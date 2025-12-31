@@ -1,26 +1,129 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+  
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  @keyframes accordion-down {
+    from { height: 0 }
+    to { height: var(--radix-accordion-content-height) }
+  }
+  @keyframes accordion-up {
+    from { height: var(--radix-accordion-content-height) }
+    to { height: 0 }
+  }
+
+  --animate-scroll: scroll 40s linear infinite;
+  
+  @keyframes scroll {
+    to {
+      transform: translate(calc(-50% - 0.5rem));
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+:root {
+  /* Base - Neutral Tones */
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(222 47% 11%);
+
+  /* PRIMARY: Deep Tech Blue */
+  --primary: hsl(222 47% 11%);
+  --primary-rgb: 15, 23, 42; /* Equivalent RGB for opacity tricks */
+  --primary-foreground: hsl(210 40% 98%);
+
+  /* SECONDARY: Evolution Green */
+  --secondary: hsl(160 84% 39%);
+  --secondary-foreground: hsl(210 40% 98%);
+
+  /* ACCENT: Vibrant Blue */
+  --accent: hsl(217 91% 60%);
+  --accent-foreground: hsl(222 47% 11%);
+
+  /* MUTED */
+  --muted: hsl(210 40% 96.1%);
+  --muted-foreground: hsl(215.4 16.3% 46.9%);
+
+  /* BORDERS */
+  --border: hsl(214.3 31.8% 91.4%);
+  --input: hsl(214.3 31.8% 91.4%);
+  --ring: hsl(222 47% 11%);
+
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: hsl(222 47% 11%);
+  --foreground: hsl(210 40% 98%);
+
+  --primary: hsl(210 40% 98%);
+  --primary-foreground: hsl(222 47% 11%);
+
+  --secondary: hsl(160 84% 39%);
+  --secondary-foreground: hsl(222 47% 11%);
+
+  --accent: hsl(217 91% 60%);
+  --accent-foreground: hsl(210 40% 98%);
+
+  --muted: hsl(217.2 32.6% 17.5%);
+  --muted-foreground: hsl(215 20.2% 65.1%);
+
+  --border: hsl(217.2 32.6% 17.5%);
+  --input: hsl(217.2 32.6% 17.5%);
+  --ring: hsl(212.7 26.8% 83.9%);
+}
+
+/* Utilities base */
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+}
+
+@layer utilities {
+  .bg-grid-small-black\/5 {
+    background-size: 20px 20px;
+    background-image: radial-gradient(circle, #000 1px, transparent 1px);
+  }
+  .bg-grid-small-white\/5 {
+    background-size: 20px 20px;
+    background-image: radial-gradient(circle, #fff 1px, transparent 1px);
+  }
+  .bg-grid-black\/5 {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, #0000000d 1px, transparent 1px),
+      linear-gradient(to bottom, #0000000d 1px, transparent 1px);
+  }
+  .bg-grid-white\/5 {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, #ffffff0d 1px, transparent 1px),
+      linear-gradient(to bottom, #ffffff0d 1px, transparent 1px);
+  }
 }
