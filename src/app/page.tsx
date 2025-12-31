@@ -1,6 +1,7 @@
 'use client';
 
 import { Header } from "@/components/layout/header"
+import Image from "next/image"
 import { TechTicker } from "@/components/layout/tech-ticker"
 import { SolutionsGrid } from "@/components/layout/solutions-grid"
 import { FaqSection } from "@/components/layout/faq-section"
@@ -93,7 +94,13 @@ export default function Home() {
         <footer className="border-t border-border/60 py-12 bg-muted/5 backdrop-blur-sm">
           <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-2">
-              <div className="w-6 h-6 bg-primary rounded flex items-center justify-center text-xs text-primary-foreground font-bold">S</div>
+              <Image 
+                src="/assets/logo-symbol.svg" 
+                alt="Sudolabs Digital" 
+                width={32} 
+                height={32} 
+                className="w-8 h-8"
+              />
               <span className="font-semibold text-sm">SudolabsDigital</span>
             </div>
             <div className="flex gap-6 text-sm text-muted-foreground">

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
@@ -24,14 +25,18 @@ export function Header() {
         {/* Logo Section */}
         <Link href="/" className="flex items-center gap-2 group ml-2">
           <motion.div 
-            whileHover={{ rotate: 8, scale: 1.1 }}
-            className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-lg shadow-primary/20"
+            whileHover={{ scale: 1.05 }}
+            className="flex items-center justify-center"
           >
-            <span className="text-primary-foreground font-bold text-sm">S</span>
+            <Image 
+              src="/assets/logo-full.svg" 
+              alt="Sudolabs Digital" 
+              width={160} 
+              height={40} 
+              priority
+              className="h-8 w-auto"
+            />
           </motion.div>
-          <span className="font-bold text-sm tracking-tight text-foreground">
-            Sudolabs<span className="text-secondary">Digital</span>
-          </span>
         </Link>
         
         {/* DESKTOP NAVIGATION */}
@@ -90,10 +95,13 @@ export function Header() {
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <SheetHeader className="mb-8 text-left">
                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                        <span className="text-primary-foreground font-bold text-sm">S</span>
-                    </div>
-                    <span className="font-bold text-lg tracking-tight">SudolabsDigital</span>
+                    <Image 
+                      src="/assets/logo-full.svg" 
+                      alt="Sudolabs Digital" 
+                      width={140} 
+                      height={35} 
+                      className="h-8 w-auto"
+                    />
                  </div>
                 <SheetTitle className="sr-only">Menú de Navegación</SheetTitle>
               </SheetHeader>
