@@ -1,15 +1,27 @@
 'use client';
 
+import { useState } from "react"
 import { Header } from "@/components/layout/header"
-import Image from "next/image"
+import { Footer } from "@/components/layout/footer"
 import { TechTicker } from "@/components/layout/tech-ticker"
 import { SolutionsGrid } from "@/components/layout/solutions-grid"
 import { FaqSection } from "@/components/layout/faq-section"
 import { Button } from "@/components/ui/button"
 import { GlobalSpotlight } from "@/components/ui/global-spotlight"
 import { ArrowRight } from "lucide-react"
+import dynamic from "next/dynamic"
+
+const ContactModal = dynamic(() => import("@/components/features/contact-modal").then(mod => mod.ContactModal), {
+  ssr: false, // No necesitamos renderizar el modal en el servidor (SEO irrelevante para un modal oculto)
+})
 
 export default function Home() {
+  const [isContactOpen, setIsContactOpen] = useState(false);
+
+  const handleWhatsappDirect = () => {
+    window.open("https://wa.me/51923384303?text=Hola%20Sudolabs,%20me%20interesa%20agendar%20una%20consultor%C3%ADa.", "_blank");
+  };
+
   return (
     <div className="min-h-screen flex flex-col font-sans bg-background selection:bg-primary/20 relative">
       {/* 1. Global Background Layer */}
@@ -17,20 +29,12 @@ export default function Home() {
 
       {/* 2. Main Content Layer */}
       <div className="relative z-10 flex flex-col min-h-screen">
+        {/* Header will handle its own contact modal instance, but that's fine. */}
         <Header />
 
         <main className="flex-1">
           {/* HERO SECTION */}
           <section className="container mx-auto px-6 pt-32 pb-32 flex flex-col items-center text-center max-w-5xl">
-              
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2 rounded-full border border-secondary/30 bg-secondary/5 px-4 py-1.5 text-sm font-medium text-secondary mb-8 backdrop-blur-sm shadow-sm hover:shadow-md hover:bg-secondary/10 transition-all cursor-default">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
-                </span>
-                Agenda Abierta Q1 2025
-              </div>
               
               {/* Main Headline */}
               <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight text-foreground mb-8 leading-[1.1]">
@@ -48,7 +52,11 @@ export default function Home() {
               
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                <Button size="lg" className="h-12 px-8 text-base shadow-xl shadow-primary/20 hover:shadow-primary/30 transition-all">
+                <Button 
+                  size="lg" 
+                  onClick={() => setIsContactOpen(true)}
+                  className="h-12 px-8 text-base shadow-xl shadow-primary/20 hover:shadow-primary/30 transition-all"
+                >
                   Hablemos de tu Proyecto
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -83,7 +91,12 @@ export default function Home() {
                       Sin compromiso de venta, solo consultoría honesta.
                     </p>
                   </div>
-                  <Button size="lg" variant="secondary" className="h-14 px-8 text-base whitespace-nowrap shadow-xl">
+                  <Button 
+                    size="lg" 
+                    variant="secondary" 
+                    onClick={handleWhatsappDirect}
+                    className="h-14 px-8 text-base whitespace-nowrap shadow-xl"
+                  >
                     Agendar Consultoría Gratis
                   </Button>
                </div>
@@ -91,28 +104,12 @@ export default function Home() {
           </section>
         </main>
 
-        <footer className="border-t border-border/60 py-12 bg-muted/5 backdrop-blur-sm">
-          <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex items-center gap-2">
-              <Image 
-                src="/assets/logo-symbol.svg" 
-                alt="Sudolabs Digital" 
-                width={32} 
-                height={32} 
-                className="w-8 h-8"
-              />
-              <span className="font-semibold text-sm">SudolabsDigital</span>
-            </div>
-            <div className="flex gap-6 text-sm text-muted-foreground">
-               <a href="#" className="hover:text-foreground transition-colors">Github</a>
-               <a href="#" className="hover:text-foreground transition-colors">LinkedIn</a>
-               <a href="#" className="hover:text-foreground transition-colors">Email</a>
-            </div>
-            <div className="text-sm text-muted-foreground">
-              © 2024 SudolabsDigital. Ingeniería con propósito.
-            </div>
-          </div>
-        </footer>
+        <Footer />
+        
+        <ContactModal 
+          isOpen={isContactOpen} 
+          onClose={() => setIsContactOpen(false)} 
+        />
       </div>
     </div>
   )
