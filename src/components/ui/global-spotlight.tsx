@@ -7,6 +7,9 @@ export const GlobalSpotlight = ({ className }: { className?: string }) => {
   const divRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Solo activar el efecto si el dispositivo soporta hover (no es táctil/móvil)
+    if (!window.matchMedia("(hover: hover)").matches) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       if (!divRef.current) return;
       

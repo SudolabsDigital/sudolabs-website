@@ -9,14 +9,13 @@ export default function Loading() {
          
          {/* Animated Logo */}
          <div className="relative z-10">
-            <Image 
-              src="/assets/logo-symbol.svg" 
-              width={64} 
-              height={64} 
-              alt="Cargando..." 
-              className="animate-pulse"
-              priority
-            />
+        <Image 
+          src="/assets/logo-symbol.webp" 
+          alt="Cargando..." 
+          width={80} 
+          height={80}
+          className="animate-pulse opacity-50"
+        />
          </div>
          
          {/* Text */}

@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import JsonLd from "@/components/seo/json-ld";
-// 1. Importamos el componente de Analytics
 import { Analytics } from "@vercel/analytics/react";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
+import { GlobalSpotlight } from "@/components/ui/global-spotlight";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,12 +53,17 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
         <JsonLd />
-        {children}
+        <GlobalSpotlight />
+        <Header />
         
-        {/* 2. Renderizamos el componente aqui (vercel analytics) */}
+        <main className="flex-1">
+          {children}
+        </main>
+        
+        <Footer />
         <Analytics />
       </body>
     </html>

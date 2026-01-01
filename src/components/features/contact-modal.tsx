@@ -72,13 +72,13 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop with blur */}
+          {/* Backdrop without blur */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-background/80 backdrop-blur-md z-[200]"
+            className="fixed inset-0 bg-black/60 z-[200]"
           />
 
           {/* Modal Content */}
@@ -88,7 +88,7 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             className="fixed inset-0 flex items-center justify-center z-[201] p-4 pointer-events-none"
           >
-            <div className="bg-card border border-border/50 rounded-3xl shadow-2xl shadow-primary/10 w-full max-w-lg overflow-hidden pointer-events-auto flex flex-col max-h-[90vh] relative">
+            <div className="bg-white text-black border border-gray-200 rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden pointer-events-auto flex flex-col max-h-[90vh] relative">
               
               {/* Decorative gradient blob */}
               <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/20 rounded-full blur-3xl pointer-events-none" />

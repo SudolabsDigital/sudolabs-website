@@ -30,19 +30,19 @@ export function HeroSection() {
               {/* LOGO MÓVIL */}
               <div className="lg:hidden mb-6 flex justify-start">
                  <Image
-                    src="/assets/logo-full.svg"
+                    src="/assets/logo-full.webp"
                     alt="Sudolabs Digital Logo"
                     width={250}
                     height={80}
-                    priority
-                    sizes="(max-width: 768px) 180px, 0px" // Solo baja en móvil
+                    sizes="(max-width: 768px) 180px, 0px"
                     className="w-[180px] h-auto drop-shadow-lg"
+                    style={{ height: 'auto' }}
                  />
               </div>
 
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter text-foreground mb-6 lg:mb-8 leading-[1.05] lg:leading-[0.95]">
                 Ingeniería de <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary/80 to-primary/50">
+                <span className="text-primary">
                   Alto Calibre.
                 </span>
               </h1>
@@ -72,20 +72,18 @@ export function HeroSection() {
             >
                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100%] h-[100%] bg-primary/5 blur-[100px] rounded-full pointer-events-none" />
                
-               <motion.div
-                  animate={{ y: [0, -15, 0] }}
-                  transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-               >
+               <div className="animate-float">
                  <Image
-                    src="/assets/logo-full.svg"
+                    src="/assets/logo-full.webp"
                     alt="Sudolabs Digital Logo"
                     width={800}
                     height={300}
-                    priority
-                    sizes="(min-width: 1024px) 600px, 0px" // Solo baja en desktop
+                    loading="eager"
+                    sizes="(min-width: 1024px) 600px, 100vw"
                     className="w-full max-w-[600px] h-auto drop-shadow-2xl relative z-10"
+                    style={{ height: 'auto' }}
                  />
-               </motion.div>
+               </div>
             </motion.div>
 
           </div>

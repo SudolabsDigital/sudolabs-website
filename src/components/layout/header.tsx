@@ -3,9 +3,9 @@
 import React, { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion"
+import { motion, useScroll, useMotionValueEvent } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from "@/components/ui/sheet"
 import { Menu } from "lucide-react"
 import dynamic from "next/dynamic"
 
@@ -20,7 +20,6 @@ const navItems = [
 ]
 
 export function Header() {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [isOpen, setIsOpen] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [isContactOpen, setIsContactOpen] = useState(false)
@@ -47,53 +46,34 @@ export function Header() {
         transition={{ duration: 0.35, ease: "easeInOut" }}
         className="fixed top-0 inset-x-0 z-[100] flex justify-center p-4 md:p-6 pointer-events-none"
       >
-        <header className="pointer-events-auto flex items-center justify-between w-full max-w-4xl h-16 md:h-20 px-6 rounded-full border border-border/40 bg-background/80 backdrop-blur-xl shadow-2xl shadow-primary/5 transition-all duration-300">
+        <header className="pointer-events-auto flex items-center justify-between w-full max-w-4xl h-16 md:h-20 px-4 rounded-full border border-white/20 bg-white/10 backdrop-blur-md shadow-lg transition-all duration-300">
           
-          {/* Logo Section */}
+          {/* Logo Section - Clean, no pill background */}
           <Link href="/" className="flex items-center gap-2 group mr-4">
             <motion.div 
               whileHover={{ scale: 1.05 }}
-              className="flex items-center justify-center"
+              className="flex items-center justify-center relative h-10 md:h-12 w-[140px] md:w-[180px]"
             >
               <Image 
-                src="/assets/logo-full.svg" 
+                src="/assets/logo-full.webp" 
                 alt="Sudolabs Digital" 
-                width={180} 
-                height={48} 
-                priority
-                className="h-10 md:h-12 w-auto object-contain"
+                fill
+                sizes="(max-width: 768px) 140px, 180px"
+                className="object-contain object-left"
               />
             </motion.div>
           </Link>
           
-          {/* DESKTOP NAVIGATION */}
+          {/* DESKTOP NAVIGATION - Buttons Style */}
           <nav 
-            className="hidden md:flex items-center gap-1"
-            onMouseLeave={() => setHoveredIndex(null)}
+            className="hidden md:flex items-center gap-2"
           >
-            {navItems.map((item, index) => (
+            {navItems.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="relative px-5 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-                onMouseEnter={() => setHoveredIndex(index)}
+                className="relative px-5 py-2 text-sm font-semibold text-black bg-white/80 hover:bg-white border border-white/20 rounded-full shadow-sm transition-all hover:scale-105"
               >
-                <AnimatePresence>
-                  {hoveredIndex === index && (
-                    <motion.span
-                      layoutId="nav-hover-pill"
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      className="absolute inset-0 z-[-1] rounded-full bg-muted/80"
-                      transition={{
-                        type: "spring",
-                        bounce: 0.2,
-                        duration: 0.4,
-                      }}
-                    />
-                  )}
-                </AnimatePresence>
                 {item.name}
               </Link>
             ))}
@@ -105,33 +85,36 @@ export function Header() {
               variant="default" 
               size="sm" 
               onClick={() => setIsContactOpen(true)}
-              className="rounded-full px-6 h-10 bg-primary hover:bg-primary/90 shadow-lg shadow-primary/10 transition-all hover:scale-105 active:scale-95 text-sm font-medium"
+              className="rounded-full px-6 h-10 bg-black text-white hover:bg-gray-800 border border-white/10 shadow-lg transition-all hover:scale-105 active:scale-95 text-sm font-medium"
             >
               Contactar
             </Button>
           </div>
 
-          {/* MOBILE MENU TRIGGER */}
+          {/* MOBILE MENU TRIGGER - Icon Only */}
           <div className="flex md:hidden ml-auto">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="rounded-full hover:bg-muted/50 w-10 h-10">
+                <Button variant="ghost" size="icon" className="w-10 h-10 text-black hover:bg-white/20">
                   <Menu className="h-6 w-6" />
                   <span className="sr-only">Menu</span>
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                 <SheetHeader className="mb-8 text-left">
-                  <div className="flex items-center gap-2 mb-2">
+                  <div className="flex items-center gap-2 mb-2 relative h-10 w-[140px]">
                       <Image 
-                        src="/assets/logo-full.svg" 
+                        src="/assets/logo-full.webp" 
                         alt="Sudolabs Digital" 
-                        width={160} 
-                        height={40} 
-                        className="h-10 w-auto"
+                        fill
+                        sizes="140px"
+                        className="object-contain object-left"
                       />
                   </div>
                   <SheetTitle className="sr-only">Menú de Navegación</SheetTitle>
+                  <SheetDescription className="sr-only">
+                    Accede a nuestras secciones de servicios, proyectos y contacto.
+                  </SheetDescription>
                 </SheetHeader>
                 
                               <div className="flex flex-col gap-4">

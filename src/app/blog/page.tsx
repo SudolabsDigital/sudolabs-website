@@ -1,6 +1,4 @@
 import { getAllContent, getAllTags } from "@/lib/mdx";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
 import Link from "next/link";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
@@ -15,9 +13,7 @@ export default async function BlogIndex() {
   const tags = await getAllTags();
 
   return (
-    <div className="min-h-screen flex flex-col bg-background font-sans">
-      <Header />
-      <main className="flex-1 pt-32 pb-24 container mx-auto px-6 max-w-5xl">
+    <main className="flex-1 pt-32 pb-24 container mx-auto px-6 max-w-5xl">
         <div className="mb-8">
            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6">
              Blog de <span className="text-primary">Ingeniería</span>
@@ -80,8 +76,6 @@ export default async function BlogIndex() {
              </div>
            )}
         </div>
-      </main>
-      <Footer />
-    </div>
+    </main>
   );
 }

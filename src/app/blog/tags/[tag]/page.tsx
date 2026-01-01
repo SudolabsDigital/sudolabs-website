@@ -1,6 +1,4 @@
 import { getPostsByTag, getAllTags } from "@/lib/mdx";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
 import Link from "next/link";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
@@ -40,9 +38,7 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
   const tagName = currentTag ? currentTag.name : tag;
 
   return (
-    <div className="min-h-screen flex flex-col bg-background font-sans">
-      <Header />
-      <main className="flex-1 pt-32 pb-24 container mx-auto px-6 max-w-5xl">
+    <main className="flex-1 pt-32 pb-24 container mx-auto px-6 max-w-5xl">
         <Link href="/blog" className="inline-flex items-center text-sm text-muted-foreground hover:text-primary mb-8 transition-colors">
            <ArrowLeft className="w-4 h-4 mr-2" /> Volver a Todos los Artículos
         </Link>
@@ -86,8 +82,6 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
              </Link>
            ))}
         </div>
-      </main>
-      <Footer />
-    </div>
+    </main>
   );
 }

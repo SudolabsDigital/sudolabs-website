@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import ServiciosClient from "./servicios-client";
+import { ServicesContent } from "@/components/modules/servicios/services-content";
 
 export const metadata: Metadata = {
   title: "Servicios de Desarrollo de Software | SudolabsDigital",
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function ServiciosPage() {
-  return <ServiciosClient />;
+  return <ServicesContent />;
 }
