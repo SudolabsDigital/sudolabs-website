@@ -1,0 +1,49 @@
+---
+title: "La Ingeniería Detrás de Sudolabs: Por Qué Elegimos Next.js 16"
+description: "Un vistazo profundo a nuestro stack tecnológico, nuestras decisiones de arquitectura y por qué apostamos por el rendimiento sin compromisos."
+date: "2025-01-01"
+readTime: "4 min read"
+tags: ["Next.js", "Arquitectura", "Performance"]
+---
+
+En el mundo del desarrollo de software, elegir las herramientas correctas es tan importante como escribir código limpio. Cuando decidimos construir la presencia digital de **Sudolabs**, no queríamos simplemente "hacer una página web". Queríamos crear un manifiesto técnico.
+
+## Nuestra Filosofía: Rendimiento como Feature
+
+Muchos estudios de agencias digitales sufren del síndrome de "Casa de herrero, cuchillo de palo". Sitios lentos, accesibilidad pobre y prácticas de SEO obsoletas. Nosotros decidimos ir en la dirección opuesta.
+
+### El Stack Elegido
+
+Para este proyecto, hemos seleccionado un conjunto de tecnologías que representan el estado del arte en 2025:
+
+- **Next.js 16 (App Router):** Por su capacidad de renderizado híbrido y Server Components.
+- **TypeScript:** Porque la seguridad de tipos no es negociable en producción.
+- **Tailwind CSS 4:** Para un diseño consistente y un bundle CSS mínimo.
+- **MDX:** Para gestionar este contenido que estás leyendo ahora mismo.
+
+## ¿Por qué MDX?
+
+Creemos en la simplicidad. Un CMS tradicional (WordPress, Contentful) añade capas de complejidad y latencia que no necesitamos en esta fase. Al usar MDX:
+
+1. **Git es nuestra fuente de verdad:** El contenido vive junto al código.
+2. **Cero latencia:** El contenido se compila a HTML estático en el build time.
+3. **Componentes React:** Podemos incrustar demos interactivos directamente en los artículos.
+
+```typescript
+// Ejemplo de cómo leemos este archivo
+export const getContentBySlug = async (slug: string) => {
+  const filePath = path.join(contentDirectory, `${slug}.mdx`);
+  const fileContent = fs.readFileSync(filePath, "utf8");
+  // ... magic happens
+};
+```
+
+## Lo Que Viene
+
+Este blog será nuestro espacio para compartir lecciones aprendidas en las trincheras. Hablaremos de:
+
+*   Arquitectura de Software en la vida real.
+*   Casos de éxito de nuestros clientes.
+*   Tutoriales avanzados de React y Node.js.
+
+Bienvenidos a la nueva era de la ingeniería de software en Huancayo.

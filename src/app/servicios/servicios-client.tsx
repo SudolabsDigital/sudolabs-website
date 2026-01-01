@@ -16,39 +16,51 @@ const ContactModal = dynamic(() => import("@/components/features/contact-modal")
 const services = [
   {
     title: "Desarrollo Web & Apps",
-    description: "Aplicaciones modernas, rápidas y escalables construidas con Next.js y React.",
+    description: "Aplicaciones de alto rendimiento. Desde landing pages que convierten hasta plataformas SaaS complejas.",
     icon: Globe,
-    color: "bg-blue-500/10 text-blue-500"
+    techs: ["Next.js", "React", "Node.js"],
+    colSpan: "lg:col-span-2", // Destacado
+    gradient: "from-blue-500/20 to-cyan-500/20"
   },
   {
-    title: "Arquitectura de Software",
-    description: "Diseño de sistemas robustos preparados para el crecimiento y alta disponibilidad.",
+    title: "Arquitectura Cloud",
+    description: "Infraestructura que escala contigo. AWS, Vercel o servidores dedicados.",
     icon: Cpu,
-    color: "bg-purple-500/10 text-purple-500"
+    techs: ["AWS", "Docker", "CI/CD"],
+    colSpan: "lg:col-span-1",
+    gradient: "from-purple-500/20 to-pink-500/20"
   },
   {
-    title: "Automatización de Procesos",
-    description: "Eliminamos tareas manuales repetitivas mediante integraciones y scripts inteligentes.",
+    title: "Automatización",
+    description: "Elimina el trabajo manual. Conectamos tus herramientas (CRM, ERP) para que fluyan solas.",
     icon: Zap,
-    color: "bg-yellow-500/10 text-yellow-500"
+    techs: ["Zapier", "Python Scripts", "APIs"],
+    colSpan: "lg:col-span-1",
+    gradient: "from-yellow-500/20 to-orange-500/20"
   },
   {
     title: "Consultoría Técnica",
-    description: "Auditamos tu stack tecnológico y te ayudamos a tomar las mejores decisiones.",
+    description: "Auditoría de código, rescate de proyectos legacy y dirección técnica (CTO as a Service).",
     icon: Code2,
-    color: "bg-green-500/10 text-green-500"
+    techs: ["Code Review", "Mentoring", "Strategy"],
+    colSpan: "lg:col-span-2", // Destacado
+    gradient: "from-green-500/20 to-emerald-500/20"
   },
   {
-    title: "Seguridad & Optimización",
-    description: "Protegemos tus datos y mejoramos el rendimiento de tus plataformas existentes.",
+    title: "Seguridad",
+    description: "Protección de datos y hardening de servidores.",
     icon: ShieldCheck,
-    color: "bg-red-500/10 text-red-500"
+    techs: ["Pen Testing", "Auditoría", "Backups"],
+    colSpan: "lg:col-span-1",
+    gradient: "from-red-500/20 to-rose-500/20"
   },
   {
-    title: "MVP para Startups",
-    description: "Lanzamos tu producto al mercado en tiempo récord sin sacrificar calidad.",
+    title: "MVP Express",
+    description: "De la idea al mercado en 4 semanas. Validamos tu hipótesis rápido.",
     icon: Rocket,
-    color: "bg-orange-500/10 text-orange-500"
+    techs: ["Prototipado", "Lean Startup", "Speed"],
+    colSpan: "lg:col-span-2", // Destacado
+    gradient: "from-orange-500/20 to-amber-500/20"
   }
 ]
 
@@ -56,72 +68,96 @@ export default function ServiciosPage() {
   const [isContactOpen, setIsContactOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-background relative overflow-hidden">
+    <div className="min-h-screen flex flex-col font-sans bg-background relative overflow-hidden selection:bg-primary/20">
       <GlobalSpotlight />
       <Header />
 
       <main className="flex-1 pt-32 pb-24 relative z-10">
-        <section className="container mx-auto px-6 max-w-6xl">
-          <div className="text-center mb-20">
+        <section className="container mx-auto px-6 max-w-7xl">
+          
+          {/* HEADER */}
+          <div className="text-center mb-24 max-w-3xl mx-auto">
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6"
+              className="text-5xl md:text-7xl font-extrabold tracking-tighter mb-8 text-foreground"
             >
-              Soluciones <span className="text-primary">Ingenieriles</span>
+              Capacidades <br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60">Técnicas.</span>
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-xl text-muted-foreground max-w-2xl mx-auto"
+              className="text-xl text-muted-foreground leading-relaxed font-light"
             >
-              No solo escribimos código, resolvemos problemas de negocio con tecnología de vanguardia.
+              Un stack completo de servicios diseñados para resolver problemas complejos. Sin relleno, solo ingeniería.
             </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
+          {/* BENTO GRID DE SERVICIOS */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-32">
             {services.map((service, index) => (
               <motion.div
                 key={service.title}
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="group p-8 rounded-3xl border border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-all duration-300"
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: index * 0.05 }}
+                className={`${service.colSpan} group relative p-8 md:p-10 rounded-[2.5rem] bg-card/30 border border-border/50 hover:border-primary/30 transition-all duration-500 overflow-hidden flex flex-col justify-between`}
               >
-                <div className={`w-12 h-12 rounded-xl ${service.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
-                  <service.icon className="w-6 h-6" />
+                {/* Hover Gradient Background */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+                
+                <div>
+                    <div className="w-14 h-14 rounded-2xl bg-background border border-border/50 flex items-center justify-center mb-8 shadow-sm group-hover:scale-110 transition-transform duration-500">
+                    <service.icon className="w-7 h-7 text-foreground/80" strokeWidth={1.5} />
+                    </div>
+                    
+                    <h3 className="text-2xl font-bold mb-4 tracking-tight group-hover:text-primary transition-colors">
+                        {service.title}
+                    </h3>
+                    <p className="text-muted-foreground text-lg leading-relaxed mb-8">
+                    {service.description}
+                    </p>
                 </div>
-                <h3 className="text-xl font-bold mb-3">{service.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {service.description}
-                </p>
+
+                {/* Tech Pills */}
               </motion.div>
             ))}
           </div>
 
           {/* CTA SECTION */}
-          <div className="bg-primary/5 border border-primary/10 rounded-3xl p-12 text-center relative overflow-hidden">
-            <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="relative rounded-[3rem] bg-primary overflow-hidden px-6 py-20 md:py-28 text-center">
+            {/* Abstract Shapes */}
+            <div className="absolute top-0 left-0 w-full h-full opacity-10" 
+                 style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '32px 32px' }}>
+            </div>
+            <div className="absolute -top-24 -left-24 w-96 h-96 bg-white/10 rounded-full blur-[100px]" />
             
-            <h2 className="text-3xl font-bold mb-6 relative z-10">¿No estás seguro de qué necesitas?</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto mb-8 relative z-10">
-              A veces el problema no es técnico, sino de estrategia. Hablemos para entender tu situación actual.
-            </p>
-            <Button 
-              size="lg" 
-              onClick={() => setIsContactOpen(true)}
-              className="rounded-full px-8 h-12 relative z-10 shadow-xl shadow-primary/20"
-            >
-              Agendar Diagnóstico Gratuito <ArrowRight className="ml-2 w-4 h-4" />
-            </Button>
+            <div className="relative z-10 max-w-2xl mx-auto">
+                <h2 className="text-3xl md:text-5xl font-bold text-primary-foreground mb-6 tracking-tight">
+                    ¿Tu problema no está en la lista?
+                </h2>
+                <p className="text-primary-foreground/80 text-xl mb-10 font-light">
+                    Los mejores proyectos suelen ser los que no encajan en ninguna categoría estándar. Nos encantan los retos raros.
+                </p>
+                <Button 
+                    size="lg" 
+                    variant="secondary"
+                    onClick={() => setIsContactOpen(true)}
+                    className="h-14 px-10 text-lg rounded-full shadow-2xl hover:scale-105 transition-all"
+                >
+                    Cuéntanos el Reto <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+            </div>
           </div>
 
         </section>
       </main>
 
       <Footer />
-      <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} defaultSubject="Consultoría Técnica" />
+      <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} defaultSubject="Consulta de Servicios" />
     </div>
   )
 }

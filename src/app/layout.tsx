@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import JsonLd from "@/components/seo/json-ld";
+// 1. Importamos el componente de Analytics
+import { Analytics } from "@vercel/analytics/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -53,6 +55,9 @@ export default function RootLayout({
       >
         <JsonLd />
         {children}
+        
+        {/* 2. Renderizamos el componente aqui (vercel analytics) */}
+        <Analytics />
       </body>
     </html>
   );
