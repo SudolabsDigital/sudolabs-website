@@ -1,10 +1,7 @@
 import { getAllContent } from "@/lib/mdx";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Sparkles } from "lucide-react";
-import { GlobalSpotlight } from "@/components/ui/global-spotlight";
 
 export const metadata = {
   title: "Portafolio y Casos de Éxito | Sudolabs",
@@ -28,16 +25,14 @@ export default async function ProyectosPage() {
 
   return (
     <div className="min-h-screen flex flex-col font-sans bg-background selection:bg-primary/20 relative overflow-hidden">
-      <GlobalSpotlight />
-      <Header />
-
+      
       <main className="flex-1 pt-32 pb-24 relative z-10">
         
         {/* HERO HEADER */}
         <section className="container mx-auto px-6 mb-16 md:mb-20 text-center md:text-left">
             <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight text-foreground mb-6 leading-tight">
               Portafolio <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-br from-primary via-foreground to-foreground/60">
+              <span className="text-primary">
                 & Casos de Éxito
               </span>
             </h1>
@@ -86,6 +81,7 @@ export default async function ProyectosPage() {
                                     src={featuredProject.image} 
                                     alt={featuredProject.title}
                                     fill
+                                    sizes="(max-width: 1024px) 100vw, 60vw"
                                     className="object-cover group-hover:scale-105 transition-transform duration-700"
                                 />
                             )}
@@ -120,6 +116,7 @@ export default async function ProyectosPage() {
                                             src={project.image} 
                                             alt={project.title}
                                             fill
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                             className="object-cover group-hover:scale-105 transition-transform duration-500"
                                         />
                                     )}
@@ -143,7 +140,6 @@ export default async function ProyectosPage() {
         )}
 
       </main>
-      <Footer />
     </div>
   );
 }

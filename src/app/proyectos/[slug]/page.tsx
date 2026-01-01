@@ -1,7 +1,5 @@
 import { getContentBySlug, getAllContent, getPostsBySlugs } from "@/lib/mdx";
 import { MDXContent } from "@/components/modules/blog/mdx-content";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
 import { notFound } from "next/navigation";
 import { ArrowLeft, BookOpen, Briefcase, ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -51,8 +49,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const projectTags = Array.isArray(project.meta.tags) ? project.meta.tags as string[] : [];
 
   return (
-    <div className="min-h-screen flex flex-col bg-background font-sans selection:bg-primary/20">
-      <Header />
+    <div className="flex flex-col bg-background font-sans selection:bg-primary/20">
       <main className="flex-1">
         
         {/* 1. IMMERSIVE HERO */}
@@ -172,7 +169,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
         </div>
       </main>
-      <Footer />
     </div>
   );
 }

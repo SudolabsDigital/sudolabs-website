@@ -23,12 +23,11 @@ export function Footer() {
           {/* COL 1: IDENTIDAD (5 columnas) */}
           <div className="md:col-span-5 space-y-6">
             <Image 
-                src="/assets/logo-full.svg" 
+                src="/assets/logo-full.webp" 
                 alt="Sudolabs Digital" 
                 width={200} 
                 height={55} 
                 className="h-10 md:h-12 w-auto"
-                priority
             />
             <p className="text-muted-foreground text-xs leading-relaxed max-w-sm">
               Transformamos problemas complejos en software eficiente. Ingeniería de alto nivel para negocios ambiciosos que buscan escalar sin límites.

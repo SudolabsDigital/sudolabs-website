@@ -1,9 +1,6 @@
 'use client';
 
 import { useState } from "react"
-import { Header } from "@/components/layout/header"
-import { Footer } from "@/components/layout/footer"
-import { GlobalSpotlight } from "@/components/ui/global-spotlight"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Target, Eye, Shield, Sparkles, Zap, Users } from "lucide-react"
@@ -17,10 +14,7 @@ export default function NosotrosPage() {
   const [isContactOpen, setIsContactOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-background relative overflow-hidden selection:bg-primary/20">
-      <GlobalSpotlight />
-      <Header />
-
+    <>
       <main className="flex-1 pt-32 pb-24 relative z-10">
         <section className="container mx-auto px-6 max-w-6xl">
           
@@ -32,7 +26,7 @@ export default function NosotrosPage() {
               className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter mb-8 text-foreground leading-[0.9]"
             >
               Ingeniería con <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60">Propósito.</span>
+              <span className="text-primary">Propósito.</span>
             </motion.h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-light">
               En Sudolabs, no solo escribimos código. Construimos la infraestructura digital que permite a las empresas ambiciosas escalar sin límites.
@@ -152,8 +146,7 @@ export default function NosotrosPage() {
         </section>
       </main>
 
-      <Footer />
       <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} defaultSubject="Hablemos de Nosotros" />
-    </div>
+    </>
   )
 }
