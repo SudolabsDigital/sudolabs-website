@@ -83,13 +83,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
         <div className="container mx-auto px-6 py-16 max-w-6xl">
            
-           {/* 2. KEY STATS (KPIs) */}
-           {project.meta.stats && Array.isArray(project.meta.stats) && (
+           {/* 2. KEY STATS (KPIs) - CORREGIDO AQUÍ */}
+           {Array.isArray(project.meta.stats) && (
              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 -mt-24 relative z-20">
                 {(project.meta.stats as { label: string, value: string }[]).map((stat, i) => (
                   <div key={i} className="bg-card border border-border/50 p-8 rounded-3xl shadow-xl shadow-black/5 flex flex-col items-center text-center backdrop-blur-sm">
-                     <span className="text-4xl md:text-5xl font-extrabold text-primary mb-2 block">{stat.value}</span>
-                     <span className="text-sm font-bold uppercase tracking-widest text-muted-foreground">{stat.label}</span>
+                      <span className="text-4xl md:text-5xl font-extrabold text-primary mb-2 block">{stat.value}</span>
+                      <span className="text-sm font-bold uppercase tracking-widest text-muted-foreground">{stat.label}</span>
                   </div>
                 ))}
              </div>
