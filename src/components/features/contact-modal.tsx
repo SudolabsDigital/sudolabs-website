@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, MessageSquare, Phone, Send, Loader2, Sparkles, Mail, CheckCircle2, ExternalLink } from "lucide-react";
+import { X, MessageSquare, Phone, Send, Sparkles, Mail, CheckCircle2, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface ContactModalProps {
@@ -21,11 +21,16 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
 
   // Reset state when opening
   useEffect(() => {
-    if (isOpen) {
-      setStep("form");
-      setGoal(defaultSubject || "Desarrollo a Medida");
-      setEmail("");
-      setDetails("");
+    if (!isOpen) {
+      // Reset only when closing to be ready for next open, 
+      // avoiding synchronous setState during render/mount.
+      const timer = setTimeout(() => {
+        setStep("form");
+        setGoal(defaultSubject || "Desarrollo a Medida");
+        setEmail("");
+        setDetails("");
+      }, 300); // Wait for exit animation
+      return () => clearTimeout(timer);
     }
   }, [isOpen, defaultSubject]);
 
