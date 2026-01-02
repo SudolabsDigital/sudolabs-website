@@ -10,19 +10,31 @@ export const GlobalSpotlight = ({ className }: { className?: string }) => {
     // Solo activar el efecto si el dispositivo soporta hover (no es táctil/móvil)
     if (!window.matchMedia("(hover: hover)").matches) return;
 
+    let animationFrameId: number;
+
     const handleMouseMove = (e: MouseEvent) => {
       if (!divRef.current) return;
       
-      const rect = divRef.current.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+      // Cancelar frame anterior si existe
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
 
-      divRef.current.style.setProperty('--mouse-x', `${x}px`);
-      divRef.current.style.setProperty('--mouse-y', `${y}px`);
+      // Programar nueva actualización
+      animationFrameId = requestAnimationFrame(() => {
+        if (!divRef.current) return;
+        const rect = divRef.current.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        divRef.current.style.setProperty('--mouse-x', `${x}px`);
+        divRef.current.style.setProperty('--mouse-y', `${y}px`);
+      });
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    };
   }, []);
 
   return (

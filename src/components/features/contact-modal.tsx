@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, MessageSquare, Phone, Send, Sparkles, Mail, CheckCircle2, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,7 @@ interface ContactModalProps {
 }
 
 export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactModalProps) {
+  const [mounted, setMounted] = useState(false);
   const [step, setStep] = useState<"form" | "success">("form");
   const [goal, setGoal] = useState(defaultSubject || "Desarrollo a Medida");
   const [preference, setPreference] = useState<"chat" | "call">("chat");
@@ -19,11 +21,14 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
   const [details, setDetails] = useState("");
   const [whatsappUrl, setWhatsappUrl] = useState("");
 
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
+
   // Reset state when opening
   useEffect(() => {
     if (!isOpen) {
-      // Reset only when closing to be ready for next open, 
-      // avoiding synchronous setState during render/mount.
       const timer = setTimeout(() => {
         setStep("form");
         setGoal(defaultSubject || "Desarrollo a Medida");
@@ -68,7 +73,9 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
     setStep("success");
   };
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <>
@@ -119,7 +126,7 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
                     {/* Field: Goal */}
                     <div className="space-y-3">
                       <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
-                        <Sparkles className="w-3 h-3 text-primary" />
+                        <Sparkles className="w-3 h-3 text-black" />
                         ¿Cuál es tu objetivo?
                       </label>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -130,8 +137,8 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
                             onClick={() => setGoal(opt)}
                             className={`text-left px-4 py-3 rounded-xl border text-sm font-medium transition-all duration-200 ${
                               goal === opt 
-                                ? "border-primary bg-primary/10 text-foreground ring-1 ring-primary shadow-[0_0_15px_rgba(var(--primary),0.3)]" 
-                                : "border-border bg-background/50 hover:bg-muted/50 hover:border-primary/50 text-muted-foreground"
+                                ? "border-black bg-black text-white ring-1 ring-black shadow-md" 
+                                : "border-gray-200 bg-gray-50 hover:bg-gray-100 hover:border-black/30 text-gray-600"
                             }`}
                           >
                             {opt}
@@ -152,7 +159,7 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="ejemplo@empresa.com"
-                          className="w-full rounded-xl border border-border bg-background/50 pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                          className="w-full rounded-xl border border-gray-200 bg-gray-50 pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-black/50 transition-all text-black placeholder:text-gray-400"
                         />
                       </div>
                     </div>
@@ -168,11 +175,11 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
                           onClick={() => setPreference("chat")}
                           className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl border transition-all duration-200 ${
                             preference === "chat"
-                              ? "border-primary bg-primary/10 text-foreground ring-1 ring-primary"
-                              : "border-border bg-background/50 hover:bg-muted/50 hover:border-primary/50 text-muted-foreground"
+                              ? "border-black bg-black text-white ring-1 ring-black shadow-md"
+                              : "border-gray-200 bg-gray-50 hover:bg-gray-100 hover:border-black/30 text-gray-600"
                           }`}
                         >
-                          <MessageSquare className={`w-6 h-6 ${preference === 'chat' ? 'text-primary' : 'text-muted-foreground'}`} />
+                          <MessageSquare className={`w-6 h-6 ${preference === 'chat' ? 'text-white' : 'text-gray-400'}`} />
                           <span className="text-sm font-medium">Chat WhatsApp</span>
                         </button>
                         <button
@@ -180,11 +187,11 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
                           onClick={() => setPreference("call")}
                           className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl border transition-all duration-200 ${
                             preference === "call"
-                              ? "border-primary bg-primary/10 text-foreground ring-1 ring-primary"
-                              : "border-border bg-background/50 hover:bg-muted/50 hover:border-primary/50 text-muted-foreground"
+                              ? "border-black bg-black text-white ring-1 ring-black shadow-md"
+                              : "border-gray-200 bg-gray-50 hover:bg-gray-100 hover:border-black/30 text-gray-600"
                           }`}
                         >
-                          <Phone className={`w-6 h-6 ${preference === 'call' ? 'text-primary' : 'text-muted-foreground'}`} />
+                          <Phone className={`w-6 h-6 ${preference === 'call' ? 'text-white' : 'text-gray-400'}`} />
                           <span className="text-sm font-medium">Agendar Llamada</span>
                         </button>
                       </div>
@@ -199,11 +206,15 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
                         value={details}
                         onChange={(e) => setDetails(e.target.value)}
                         placeholder="Breve descripción de tu idea..."
-                        className="w-full min-h-[80px] rounded-xl border border-border bg-background/50 p-4 text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none transition-all"
+                        className="w-full min-h-[80px] rounded-xl border border-gray-200 bg-gray-50 p-4 text-sm text-black placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-black/50 resize-none transition-all"
                       />
                     </div>
 
-                    <Button type="submit" size="lg" className="w-full rounded-full text-base font-bold h-12 shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
+                    <Button 
+                      type="submit" 
+                      size="lg" 
+                      className="w-full rounded-full text-base font-bold h-12 bg-black text-white hover:bg-gray-900 shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
+                    >
                       Continuar a WhatsApp <Send className="ml-2 w-4 h-4" />
                     </Button>
                   </form>
@@ -253,6 +264,7 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }

@@ -7,7 +7,7 @@ export function HeroSection() {
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-20 items-center w-full">
           
           {/* COLUMNA 1: CONTENIDO */}
-          <div className="max-w-2xl animate-in fade-in slide-in-from-bottom-4 duration-700">
+          <div className="max-w-2xl md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
             {/* LOGO MÓVIL */}
             <div className="lg:hidden mb-6 flex justify-start">
                <Image
@@ -15,21 +15,22 @@ export function HeroSection() {
                   alt="Sudolabs Digital Logo"
                   width={250}
                   height={80}
-                  loading="eager"
+                  priority
+                  fetchPriority="high"
                   sizes="(max-width: 768px) 180px, 0px"
                   className="w-[180px] h-auto drop-shadow-lg"
                   style={{ height: 'auto' }}
                />
             </div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter text-foreground mb-6 lg:mb-8 leading-[1.05] lg:leading-[0.95]">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter text-white mb-6 lg:mb-8 leading-[1.05] lg:leading-[0.95]">
               Ingeniería de <br />
               <span className="text-primary">
                 Alto Calibre.
               </span>
             </h1>
             
-            <p className="text-lg md:text-2xl text-muted-foreground mb-8 lg:mb-12 leading-relaxed max-w-lg">
+            <p className="text-lg md:text-2xl text-gray-300 mb-8 lg:mb-12 leading-relaxed max-w-lg">
               No hacemos solo apps, construimos activos digitales. Sistemas robustos diseñados para escalar tu negocio.
             </p>
             
