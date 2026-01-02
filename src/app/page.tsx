@@ -1,9 +1,13 @@
+import dynamic from "next/dynamic"
 import { TechTicker } from "@/components/layout/tech-ticker"
 import { SolutionsGrid } from "@/components/layout/solutions-grid"
 import { FaqSection } from "@/components/layout/faq-section"
 import { HeroSection } from "@/components/modules/home/hero-section"
 import { CtaSection } from "@/components/modules/home/cta-section"
-import { TubeCursorBackground } from "@/components/ui/tube-cursor-background"
+
+const TubeCursorBackground = dynamic(
+  () => import("@/components/ui/tube-cursor-background").then(mod => mod.TubeCursorBackground)
+)
 
 export const metadata = {
   title: "Sudolabs Digital | Ingeniería de Software de Alto Calibre",

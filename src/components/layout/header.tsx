@@ -58,7 +58,7 @@ export function Header() {
                 src="/assets/logo-full.webp" 
                 alt="Sudolabs Digital" 
                 fill
-                loading="eager"
+                priority
                 sizes="(max-width: 768px) 140px, 180px"
                 className="object-contain object-left"
               />
