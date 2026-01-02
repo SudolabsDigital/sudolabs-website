@@ -16,6 +16,7 @@ export function HeroSection() {
                   width={250}
                   height={80}
                   priority
+                  fetchPriority="high"
                   sizes="(max-width: 768px) 180px, 0px"
                   className="w-[180px] h-auto drop-shadow-lg"
                   style={{ height: 'auto' }}

@@ -1,9 +1,11 @@
 import dynamic from "next/dynamic"
-import { TechTicker } from "@/components/layout/tech-ticker"
-import { SolutionsGrid } from "@/components/layout/solutions-grid"
-import { FaqSection } from "@/components/layout/faq-section"
 import { HeroSection } from "@/components/modules/home/hero-section"
-import { CtaSection } from "@/components/modules/home/cta-section"
+
+// Componentes dinámicos "Below the Fold" para reducir TBT
+const TechTicker = dynamic(() => import("@/components/layout/tech-ticker").then(mod => mod.TechTicker))
+const SolutionsGrid = dynamic(() => import("@/components/layout/solutions-grid").then(mod => mod.SolutionsGrid))
+const FaqSection = dynamic(() => import("@/components/layout/faq-section").then(mod => mod.FaqSection))
+const CtaSection = dynamic(() => import("@/components/modules/home/cta-section").then(mod => mod.CtaSection))
 
 const TubeCursorBackground = dynamic(
   () => import("@/components/ui/tube-cursor-background").then(mod => mod.TubeCursorBackground)
@@ -24,16 +26,16 @@ export default function Home() {
       <div className="fixed bottom-0 right-0 w-[300px] h-[300px] bg-[#00FFA3]/10 blur-[100px] rounded-full pointer-events-none lg:hidden z-0" />
       
       <div className="relative z-10">
-        {/* ISLA INTERACTIVA 1: HERO */}
+        {/* ISLA INTERACTIVA 1: HERO (Carga Inmediata para LCP) */}
         <HeroSection />
 
         {/* ISLA INTERACTIVA 2: TICKER */}
         <TechTicker />
 
-        {/* SECCIÓN ESTÁTICA (Server Component) */}
+        {/* SECCIÓN ESTÁTICA */}
         <SolutionsGrid />
 
-        {/* SECCIÓN ESTÁTICA (Server Component) */}
+        {/* SECCIÓN ESTÁTICA */}
         <FaqSection />
 
         {/* ISLA INTERACTIVA 3: CTA FINAL */}

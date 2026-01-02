@@ -23,6 +23,7 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [isContactOpen, setIsContactOpen] = useState(false)
+  const [hasOpenedOnce, setHasOpenedOnce] = useState(false)
   const { scrollY } = useScroll()
 
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -34,6 +35,11 @@ export function Header() {
       setHidden(false);
     }
   });
+
+  const handleOpenContact = () => {
+    setHasOpenedOnce(true);
+    setIsContactOpen(true);
+  };
 
   return (
     <>
@@ -50,8 +56,7 @@ export function Header() {
           
           {/* Logo Section - Inverted for Dark Mode */}
           <Link href="/" className="flex items-center gap-2 group mr-4">
-            <motion.div 
-              whileHover={{ scale: 1.05 }}
+            <div 
               className="flex items-center justify-center relative h-10 md:h-12 w-[140px] md:w-[180px] brightness-0 invert filter"
             >
               <Image 
@@ -59,10 +64,11 @@ export function Header() {
                 alt="Sudolabs Digital" 
                 fill
                 priority
+                fetchPriority="high"
                 sizes="(max-width: 768px) 140px, 180px"
                 className="object-contain object-left"
               />
-            </motion.div>
+            </div>
           </Link>
           
           {/* DESKTOP NAVIGATION - Glass Pills */}
@@ -85,7 +91,7 @@ export function Header() {
             <Button 
               variant="default" 
               size="sm" 
-              onClick={() => setIsContactOpen(true)}
+              onClick={handleOpenContact}
               className="rounded-full px-6 h-10 bg-white text-[#020617] hover:bg-gray-200 border border-white/10 shadow-lg transition-all hover:scale-105 active:scale-95 text-sm font-bold"
             >
               Contactar
@@ -140,7 +146,7 @@ export function Header() {
                       <Button 
                         onClick={() => {
                           setIsOpen(false);
-                          setIsContactOpen(true);
+                          handleOpenContact();
                         }}
                         className="w-full h-12 text-base rounded-full bg-white text-black hover:bg-gray-200 font-bold"
                       >
@@ -154,10 +160,12 @@ export function Header() {
         </header>
       </motion.div>
 
-      <ContactModal 
-        isOpen={isContactOpen} 
-        onClose={() => setIsContactOpen(false)} 
-      />
+      {hasOpenedOnce && (
+        <ContactModal 
+          isOpen={isContactOpen} 
+          onClose={() => setIsContactOpen(false)} 
+        />
+      )}
     </>
   )
 }

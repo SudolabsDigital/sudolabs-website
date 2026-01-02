@@ -76,7 +76,7 @@ export function TubeCursorBackground() {
       const renderScene = new RenderPass(scene, camera)
       bloomPass = new UnrealBloomPass(
         new THREE.Vector2(width, height),
-        2.0, 0.3, 0.0 
+        2.0, 0.3, 0.0  // Difuso, intensidad, radio
       )
 
       composer = new EffectComposer(renderer)

@@ -14,8 +14,9 @@ export function TechTicker() {
     { name: "Seguridad Integrada", icon: ShieldCheck },
   ];
 
-  // Duplicamos la lista suficientes veces para cubrir pantallas grandes sin saltos
-  const repeatedPillars = [...pillars, ...pillars, ...pillars, ...pillars];
+  // Duplicamos la lista para cubrir pantallas grandes sin saltos
+  // Reducimos de 4 a 2 repeticiones para minimizar nodos en el DOM
+  const repeatedPillars = [...pillars, ...pillars];
 
   return (
     <section className="py-10 border-y border-dashed border-white/10 bg-transparent overflow-hidden relative group">
@@ -26,36 +27,26 @@ export function TechTicker() {
 
       {/* Contenedor de Scroll */}
       <div className="flex overflow-hidden w-full mask-linear-fade">
-        {/* Pista Animada para CSS Puro */}
-        <div className="flex gap-12 pr-12 items-center animate-infinite-scroll w-max will-change-transform">
-            {repeatedPillars.map((tech, i) => (
-                <div key={i} className="flex items-center gap-12 group/item">
-                    <div className="flex items-center gap-3 opacity-80 transition-all duration-500 group-hover/item:opacity-100 group-hover/item:grayscale-0">
-                        <tech.icon className="w-5 h-5 text-white" strokeWidth={2} />
-                        <span className="text-sm font-bold tracking-widest uppercase text-white whitespace-nowrap">
-                            {tech.name}
-                        </span>
-                    </div>
-                    {/* Separador Sutil */}
-                    <div className="w-1 h-1 rounded-full bg-white/20 group-hover/item:bg-primary/50 transition-colors" />
-                </div>
-            ))}
-        </div>
-        
-        {/* Segunda pista para loop */}
-        <div className="flex gap-12 pr-12 items-center animate-infinite-scroll w-max will-change-transform" aria-hidden="true">
-            {repeatedPillars.map((tech, i) => (
-                <div key={`clone-${i}`} className="flex items-center gap-12 group/item">
-                    <div className="flex items-center gap-3 opacity-80 transition-all duration-500 group-hover/item:opacity-100 group-hover/item:grayscale-0">
-                        <tech.icon className="w-5 h-5 text-white" strokeWidth={2} />
-                        <span className="text-sm font-bold tracking-widest uppercase text-white whitespace-nowrap">
-                            {tech.name}
-                        </span>
-                    </div>
-                    <div className="w-1 h-1 rounded-full bg-white/20 group-hover/item:bg-primary/50 transition-colors" />
-                </div>
-            ))}
-        </div>
+        {/* Pista Animada para CSS Puro - Solo 2 instancias para el loop infinito */}
+        {[0, 1].map((index) => (
+          <div 
+            key={index}
+            className="flex gap-12 pr-12 items-center animate-infinite-scroll w-max will-change-transform"
+            aria-hidden={index > 0}
+          >
+              {repeatedPillars.map((tech, i) => (
+                  <div key={`${index}-${i}`} className="flex items-center gap-12 group/item">
+                      <div className="flex items-center gap-3 opacity-80 transition-all duration-500 group-hover/item:opacity-100 group-hover/item:grayscale-0">
+                          <tech.icon className="w-5 h-5 text-white" strokeWidth={2} />
+                          <span className="text-sm font-bold tracking-widest uppercase text-white whitespace-nowrap">
+                              {tech.name}
+                          </span>
+                      </div>
+                      <div className="w-1 h-1 rounded-full bg-white/20 group-hover/item:bg-primary/50 transition-colors" />
+                  </div>
+              ))}
+          </div>
+        ))}
       </div>
     </section>
   );
