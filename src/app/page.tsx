@@ -3,6 +3,7 @@ import { SolutionsGrid } from "@/components/layout/solutions-grid"
 import { FaqSection } from "@/components/layout/faq-section"
 import { HeroSection } from "@/components/modules/home/hero-section"
 import { CtaSection } from "@/components/modules/home/cta-section"
+import { TubeCursorBackground } from "@/components/ui/tube-cursor-background"
 
 export const metadata = {
   title: "Sudolabs Digital | Ingeniería de Software de Alto Calibre",
@@ -11,21 +12,25 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <>
-      {/* ISLA INTERACTIVA 1: HERO */}
-      <HeroSection />
+    <main className="relative min-h-screen overflow-x-hidden forced-dark-mode">
+      <TubeCursorBackground />
+      
+      <div className="relative z-10">
+        {/* ISLA INTERACTIVA 1: HERO */}
+        <HeroSection />
 
-      {/* ISLA INTERACTIVA 2: TICKER */}
-      <TechTicker />
+        {/* ISLA INTERACTIVA 2: TICKER */}
+        <TechTicker />
 
-      {/* SECCIÓN ESTÁTICA (Server Component) */}
-      <SolutionsGrid />
+        {/* SECCIÓN ESTÁTICA (Server Component) */}
+        <SolutionsGrid />
 
-      {/* SECCIÓN ESTÁTICA (Server Component) */}
-      <FaqSection />
+        {/* SECCIÓN ESTÁTICA (Server Component) */}
+        <FaqSection />
 
-      {/* ISLA INTERACTIVA 3: CTA FINAL */}
-      <CtaSection />
-    </>
+        {/* ISLA INTERACTIVA 3: CTA FINAL */}
+        <CtaSection />
+      </div>
+    </main>
   )
 }

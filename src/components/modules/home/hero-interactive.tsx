@@ -17,7 +17,7 @@ export function HeroInteractive() {
       <Button 
         size="lg" 
         onClick={() => setIsContactOpen(true)}
-        className="h-14 lg:h-16 px-8 lg:px-12 text-base lg:text-lg rounded-full shadow-2xl shadow-primary/25 hover:shadow-primary/40 hover:scale-[1.02] transition-all duration-300 w-full sm:w-auto"
+        className="h-14 lg:h-16 px-8 lg:px-12 text-base lg:text-lg rounded-full shadow-[0_0_20px_rgba(37,99,235,0.4)] bg-blue-600 hover:bg-blue-700 text-white hover:scale-[1.05] transition-all duration-300 w-full sm:w-auto border border-blue-400/30"
       >
         Iniciar Transformación
         <ArrowRight className="ml-3 h-5 w-5" />

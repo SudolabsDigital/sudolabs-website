@@ -9,24 +9,23 @@ export function CtaSection() {
 
   return (
     <section className="py-20 lg:py-32 container mx-auto px-6">
-      <div className="bg-primary rounded-[2.5rem] p-10 md:p-24 text-center relative overflow-hidden shadow-2xl">
+      <div className="bg-primary/20 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-10 md:p-24 text-center relative overflow-hidden shadow-2xl">
          {/* Decoraciones abstractas */}
          <div className="absolute top-0 right-0 -mr-32 -mt-32 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-white/5 rounded-full blur-3xl"></div>
          <div className="absolute bottom-0 left-0 -ml-32 -mb-32 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-white/5 rounded-full blur-3xl"></div>
 
-         <div className="relative z-10 max-w-3xl mx-auto">
-              <h2 className="text-3xl md:text-6xl font-extrabold text-primary-foreground mb-6 md:mb-8 tracking-tight">
+         <div className="relative z-10 max-w-4xl mx-auto">
+              <h2 className="text-4xl md:text-7xl font-extrabold text-white mb-8 tracking-tight leading-tight">
                 El Futuro es Código.
               </h2>
-              <p className="text-primary-foreground/80 text-lg md:text-2xl mb-8 md:mb-12 font-light">
+              <p className="text-gray-200 text-xl md:text-3xl mb-12 font-light leading-relaxed">
                 ¿Vas a dejar que tu competencia lo escriba antes que tú?
               </p>
             
             <Button 
               size="lg" 
-              variant="secondary" 
               onClick={handleWhatsappDirect}
-              className="h-14 lg:h-16 px-8 lg:px-12 text-base lg:text-lg rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all font-bold w-full sm:w-auto"
+              className="h-16 lg:h-20 px-10 lg:px-16 text-lg lg:text-xl rounded-full shadow-[0_0_30px_rgba(0,255,163,0.3)] bg-[#00FFA3] hover:bg-[#00e692] text-slate-950 hover:scale-105 transition-all font-black w-full sm:w-auto border-none"
             >
               Agendar Consultoría Gratis
             </Button>
