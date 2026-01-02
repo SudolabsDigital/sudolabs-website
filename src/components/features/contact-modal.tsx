@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, MessageSquare, Phone, Send, Sparkles, Mail, CheckCircle2, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,7 @@ interface ContactModalProps {
 }
 
 export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactModalProps) {
+  const [mounted, setMounted] = useState(false);
   const [step, setStep] = useState<"form" | "success">("form");
   const [goal, setGoal] = useState(defaultSubject || "Desarrollo a Medida");
   const [preference, setPreference] = useState<"chat" | "call">("chat");
@@ -19,11 +21,14 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
   const [details, setDetails] = useState("");
   const [whatsappUrl, setWhatsappUrl] = useState("");
 
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
+
   // Reset state when opening
   useEffect(() => {
     if (!isOpen) {
-      // Reset only when closing to be ready for next open, 
-      // avoiding synchronous setState during render/mount.
       const timer = setTimeout(() => {
         setStep("form");
         setGoal(defaultSubject || "Desarrollo a Medida");
@@ -68,7 +73,9 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
     setStep("success");
   };
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <>
@@ -253,6 +260,7 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }
