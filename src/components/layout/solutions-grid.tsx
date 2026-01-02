@@ -16,7 +16,7 @@ export function SolutionsGrid() {
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {/* CARD 1: EMPRENDEDORES & PYMES */}
-        <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-10 flex flex-col hover:border-secondary/50 transition-colors shadow-sm group">
+        <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-6 md:p-10 flex flex-col hover:border-secondary/50 transition-colors shadow-sm group">
           <div className="w-14 h-14 bg-secondary/10 text-white rounded-xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
             <Zap className="w-8 h-8" />
           </div>
@@ -33,7 +33,7 @@ export function SolutionsGrid() {
         </div>
 
         {/* CARD 2: EMPRESAS */}
-        <div className="bg-black/40 backdrop-blur-md border border-primary/30 rounded-2xl p-10 flex flex-col relative shadow-lg shadow-primary/5 hover:border-primary/60 transition-colors group">
+        <div className="bg-black/40 backdrop-blur-md border border-primary/30 rounded-2xl p-6 md:p-10 flex flex-col relative shadow-lg shadow-primary/5 hover:border-primary/60 transition-colors group">
           <div className="absolute top-0 right-0 bg-white text-slate-950 text-sm font-bold px-4 py-2 rounded-bl-xl rounded-tr-xl">
             MÁS SOLICITADO
           </div>
@@ -53,7 +53,7 @@ export function SolutionsGrid() {
         </div>
 
         {/* CARD 3: CONSULTORÍA */}
-        <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-10 flex flex-col hover:border-accent/50 transition-colors shadow-sm group">
+        <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-6 md:p-10 flex flex-col hover:border-accent/50 transition-colors shadow-sm group">
           <div className="w-14 h-14 bg-accent/10 text-white rounded-xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
             <Briefcase className="w-8 h-8" />
           </div>

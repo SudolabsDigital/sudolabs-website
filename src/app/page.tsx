@@ -12,8 +12,12 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen overflow-x-hidden forced-dark-mode">
+    <main className="relative min-h-screen overflow-x-hidden forced-dark-mode bg-[#020617] lg:bg-transparent">
       <TubeCursorBackground />
+
+      {/* Para responsive */}
+      <div className="fixed top-0 left-0 w-[300px] h-[300px] bg-blue-600/20 blur-[100px] rounded-full pointer-events-none lg:hidden z-0" />
+      <div className="fixed bottom-0 right-0 w-[300px] h-[300px] bg-[#00FFA3]/10 blur-[100px] rounded-full pointer-events-none lg:hidden z-0" />
       
       <div className="relative z-10">
         {/* ISLA INTERACTIVA 1: HERO */}
