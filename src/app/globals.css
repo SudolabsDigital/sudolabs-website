@@ -5,6 +5,12 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: hsl(222 47% 11%);
+    --foreground: hsl(210 40% 98%);
+  }
+}
 
 @layer utilities {
   .animate-float {
@@ -107,7 +113,7 @@
 }
 
 .dark {
-  --background: hsl(222 47% 11%);
+  --background: #02071b;
   --foreground: hsl(210 40% 98%);
 
   --primary: hsl(210 40% 98%);
