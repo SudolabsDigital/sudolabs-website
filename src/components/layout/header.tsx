@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from "@/components/ui/sheet"
 import { Menu } from "lucide-react"
 import dynamic from "next/dynamic"
+import DarkThemeToggle from "../ui/darkTheme";
 
 const ContactModal = dynamic(() => import("@/components/features/contact-modal").then(mod => mod.ContactModal), {
   ssr: false,
@@ -96,6 +97,10 @@ export function Header() {
             >
               Contactar
             </Button>
+          </div>
+
+          <div className="max-md:hidden">
+            <DarkThemeToggle/>
           </div>
 
           {/* MOBILE MENU TRIGGER - Icon Only */}
