@@ -23,16 +23,22 @@ export function HeroSection() {
                />
             </div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter text-white mb-6 lg:mb-8 leading-[1.05] lg:leading-[0.95]">
-              Ingeniería de <br />
-              <span className="text-primary">
-                Alto Calibre.
-              </span>
-            </h1>
-            
-            <p className="text-lg md:text-2xl text-gray-300 mb-8 lg:mb-12 leading-relaxed max-w-lg">
-              No hacemos solo apps, construimos activos digitales. Sistemas robustos diseñados para escalar tu negocio.
-            </p>
+          {/* H1 optimizado para SEO */}
+          <h1
+            id="hero-title"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tighter text-white mb-6 lg:mb-8 leading-[1.05] lg:leading-[0.95]"
+          >
+            Consultora de software en
+            <strong> Huancayo.</strong>
+          </h1>
+
+          {/* Descripción con jerarquía H2 */}
+          <h2 className="text-lg md:text-xl text-gray-300 mb-8 lg:mb-12 leading-relaxed max-w-xl">
+            Diseñamos y desarrollamos{" "}
+            <strong>sitios web, aplicaciones web y sistemas de software a medida</strong>.
+            Creamos soluciones digitales robustas, seguras y escalables que impulsan
+            el crecimiento de tu negocio.
+          </h2>
             
             <div>
               <HeroInteractive />
