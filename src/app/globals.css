@@ -5,11 +5,57 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: hsl(222 47% 11%);
-    --foreground: hsl(210 40% 98%);
-  }
+
+/* 1. Base Variables (Default = Light Mode) */
+:root {
+  /* Base - Neutral Tones */
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(222 47% 11%);
+
+  /* PRIMARY: Deep Tech Blue */
+  --primary: hsl(222 47% 11%);
+  --primary-foreground: hsl(210 40% 98%);
+
+  /* SECONDARY: Evolution Green */
+  --secondary: hsl(160 84% 39%);
+  --secondary-foreground: hsl(210 40% 98%);
+
+  /* ACCENT: Vibrant Blue */
+  --accent: hsl(217 91% 60%);
+  --accent-foreground: hsl(210 40% 98%);
+
+  /* MUTED */
+  --muted: hsl(210 40% 96.1%);
+  --muted-foreground: hsl(215.4 16.3% 46.9%);
+
+  /* BORDERS */
+  --border: hsl(214.3 31.8% 91.4%);
+  --input: hsl(214.3 31.8% 91.4%);
+  --ring: hsl(222 47% 11%);
+
+  --radius: 0.5rem;
+}
+
+/* 2. Dark Mode Overrides (Applied via .dark class) */
+.dark {
+  --background: #02071b;
+  --foreground: hsl(210 40% 98%);
+
+  --primary: hsl(210 40% 98%);
+  --primary-foreground: hsl(222 47% 11%);
+
+  --secondary: hsl(160 84% 39%);
+  --secondary-foreground: hsl(222 47% 11%);
+
+  --accent: hsl(217 91% 60%);
+  --accent-foreground: hsl(210 40% 98%);
+
+  --muted: hsl(217.2 32.6% 17.5%);
+  --muted-foreground: hsl(215 20.2% 65.1%);
+
+  --border: hsl(217.2 32.6% 17.5%);
+  --input: hsl(217.2 32.6% 17.5%);
+  --ring: hsl(212.7 26.8% 83.9%);
 }
 
 @layer utilities {
@@ -35,9 +81,9 @@
     animation: infinite-scroll 40s linear infinite;
   }
 
-  /* UTILITY: Force Dark Mode Variables for specific sections */
+  /* UTILITY: Force Dark Mode Variables explicitly for specific sections (Home) */
   .forced-dark-mode {
-    --background: hsl(222 47% 11%);
+    --background: #02071b;
     --foreground: hsl(210 40% 98%);
     --primary: hsl(210 40% 98%);
     --primary-foreground: hsl(222 47% 11%);
@@ -46,91 +92,23 @@
     --accent: hsl(217 91% 60%);
     --accent-foreground: hsl(210 40% 98%);
     --muted: hsl(217.2 32.6% 17.5%);
-    --muted-foreground: hsl(215 20.2% 85%);
+    --muted-foreground: hsl(215 20.2% 65.1%);
     --border: hsl(217.2 32.6% 17.5%);
     --input: hsl(217.2 32.6% 17.5%);
     --ring: hsl(212.7 26.8% 83.9%);
+    
+    background-color: var(--background);
+    color: var(--foreground);
   }
 
-  /* Hide scrollbar for the entire page when forced-dark-mode is active */
-  :root:has(.forced-dark-mode) {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
+  /* Hide scrollbar */
+  html {
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
   }
-
-  :root:has(.forced-dark-mode)::-webkit-scrollbar {
-    display: none; /* Chrome, Safari and Opera */
+  html::-webkit-scrollbar {
+    display: none; 
   }
-  
-  .bg-grid-small-black\/5 {
-    background-size: 20px 20px;
-    background-image: radial-gradient(circle, #000 1px, transparent 1px);
-  }
-  .bg-grid-small-white\/5 {
-    background-size: 20px 20px;
-    background-image: radial-gradient(circle, #fff 1px, transparent 1px);
-  }
-  .bg-grid-black\/5 {
-    background-size: 40px 40px;
-    background-image: linear-gradient(to right, #0000000d 1px, transparent 1px),
-      linear-gradient(to bottom, #0000000d 1px, transparent 1px);
-  }
-  .bg-grid-white\/5 {
-    background-size: 40px 40px;
-    background-image: linear-gradient(to right, #ffffff0d 1px, transparent 1px),
-      linear-gradient(to bottom, #ffffff0d 1px, transparent 1px);
-  }
-}
-
-:root {
-  /* Base - Neutral Tones */
-  --background: hsl(0 0% 100%);
-  --foreground: hsl(222 47% 11%);
-
-  /* PRIMARY: Deep Tech Blue */
-  --primary: hsl(222 47% 11%);
-  --primary-rgb: 15, 23, 42; /* Equivalent RGB for opacity tricks */
-  --primary-foreground: hsl(210 40% 98%);
-
-  /* SECONDARY: Evolution Green */
-  --secondary: hsl(160 84% 39%);
-  --secondary-foreground: hsl(210 40% 98%);
-
-  /* ACCENT: Vibrant Blue */
-  --accent: hsl(217 91% 60%);
-  --accent-foreground: hsl(222 47% 11%);
-
-  /* MUTED */
-  --muted: hsl(210 40% 96.1%);
-  --muted-foreground: hsl(215.4 16.3% 46.9%);
-
-  /* BORDERS */
-  --border: hsl(214.3 31.8% 91.4%);
-  --input: hsl(214.3 31.8% 91.4%);
-  --ring: hsl(222 47% 11%);
-
-  --radius: 0.5rem;
-}
-
-.dark {
-  --background: #02071b;
-  --foreground: hsl(210 40% 98%);
-
-  --primary: hsl(210 40% 98%);
-  --primary-foreground: hsl(222 47% 11%);
-
-  --secondary: hsl(160 84% 39%);
-  --secondary-foreground: hsl(222 47% 11%);
-
-  --accent: hsl(217 91% 60%);
-  --accent-foreground: hsl(210 40% 98%);
-
-  --muted: hsl(217.2 32.6% 17.5%);
-  --muted-foreground: hsl(215 20.2% 65.1%);
-
-  --border: hsl(217.2 32.6% 17.5%);
-  --input: hsl(217.2 32.6% 17.5%);
-  --ring: hsl(212.7 26.8% 83.9%);
 }
 
 /* Utilities base */
@@ -142,4 +120,77 @@
     background-color: var(--background);
     color: var(--foreground);
   }
+}
+
+/* Blog Article Contrast Fix (Force High Contrast) */
+.article-content {
+  color: #111827; /* Gray-900 */
+}
+.article-content :is(h1, h2, h3, h4, h5, h6, strong, b) {
+  color: #000000;
+  font-weight: 800;
+}
+.article-content a {
+  color: #000000;
+  text-decoration-line: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.article-content :is(ul, ol) > li::marker {
+  color: #000000;
+}
+.article-content blockquote {
+  color: #374151;
+  border-left-color: #000000;
+  background-color: #f3f4f6;
+}
+
+/* Article Header Contrast Fix */
+.article-header h1 {
+  color: #000000;
+}
+.article-header p {
+  color: #374151; /* Gray-700 */
+}
+.article-header .meta-text {
+  color: #4b5563; /* Gray-600 */
+}
+.article-header .tag-badge {
+  background-color: #f3f4f6;
+  color: #1f2937;
+  border-color: #e5e7eb;
+}
+
+/* Dark Mode Overrides for Blog */
+.dark .article-content {
+  color: #e5e7eb; /* Gray-200 */
+}
+.dark .article-content :is(h1, h2, h3, h4, h5, h6, strong, b) {
+  color: #ffffff;
+}
+.dark .article-content a {
+  color: #ffffff;
+}
+.dark .article-content :is(ul, ol) > li::marker {
+  color: #ffffff;
+}
+.dark .article-content blockquote {
+  color: #d1d5db;
+  border-left-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.dark .article-header h1 {
+  color: #ffffff;
+}
+.dark .article-header p {
+  color: #d1d5db; /* Gray-300 */
+}
+.dark .article-header .meta-text {
+  color: #9ca3af; /* Gray-400 */
+}
+.dark .article-header .tag-badge {
+  background-color: #1f2937;
+  color: #e5e7eb;
+  border-color: #374151;
 }

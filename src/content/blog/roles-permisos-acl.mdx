@@ -1,0 +1,27 @@
+---
+title: "Seguridad Granular: Roles y Permisos (ACL)"
+description: "Control total sobre quién ve qué. Protege tu información sensible con un sistema de control de acceso robusto."
+date: "2024-01-05"
+tags: ["seguridad", "backend", "arquitectura"]
+---
+
+## El Riesgo: Demasiada Información
+
+En una empresa en crecimiento, no todos deben verlo todo. ¿Es prudente que un vendedor temporal vea los balances financieros globales? ¿O que almacén pueda editar precios de venta? La falta de control de acceso es una vulnerabilidad crítica interna.
+
+## La Solución: Access Control List (ACL)
+
+Implementamos un esquema de seguridad basado en **Roles y Permisos Granulares**.
+
+### ¿Cómo lo estructuramos?
+
+1.  **Sujetos (Usuarios):** Las personas que usan el sistema.
+2.  **Roles (Perfiles):** Agrupadores lógicos (e.g., Administrador, Vendedor, Contador).
+3.  **Permisos (Acciones):** La unidad mínima de autorización (e.g., `crear_factura`, `ver_reportes`, `editar_precio`).
+
+### Implementación Técnica
+
+*   **Middleware de Protección:** Cada ruta de la API verifica si el usuario tiene el permiso necesario antes de procesar la solicitud.
+*   **UI Condicional:** El frontend oculta botones y menús que el usuario no tiene permitido usar. Si no puedes borrar usuarios, el botón de "Eliminar" ni siquiera se renderiza para ti.
+
+Protege tu activo más valioso: tus datos.

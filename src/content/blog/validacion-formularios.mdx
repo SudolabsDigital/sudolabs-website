@@ -1,0 +1,26 @@
+---
+title: "Formularios a Prueba de Balas"
+description: "Validación en tiempo real con Zod y React Hook Form para asegurar datos limpios desde el origen."
+date: "2024-01-05"
+tags: ["frontend", "ux", "data-quality"]
+---
+
+## El Dolor: "Garbage In, Garbage Out"
+
+Recibes pedidos con teléfonos incompletos, correos sin arroba o DNIs con letras. Tu equipo de ventas pierde tiempo llamando para corregir datos o los correos de confirmación rebotan.
+
+## La Solución: Validación de Esquemas (Zod)
+
+Dejamos atrás las validaciones simples de HTML5. Implementamos esquemas de validación robustos que guían al usuario.
+
+### Características
+
+1.  **Feedback Inmediato:** El campo se pone rojo y muestra un mensaje de ayuda *mientras* el usuario escribe, no después de hacer click en "Enviar".
+2.  **Validación Asíncrona:** Verificar si el correo ya está registrado en la base de datos antes de permitir el envío.
+3.  **Formatos Complejos:** Validación de RUC, DNI, Tarjetas de Crédito con algoritmo de Luhn, y fuerza de contraseñas.
+
+### Resultado
+
+*   Bases de datos limpias y normalizadas.
+*   Menor fricción para el usuario (sabe qué corregir al instante).
+*   Aumento en la tasa de finalización de formularios.

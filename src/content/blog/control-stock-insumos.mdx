@@ -1,0 +1,27 @@
+---
+title: "Control de Stock en Tiempo Real: Recetas y Descuento Automático"
+description: "Algoritmos que gestionan tu inventario basándose en la composición de tus productos, evitando quiebres de stock."
+date: "2024-01-05"
+tags: ["logistica", "base-de-datos", "erp"]
+---
+
+## El Dolor: La Caja Negra del Inventario
+
+¿Vendes productos compuestos (como un kit o un plato de comida) y no sabes cuánto material bruto te queda realmente? Gestionar el stock de productos terminados es fácil, pero controlar los insumos que los componen es donde la mayoría de los sistemas fallan.
+
+## Ingeniería de Inventarios
+
+Implementamos un sistema de **Recetas y Descuento en Cascada**.
+
+### Arquitectura Lógica
+
+1.  **Definición de Recetas:** Cada producto vendible (Padre) tiene una lista de insumos (Hijos) con sus cantidades exactas.
+    *   *Ejemplo:* 1 Silla = 4 Patas de madera + 1 Asiento + 8 Tornillos.
+2.  **Trigger de Venta:** Cuando se factura una "Silla", el sistema no solo resta 1 silla del stock virtual, sino que descuenta automáticamente los insumos correspondientes del almacén de materia prima.
+3.  **Alertas de Reabastecimiento:** El sistema monitorea los niveles de insumos críticos y te alerta antes de que se agoten.
+
+## Impacto en el Negocio
+
+*   **Visibilidad Total:** Sabes exactamente qué puedes producir hoy.
+*   **Menos Mermas:** Identificas robos o desperdicios al comparar el consumo teórico vs real.
+*   **Compras Inteligentes:** Pides insumos basándote en la demanda real de productos.

@@ -14,39 +14,56 @@ export function TechTicker() {
     { name: "Seguridad Integrada", icon: ShieldCheck },
   ];
 
-  // Duplicamos la lista para cubrir pantallas grandes sin saltos
-  // Reducimos de 4 a 2 repeticiones para minimizar nodos en el DOM
-  const repeatedPillars = [...pillars, ...pillars];
+  // Renderizamos 4 copias para asegurar cobertura
+  const loops = [0, 1, 2, 3];
 
   return (
-    <section className="py-10 border-y border-dashed border-white/10 bg-transparent overflow-hidden relative group">
-      
-      {/* Fade Gradients */}
-      <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-32 bg-gradient-to-r from-[#020617] to-transparent"></div>
-      <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-32 bg-gradient-to-l from-[#020617] to-transparent"></div>
+    <section className="py-10 border-y border-dashed border-white/10 bg-transparent overflow-hidden">
+      <div className="container mx-auto px-6 relative group">
+        
+        {/* Fade Gradients */}
+        <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-24 bg-gradient-to-r from-[#020617] to-transparent"></div>
+        <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-24 bg-gradient-to-l from-[#020617] to-transparent"></div>
 
-      {/* Contenedor de Scroll */}
-      <div className="flex overflow-hidden w-full mask-linear-fade">
-        {/* Pista Animada para CSS Puro - Solo 2 instancias para el loop infinito */}
-        {[0, 1].map((index) => (
-          <div 
-            key={index}
-            className="flex gap-12 pr-12 items-center animate-infinite-scroll w-max will-change-transform"
-            aria-hidden={index > 0}
-          >
-              {repeatedPillars.map((tech, i) => (
-                  <div key={`${index}-${i}`} className="flex items-center gap-12 group/item">
-                      <div className="flex items-center gap-3 opacity-80 transition-all duration-500 group-hover/item:opacity-100 group-hover/item:grayscale-0">
-                          <tech.icon className="w-5 h-5 text-white" strokeWidth={2} />
-                          <span className="text-sm font-bold tracking-widest uppercase text-white whitespace-nowrap">
-                              {tech.name}
-                          </span>
-                      </div>
-                      <div className="w-1 h-1 rounded-full bg-white/20 group-hover/item:bg-primary/50 transition-colors" />
+        {/* Contenedor de Scroll */}
+        <div className="flex w-full overflow-hidden">
+          {/* Pista Animada */}
+          <div className="flex animate-infinite-scroll hover:[animation-play-state:paused] w-max">
+              {loops.map((loopIndex) => (
+                  <div key={loopIndex} className="flex items-center gap-12 pr-12">
+                      {pillars.map((tech, i) => (
+                          <div key={`${loopIndex}-${i}`} className="flex items-center gap-12 group/item">
+                              <div className="flex items-center gap-3 opacity-60 transition-all duration-500 group-hover/item:opacity-100 group-hover/item:text-[#00FFA3] grayscale hover:grayscale-0">
+                                  <tech.icon className="w-5 h-5" strokeWidth={2} />
+                                  <span className="text-sm font-bold tracking-widest uppercase whitespace-nowrap">
+                                      {tech.name}
+                                  </span>
+                              </div>
+                              <div className="w-1 h-1 rounded-full bg-white/20" />
+                          </div>
+                      ))}
                   </div>
               ))}
           </div>
-        ))}
+          {/* Copia exacta para loop sin costuras */}
+          <div className="flex animate-infinite-scroll hover:[animation-play-state:paused] w-max" aria-hidden="true">
+               {loops.map((loopIndex) => (
+                  <div key={loopIndex} className="flex items-center gap-12 pr-12">
+                      {pillars.map((tech, i) => (
+                          <div key={`${loopIndex}-${i}`} className="flex items-center gap-12 group/item">
+                               <div className="flex items-center gap-3 opacity-60 transition-all duration-500 group-hover/item:opacity-100 group-hover/item:text-[#00FFA3] grayscale hover:grayscale-0">
+                                  <tech.icon className="w-5 h-5" strokeWidth={2} />
+                                  <span className="text-sm font-bold tracking-widest uppercase whitespace-nowrap">
+                                      {tech.name}
+                                  </span>
+                              </div>
+                              <div className="w-1 h-1 rounded-full bg-white/20" />
+                          </div>
+                      ))}
+                  </div>
+              ))}
+          </div>
+        </div>
       </div>
     </section>
   );

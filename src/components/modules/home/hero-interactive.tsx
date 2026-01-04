@@ -23,7 +23,7 @@ export function HeroInteractive() {
       <Button 
         size="lg" 
         onClick={handleOpen}
-        className="h-14 lg:h-16 px-8 lg:px-12 text-base lg:text-lg rounded-full shadow-[0_0_20px_rgba(37,99,235,0.4)] bg-blue-600 hover:bg-blue-700 text-white hover:scale-[1.05] transition-all duration-300 w-full sm:w-auto border border-blue-400/30"
+        className="h-14 lg:h-16 px-8 lg:px-12 text-base lg:text-lg rounded-full shadow-[0_0_20px_rgba(0,255,163,0.4)] bg-[#00FFA3] hover:bg-[#00FFA3]/90 text-black hover:scale-[1.05] transition-all duration-300 w-full sm:w-auto border border-[#00FFA3]/30 font-bold"
       >
         Iniciar Transformación
         <ArrowRight className="ml-3 h-5 w-5" />

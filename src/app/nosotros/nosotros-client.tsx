@@ -136,7 +136,7 @@ export default function NosotrosPage() {
                <Button 
                 size="lg" 
                 onClick={() => setIsContactOpen(true)}
-                className="rounded-full px-10 h-14 text-lg shadow-xl shadow-primary/20 hover:scale-105 transition-all"
+                className="rounded-full px-10 h-14 text-lg bg-[#00FFA3] hover:bg-[#00FFA3]/90 text-black font-bold shadow-[0_0_20px_rgba(0,255,163,0.3)] hover:scale-105 transition-all"
                >
                  Iniciar Conversación <ArrowRight className="ml-2 w-5 h-5" />
                </Button>

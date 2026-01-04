@@ -1,0 +1,29 @@
+---
+title: "Logs de Auditoría: Trazabilidad Total"
+description: "El 'Caja Negra' de tu software. Registra cada movimiento para garantizar responsabilidad y seguridad."
+date: "2024-01-05"
+tags: ["seguridad", "backend", "compliance"]
+---
+
+## El Problema: "¿Quién borró eso?"
+
+Un registro importante desaparece. Un precio cambia misteriosamente. Nadie sabe qué pasó. Sin un registro de auditoría, los errores internos o actos malintencionados quedan impunes y son imposibles de rastrear.
+
+## La Solución: Historial Inmutable
+
+Implementamos un módulo de **Audit Logs** que actúa como el notario del sistema.
+
+### ¿Qué registramos?
+
+Cada vez que se modifica el estado del sistema (Crear, Editar, Eliminar), guardamos:
+1.  **Actor:** ID del usuario responsable.
+2.  **Acción:** Qué hizo (e.g., `UPDATE_PRODUCT`).
+3.  **Objetivo:** ID del recurso afectado.
+4.  **Payload:** El "Antes" y el "Después" de los datos (Snapshot).
+5.  **Timestamp y IP:** Cuándo y desde dónde.
+
+### Utilidad Práctica
+
+*   **Seguridad:** Detecta patrones de uso sospechosos.
+*   **Recuperación:** Permite deshacer cambios erróneos volviendo a versiones anteriores.
+*   **Compliance:** Requisito indispensable para normativas legales y de calidad.

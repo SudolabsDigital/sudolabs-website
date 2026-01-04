@@ -1,0 +1,26 @@
+---
+title: "Buscadores Inteligentes: Encuentra lo que buscas en milisegundos"
+description: "Implementación de búsqueda predictiva (Fuzzy Search) y filtros multicriterio para mejorar la conversión."
+date: "2024-01-05"
+tags: ["ux", "algoritmos", "frontend"]
+---
+
+## El Problema: Frustración del Usuario
+
+El usuario sabe lo que quiere, pero tu buscador le dice "No se encontraron resultados" porque escribió "zapatillas" en lugar de "calzado" o cometió un error tipográfico. Resultado: Abandono del sitio.
+
+## La Solución: Fuzzy Search & Indexing
+
+Implementamos motores de búsqueda tolerantes a fallos (Typos tolerance) y sistemas de filtrado instantáneo.
+
+### Arquitectura
+
+*   **Algoritmos Fuzzy:** Usamos librerías como `Fuse.js` o motores como `Meilisearch` que entienden la intención del usuario aunque escriba mal.
+*   **Filtros en Tiempo Real:** Facetas dinámicas (Color, Talla, Rango de Precio) que se actualizan sin recargar la página.
+*   **Debouncing:** Optimizamos las peticiones al servidor para que la búsqueda sea fluida mientras el usuario escribe, sin saturar la base de datos.
+
+## Impacto
+
+*   Reducción de la tasa de rebote.
+*   Aumento directo en la tasa de conversión.
+*   Experiencia de usuario nivel Amazon/MercadoLibre.
