@@ -51,7 +51,7 @@ export function HeroSection() {
              
              <div className="animate-float">
                <Image
-                  src="/assets/logo-full.webp"
+                  src="/assets/logo-sudolabs.webp"
                   alt="Sudolabs Digital Logo"
                   width={800}
                   height={300}
