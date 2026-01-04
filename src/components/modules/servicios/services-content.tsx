@@ -135,9 +135,8 @@ export function ServicesContent() {
               </p>
               <Button 
                   size="lg" 
-                  variant="secondary"
                   onClick={() => setIsContactOpen(true)}
-                  className="h-14 px-10 text-lg rounded-full shadow-2xl hover:scale-105 transition-all"
+                  className="bg-[#00FFA3] hover:bg-[#00FFA3]/90 text-black font-bold h-14 px-10 text-lg rounded-full shadow-[0_0_20px_rgba(0,255,163,0.3)] hover:scale-105 transition-all"
               >
                   Cuéntanos el Reto <ArrowRight className="ml-2 w-5 h-5" />
               </Button>

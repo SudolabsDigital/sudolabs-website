@@ -138,6 +138,13 @@
   * {
     border-color: var(--border);
   }
+  html {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+  html::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
   body {
     background-color: var(--background);
     color: var(--foreground);
