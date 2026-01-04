@@ -371,7 +371,7 @@ export function TubeCursorBackground() {
   return (
     <div 
       ref={containerRef} 
-      className="fixed inset-0 z-[-1] pointer-events-none"
+      className="fixed inset-0 z-0 pointer-events-none"
       style={{ backgroundColor: '#020617' }} 
     />
   )

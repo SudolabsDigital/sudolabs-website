@@ -18,25 +18,29 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen overflow-x-hidden bg-background  ">
-      <TubeCursorBackground />
+    // FORZAMOS EL MODO OSCURO SOLO PARA EL HOME
+    // Quitamos bg-background para que se vea el TubeCursorBackground
+    <div className="forced-dark-mode text-foreground min-h-screen">
+      <main className="relative min-h-screen overflow-x-hidden">
+        <TubeCursorBackground />
 
-      <div className="relative z-10">
-        {/* ISLA INTERACTIVA 1: HERO (Carga Inmediata para LCP) */}
-        <HeroSection />
+        <div className="relative z-10">
+          {/* ISLA INTERACTIVA 1: HERO (Carga Inmediata para LCP) */}
+          <HeroSection />
 
-        {/* ISLA INTERACTIVA 2: TICKER */}
-        <TechTicker />
+          {/* ISLA INTERACTIVA 2: TICKER */}
+          <TechTicker />
 
-        {/* SECCIÓN ESTÁTICA */}
-        <SolutionsGrid />
+          {/* SECCIÓN ESTÁTICA */}
+          <SolutionsGrid />
 
-        {/* SECCIÓN ESTÁTICA */}
-        <FaqSection />
+          {/* SECCIÓN ESTÁTICA */}
+          <FaqSection />
 
-        {/* ISLA INTERACTIVA 3: CTA FINAL */}
-        <CtaSection />
-      </div>
-    </main>
+          {/* ISLA INTERACTIVA 3: CTA FINAL */}
+          <CtaSection />
+        </div>
+      </main>
+    </div>
   )
 }

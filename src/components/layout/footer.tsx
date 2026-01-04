@@ -36,19 +36,19 @@ export function Footer() {
                   href={siteConfig.social.facebook}
                   target="_blank"
                   rel="noopener noreferrer" 
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 hover:text-white transition-all hover:scale-110"
                   aria-label="Facebook"
                 >
-                  <Facebook className="w-5 h-5" />
+                  <Facebook className="w-6 h-6" />
                 </a>
                 <a 
                   href={siteConfig.social.instagram} 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 hover:text-white transition-all hover:scale-110"
                   aria-label="Instagram"
                 >
-                  <Instagram className="w-5 h-5" />
+                  <Instagram className="w-6 h-6" />
                 </a>
               </div>
               <div className="h-4 w-px bg-white/20 hidden md:block" />
@@ -65,7 +65,7 @@ export function Footer() {
               <li><Link href="/servicios" className="text-gray-400 hover:text-white transition-colors">Servicios</Link></li>
               <li><Link href="/proyectos" className="text-gray-400 hover:text-white transition-colors">Portafolio</Link></li>
               <li><Link href="/nosotros" className="text-gray-400 hover:text-white transition-colors">Nosotros</Link></li>
-              <li><Link href="/blog" className="text-gray-400 hover:text-white transition-colors">Blog de Ingeniería</Link></li>
+              <li><Link href="/blog" className="text-gray-400 hover:text-white transition-colors">Blog</Link></li>
             </ul>
           </div>
 

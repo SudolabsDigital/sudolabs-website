@@ -18,6 +18,7 @@ const navItems = [
   { name: "Servicios", href: "/servicios" },
   { name: "Proyectos", href: "/proyectos" },
   { name: "Nosotros", href: "/nosotros" },
+  { name: "Blog", href: "/blog" },
 ]
 
 export function Header() {
