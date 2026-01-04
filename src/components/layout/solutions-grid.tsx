@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import Link from "next/link"
 import { 
   FileText, PackageSearch, BarChart3, ShieldCheck, History, BellRing, Calendar,
   Search, Filter, FormInput, Calculator, Smartphone, WifiOff, Languages,
@@ -18,43 +19,50 @@ const solutions = [
         title: "Generación Automática de Documentos",
         pain: "¿Tu equipo pierde tiempo copiando datos?",
         description: "Generación instantánea de PDFs/Excel con formato oficial listos para firmar.",
-        icon: FileText
+        icon: FileText,
+        slug: "generacion-automatica-documentos"
       },
       {
         title: "Control de Stock e Insumos",
         pain: "¿Inventario desactualizado?",
         description: "Descuento automático de insumos basado en recetas/fórmulas en tiempo real.",
-        icon: PackageSearch
+        icon: PackageSearch,
+        slug: "control-stock-insumos"
       },
       {
         title: "Dashboards de Métricas (KPIs)",
         pain: "¿Datos sin visualizar?",
         description: "Gráficos dinámicos para tomar decisiones gerenciales basadas en datos reales.",
-        icon: BarChart3
+        icon: BarChart3,
+        slug: "dashboards-metricas"
       },
       {
         title: "Roles y Permisos (ACL)",
         pain: "¿Acceso indebido a datos?",
         description: "Seguridad granular que restringe vistas y botones según el cargo del usuario.",
-        icon: ShieldCheck
+        icon: ShieldCheck,
+        slug: "roles-permisos-acl"
       },
       {
         title: "Logs de Auditoría",
         pain: "¿Quién borró ese archivo?",
         description: "Registro inmutable de 'quién hizo qué y cuándo' para seguridad interna.",
-        icon: History
+        icon: History,
+        slug: "trazabilidad-logs-auditoria"
       },
       {
         title: "Notificaciones Automáticas",
         pain: "¿Olvidos y retrasos?",
         description: "Alertas por Email/WhatsApp automáticas para vencimientos y citas.",
-        icon: BellRing
+        icon: BellRing,
+        slug: "alertas-notificaciones"
       },
       {
         title: "Gestión de Recursos",
         pain: "¿Conflictos de agenda?",
         description: "Algoritmos que evitan cruces de horarios en salas, equipos o personal.",
-        icon: Calendar
+        icon: Calendar,
+        slug: "gestion-calendarios"
       }
     ]
   },
@@ -66,43 +74,50 @@ const solutions = [
         title: "SEO Técnico Avanzado",
         pain: "¿Invisible en Google?",
         description: "SSR y metadatos dinámicos para indexación perfecta en buscadores.",
-        icon: Search
+        icon: Search,
+        slug: "seo-tecnico-avanzado"
       },
       {
         title: "Buscadores Inteligentes",
         pain: "¿Clientes frustrados?",
         description: "Búsqueda predictiva y filtros multicriterio con resultados milimétricos.",
-        icon: Filter
+        icon: Filter,
+        slug: "buscadores-inteligentes"
       },
       {
         title: "Validación en Tiempo Real",
         pain: "¿Datos erróneos?",
         description: "Formularios que corrigen al usuario mientras escribe (DNI, RUC, Email).",
-        icon: FormInput
+        icon: FormInput,
+        slug: "validacion-formularios"
       },
       {
         title: "Cotizadores Web",
         pain: "¿Presupuestos lentos?",
         description: "Calculadoras interactivas que dan precios estimados 24/7.",
-        icon: Calculator
+        icon: Calculator,
+        slug: "cotizadores-web"
       },
       {
         title: "Diseño Responsive",
         pain: "¿Móvil roto?",
         description: "Interfaces fluidas que funcionan perfecto en cualquier dispositivo.",
-        icon: Smartphone
+        icon: Smartphone,
+        slug: "diseno-responsive"
       },
       {
         title: "Modo Offline (PWA)",
         pain: "¿Sin internet?",
         description: "La app sigue funcionando sin señal y sincroniza al volver la conexión.",
-        icon: WifiOff
+        icon: WifiOff,
+        slug: "modo-offline-pwa"
       },
       {
         title: "Multi-idioma (i18n)",
         pain: "¿Solo español?",
         description: "Cambio de idioma instantáneo sin romper el diseño ni el SEO.",
-        icon: Languages
+        icon: Languages,
+        slug: "soporte-multi-idioma"
       }
     ]
   },
@@ -114,13 +129,15 @@ const solutions = [
         title: "Mapeo de Procesos",
         pain: "¿Caos operativo?",
         description: "Diagramas As-Is/To-Be para detectar cuellos de botella y optimizar flujos.",
-        icon: GitBranch
+        icon: GitBranch,
+        slug: "mapeo-procesos"
       },
       {
         title: "Auditoría de Seguridad",
         pain: "¿Vulnerable?",
         description: "Detección de brechas de seguridad y plan de remediación técnica.",
-        icon: Lock
+        icon: Lock,
+        slug: "auditoria-seguridad"
       }
     ]
   }
@@ -128,21 +145,88 @@ const solutions = [
 
 export function SolutionsGrid() {
   const [activeTab, setActiveTab] = useState(solutions[0].id)
+  const [isDragging, setIsDragging] = useState(false)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const startX = useRef(0)
+  const scrollLeftStart = useRef(0)
   
   const currentCategory = solutions.find(s => s.id === activeTab) || solutions[0]
   const cards = currentCategory.cards
 
-  // Reset scroll when tab changes
+  // PERSISTENCE LOGIC
+  const STORAGE_KEY = "solutions_grid_state";
+
   useEffect(() => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTo({ left: 0, behavior: 'smooth' })
+    // 1. Restaurar estado al montar
+    const savedState = sessionStorage.getItem(STORAGE_KEY);
+    if (savedState) {
+      try {
+        const parsed = JSON.parse(savedState);
+        // Restaurar Tab
+        if (parsed.tab) setActiveTab(parsed.tab);
+        
+        // Restaurar Scroll (con leve delay para asegurar que el DOM existe)
+        if (parsed.scroll && scrollContainerRef.current) {
+          setTimeout(() => {
+            if (scrollContainerRef.current) {
+              scrollContainerRef.current.scrollLeft = parsed.scroll;
+            }
+          }, 50);
+        }
+      } catch (e) {
+        console.error("Error parsing state", e);
+      }
     }
-  }, [activeTab])
+  }, []);
+
+  // Función para guardar estado actual antes de navegar
+  const saveCurrentState = () => {
+    if (scrollContainerRef.current) {
+      const state = {
+        tab: activeTab,
+        scroll: scrollContainerRef.current.scrollLeft
+      };
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+  };
+
+  // Manejador de cambio de tab manual
+  const handleTabChange = (newTabId: string) => {
+    setActiveTab(newTabId);
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+      const state = { tab: newTabId, scroll: 0 };
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+  };
+
+  // --- DRAG TO SCROLL LOGIC ---
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollContainerRef.current) return;
+    setIsDragging(true);
+    startX.current = e.pageX - scrollContainerRef.current.offsetLeft;
+    scrollLeftStart.current = scrollContainerRef.current.scrollLeft;
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !scrollContainerRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX.current) * 1.5; // Multiplicador de velocidad
+    scrollContainerRef.current.scrollLeft = scrollLeftStart.current - walk;
+  };
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
-      const scrollAmount = 400; // Width of card + gap
+      const scrollAmount = 400;
       const newScrollLeft = direction === 'left' 
         ? scrollContainerRef.current.scrollLeft - scrollAmount 
         : scrollContainerRef.current.scrollLeft + scrollAmount;
@@ -155,7 +239,7 @@ export function SolutionsGrid() {
   }
 
   return (
-    <section className="py-20 border-t border-white/5 bg-black/20">
+    <section id="soluciones" className="py-20 border-t border-white/5 bg-black/20 select-none">
       <div className="container mx-auto px-6">
         
         {/* HEADER RESTAURADO: Título + Descripción + Tabs */}
@@ -174,7 +258,7 @@ export function SolutionsGrid() {
             {solutions.map((item) => (
               <button
                 key={item.id}
-                onClick={() => setActiveTab(item.id)}
+                onClick={() => handleTabChange(item.id)}
                 className={`
                   px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 border
                   ${activeTab === item.id 
@@ -192,25 +276,32 @@ export function SolutionsGrid() {
         {/* CONTENIDO SCROLLABLE HORIZONTAL */}
         <div className="relative group">
           
-          {/* Botones de Navegación (Aparecen al hover en desktop) */}
+          {/* Botones de Navegación (Solo click, no drag) */}
           <button 
             onClick={() => scroll('left')}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-20 w-12 h-12 rounded-full bg-[#020617] border border-white/20 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-xl hover:bg-white hover:text-black hidden xl:flex"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-20 w-12 h-12 rounded-full bg-[#020617] border border-white/20 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-xl hover:bg-white hover:text-black hidden xl:flex cursor-pointer"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
           
           <button 
             onClick={() => scroll('right')}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-20 w-12 h-12 rounded-full bg-[#020617] border border-white/20 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-xl hover:bg-white hover:text-black hidden xl:flex"
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-20 w-12 h-12 rounded-full bg-[#020617] border border-white/20 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-xl hover:bg-white hover:text-black hidden xl:flex cursor-pointer"
           >
             <ChevronRight className="w-6 h-6" />
           </button>
 
-          {/* Área de Scroll */}
+          {/* Área de Scroll Draggable */}
           <div 
             ref={scrollContainerRef}
-            className="flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-hide -mx-6 px-6 xl:mx-0 xl:px-0"
+            onMouseDown={handleMouseDown}
+            onMouseLeave={handleMouseLeave}
+            onMouseUp={handleMouseUp}
+            onMouseMove={handleMouseMove}
+            className={`
+              flex gap-6 overflow-x-auto pb-8 -mx-6 px-6 xl:mx-0 xl:px-0 scrollbar-hide
+              ${isDragging ? 'cursor-grabbing snap-none' : 'cursor-grab snap-x snap-mandatory'}
+            `}
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             <AnimatePresence mode="popLayout">
@@ -223,7 +314,7 @@ export function SolutionsGrid() {
                   transition={{ duration: 0.3, delay: idx * 0.05 }}
                   className="min-w-[300px] md:min-w-[350px] snap-start h-full"
                 >
-                  <div className="h-full bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-300 group/card flex flex-col">
+                  <div className="h-full bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-300 group/card flex flex-col pointer-events-auto">
                     
                     {/* Header Card */}
                     <div className="flex justify-between items-start mb-6">
@@ -249,10 +340,17 @@ export function SolutionsGrid() {
                       {card.description}
                     </p>
 
-                    {/* Footer */}
-                    <div className="mt-6 flex items-center text-xs font-bold text-[#00FFA3] opacity-0 group-hover/card:opacity-100 transition-opacity -translate-x-2 group-hover/card:translate-x-0 duration-300">
+                    {/* Footer - Ahora es un Link con SaveState */}
+                    <Link 
+                      href={`/blog/${card.slug}`}
+                      onClick={saveCurrentState}
+                      className="mt-6 flex items-center text-xs font-bold text-[#00FFA3] transition-all duration-300 w-fit 
+                        opacity-100 translate-x-0 
+                        lg:opacity-0 lg:-translate-x-2 
+                        lg:group-hover/card:opacity-100 lg:group-hover/card:translate-x-0"
+                    >
                       Ver Solución <ArrowRight className="ml-2 w-3 h-3" />
-                    </div>
+                    </Link>
                   </div>
                 </motion.div>
               ))}

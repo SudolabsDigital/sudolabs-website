@@ -1,0 +1,26 @@
+---
+title: "Progressive Web Apps (PWA): Software que funciona sin internet"
+description: "Cómo convertimos tu web en una aplicación instalable con modo offline y sincronización en segundo plano."
+date: "2024-01-05"
+tags: ["pwa", "mobile", "architecture"]
+---
+
+## El Problema: La Conectividad Intermitente
+
+Tus operarios de campo (almacén, logística, ventas en ruta) entran a zonas sin señal y la aplicación se queda en blanco. "Sin conexión" significa "No puedo trabajar".
+
+## La Solución: Service Workers & Local Storage
+
+Transformamos tu web en una **PWA (Progressive Web App)**.
+
+### ¿Qué permite esto?
+
+1.  **Modo Offline:** La aplicación carga instantáneamente (incluso en Modo Avión) usando recursos cacheados en el dispositivo.
+2.  **Persistencia Local:** Los datos que el usuario ingresa (formularios, pedidos) se guardan en una base de datos interna del navegador (IndexedDB).
+3.  **Background Sync:** Apenas el dispositivo recupera señal, el Service Worker despierta y envía todos los datos pendientes al servidor automáticamente.
+
+### Beneficios
+
+*   Continuidad operativa absoluta.
+*   Instalable en el Home Screen como una app nativa (sin pasar por App Store/Play Store).
+*   Experiencia de usuario fluida y resiliente.
