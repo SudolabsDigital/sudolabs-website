@@ -7,6 +7,7 @@ export const siteConfig = {
   },
   social: {
     facebook: "https://www.facebook.com/profile.php?id=61585696276461",
-    instagram: "https://www.instagram.com/sudolabsperu/"
+    instagram: "https://www.instagram.com/sudolabsperu/",
+    tiktok: "https://www.tiktok.com/@sudolabs_peru"
   }
 };

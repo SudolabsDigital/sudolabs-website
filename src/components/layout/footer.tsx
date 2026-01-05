@@ -5,6 +5,19 @@ import Image from "next/image"
 import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react"
 import { siteConfig } from "@/core/config"
 
+const Tiktok = ({ className }: { className?: string }) => (
+  <svg
+    role="img"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+  >
+    <title>TikTok</title>
+    <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.76v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.03 5.84-.02 8.75-.08 3.12-2.5 5.48-5.6 5.54-3.01.06-5.65-2.16-6.07-5.12-.42-2.96 1.4-5.69 4.29-6.39 1.46-.35 3.03-.13 4.39.46v4.01c-.91-1.1-2.45-1.39-3.76-.84-1.31.55-2.09 1.98-1.89 3.4.19 1.42 1.49 2.49 2.92 2.42 1.54-.07 2.76-1.39 2.76-2.94V.02Z"/>
+  </svg>
+)
+
 export function Footer() {
   const handleLegal = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -49,6 +62,15 @@ export function Footer() {
                   aria-label="Instagram"
                 >
                   <Instagram className="w-6 h-6" />
+                </a>
+                <a 
+                  href={siteConfig.social.tiktok} 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition-all hover:scale-110"
+                  aria-label="TikTok"
+                >
+                  <Tiktok className="w-6 h-6" />
                 </a>
               </div>
               <div className="h-4 w-px bg-white/20 hidden md:block" />
