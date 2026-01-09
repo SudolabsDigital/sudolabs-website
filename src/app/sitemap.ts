@@ -1,30 +1,53 @@
 import { MetadataRoute } from 'next'
- 
-export default function sitemap(): MetadataRoute.Sitemap {
-  return [
+import { getAllContent } from '@/lib/mdx'
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const baseUrl = 'https://sudolabs.space'
+  
+  // Obtener contenido dinámico
+  const blogs = await getAllContent('blog')
+  const projects = await getAllContent('projects')
+
+  const blogsUrls = blogs.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.date),
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }))
+
+  const projectsUrls = projects.map((project) => ({
+    url: `${baseUrl}/proyectos/${project.slug}`,
+    lastModified: new Date(project.date),
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }))
+
+  const staticRoutes = [
     {
-      url: 'https://sudolabs.space',
+      url: baseUrl,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'monthly' as const,
       priority: 1,
     },
     {
-      url: 'https://sudolabs.space/servicios',
+      url: `${baseUrl}/servicios`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'monthly' as const,
       priority: 0.8,
     },
     {
-      url: 'https://sudolabs.space/proyectos',
+      url: `${baseUrl}/proyectos`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'monthly' as const,
       priority: 0.8,
     },
     {
-      url: 'https://sudolabs.space/nosotros',
+      url: `${baseUrl}/nosotros`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'monthly' as const,
       priority: 0.8,
     },
   ]
+
+  return [...staticRoutes, ...blogsUrls, ...projectsUrls]
 }

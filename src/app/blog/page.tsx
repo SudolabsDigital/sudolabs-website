@@ -13,7 +13,7 @@ export default async function BlogIndex() {
   const tags = await getAllTags();
 
   return (
-    <main className="flex-1 pt-32 pb-24 container mx-auto px-6 max-w-5xl">
+    <div className="flex-1 pt-32 pb-24 container mx-auto px-6 max-w-5xl">
         <div className="mb-8">
            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6">
              Blog de <span className="text-primary">Ingeniería</span>
@@ -76,6 +76,6 @@ export default async function BlogIndex() {
              </div>
            )}
         </div>
-    </main>
+    </div>
   );
 }

@@ -26,7 +26,7 @@ export default async function ProyectosPage() {
   return (
     <div className="min-h-screen flex flex-col font-sans bg-background selection:bg-primary/20 relative overflow-hidden">
       
-      <main className="flex-1 pt-32 pb-24 relative z-10">
+      <div className="flex-1 pt-32 pb-24 relative z-10">
         
         {/* HERO HEADER */}
         <section className="container mx-auto px-6 mb-16 md:mb-20 text-center md:text-left">
@@ -139,7 +139,7 @@ export default async function ProyectosPage() {
             </section>
         )}
 
-      </main>
+      </div>
     </div>
   );
 }
