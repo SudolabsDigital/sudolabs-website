@@ -55,7 +55,7 @@ export function FaqSection() {
 
           <AccordionItem value="item-4">
             <AccordionTrigger className="text-2xl text-white font-medium py-4 text-left">
-              Tengo un sistema viejo (Legacy) que nadie quiere tocar. ¿Pueden ayudar?
+            "Tengo un sistema antiguo que limita mi crecimiento. ¿Pueden ayudar?",
             </AccordionTrigger>
             <AccordionContent className="text-xl text-gray-300 leading-relaxed pb-6">
               Somos especialistas en &quot;Software Rescue&quot;. Analizamos tu sistema actual, identificamos los cuellos de botella 

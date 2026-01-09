@@ -1,12 +1,15 @@
 export default function JsonLd() {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": "SudolabsDigital",
-    "image": "https://sudolabs.space/assets/logo-full.png",
-    "description": "Consultora de software especializada en desarrollo web a medida, arquitectura de sistemas y transformación digital.",
+    "@type": "LocalBusiness",
+    "name": "Sudolabs Perú",
+    "alternateName": "Sudolabs Digital",
+    "image": "https://sudolabs.space/assets/logo-full.webp",
+    "description": "Consultora de Ingeniería de Software y Transformación Digital en Huancayo.",
+    "disambiguatingDescription": "Empresa peruana de desarrollo de software y consultoría tecnológica con sede en Huancayo, especializada en soluciones web y modernización de plataformas.",
     "address": {
       "@type": "PostalAddress",
+      "streetAddress": "Prolongacion Jose Carlos Mariategui 205",
       "addressLocality": "Huancayo",
       "addressRegion": "Junín",
       "addressCountry": "PE"
@@ -18,7 +21,7 @@ export default function JsonLd() {
     },
     "url": "https://sudolabs.space",
     "telephone": "+51923384303",
-    "email": "jososo1396@gmail.com",
+    "email": "contacto@sudolabs.space",
     "priceRange": "$$",
     "openingHoursSpecification": [
       {
@@ -35,7 +38,10 @@ export default function JsonLd() {
       }
     ],
     "sameAs": [
-      "https://github.com/sudolabs-digital"
+      "https://github.com/sudolabs-digital",
+      "https://www.facebook.com/profile.php?id=61585696276461",
+      "https://www.instagram.com/sudolabsperu/",
+      "https://www.tiktok.com/@sudolabs_peru"
     ]
   };
 

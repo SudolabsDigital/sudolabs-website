@@ -37,7 +37,7 @@ const services = [
   },
   {
     title: "Consultoría Técnica",
-    description: "Auditoría de código, rescate de proyectos legacy y dirección técnica (CTO as a Service).",
+    description: "Auditoría de código, modernización de plataformas y dirección técnica (CTO as a Service).",
     icon: Code2,
     techs: ["Code Review", "Mentoring", "Strategy"],
     colSpan: "lg:col-span-2", // Destacado

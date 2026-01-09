@@ -12,7 +12,7 @@ const TubeCursorBackground = dynamic(
 )
 
 export const metadata = {
-  title: "Sudolabs Digital | Consultora de software en Huancayo",
+  title: "Sudolabs Perú | Consultora de software en Huancayo",
   description: "Consultora de software especializada en Next.js, Cloud Architecture y Transformación Digital. Convertimos complejidad operativa en ventajas competitivas.",
 }
 
@@ -21,7 +21,7 @@ export default function Home() {
     // FORZAMOS EL MODO OSCURO SOLO PARA EL HOME
     // Quitamos bg-background para que se vea el TubeCursorBackground
     <div className="forced-dark-mode text-foreground min-h-screen">
-      <main className="relative min-h-screen overflow-x-hidden">
+      <div className="relative min-h-screen overflow-x-hidden">
         <TubeCursorBackground />
 
         <div className="relative z-10">
@@ -40,7 +40,7 @@ export default function Home() {
           {/* ISLA INTERACTIVA 3: CTA FINAL */}
           <CtaSection />
         </div>
-      </main>
+      </div>
     </div>
   )
 }

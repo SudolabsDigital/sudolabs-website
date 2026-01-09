@@ -50,7 +50,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
   return (
     <div className="flex flex-col bg-background font-sans selection:bg-primary/20">
-      <main className="flex-1">
+      <div className="flex-1">
         
         {/* 1. IMMERSIVE HERO */}
         <div className="relative h-[60vh] md:h-[70vh] w-full bg-muted overflow-hidden flex items-end">
@@ -168,7 +168,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
            )}
 
         </div>
-      </main>
+      </div>
     </div>
   );
 }

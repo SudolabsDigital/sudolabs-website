@@ -25,6 +25,10 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://sudolabs.space"),
+  alternates: {
+    canonical: './',
+  },
   title: {
     default: "SudolabsDigital | Ingeniería de Software y Consultoría",
     template: "%s | SudolabsDigital",

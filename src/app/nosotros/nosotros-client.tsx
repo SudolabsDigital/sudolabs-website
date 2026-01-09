@@ -15,7 +15,7 @@ export default function NosotrosPage() {
 
   return (
     <>
-      <main className="flex-1 pt-32 pb-24 relative z-10">
+      <div className="flex-1 pt-32 pb-24 relative z-10">
         <section className="container mx-auto px-6 max-w-6xl">
           
           {/* HERO SECTION: MANIFIESTO */}
@@ -141,12 +141,11 @@ export default function NosotrosPage() {
                  Iniciar Conversación <ArrowRight className="ml-2 w-5 h-5" />
                </Button>
              </div>
-          </section>
-
-        </section>
-      </main>
-
-      <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} defaultSubject="Hablemos de Nosotros" />
+                    </section>
+                  </section>
+                </div>
+          
+                <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} defaultSubject="Hablemos de Nosotros" />
     </>
   )
 }
