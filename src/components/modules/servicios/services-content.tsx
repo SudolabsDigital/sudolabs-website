@@ -118,27 +118,33 @@ export function ServicesContent() {
           ))}
         </div>
 
-        {/* CTA SECTION */}
-        <div className="relative rounded-[3rem] bg-primary overflow-hidden px-6 py-20 md:py-28 text-center">
-          {/* Abstract Shapes */}
-          <div className="absolute top-0 left-0 w-full h-full opacity-10" 
-               style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '32px 32px' }}>
-          </div>
-          <div className="absolute -top-24 -left-24 w-96 h-96 bg-white/10 rounded-full blur-[100px]" />
+        {/* CTA SECTION - DARK ISLAND STYLE */}
+        <div className="relative group overflow-hidden rounded-[2.5rem] bg-zinc-950 border border-zinc-800 transition-all duration-500 hover:border-zinc-700 px-6 py-20 md:py-28 text-center shadow-2xl">
           
-          <div className="relative z-10 max-w-2xl mx-auto">
-              <h2 className="text-3xl md:text-5xl font-bold text-primary-foreground mb-6 tracking-tight">
+          {/* Background Gradients */}
+          <div className="absolute top-0 right-0 -mr-32 -mt-32 w-[500px] h-[500px] bg-[#00FFA3]/10 rounded-full blur-[100px] pointer-events-none group-hover:bg-[#00FFA3]/20 transition-colors duration-700"></div>
+          <div className="absolute bottom-0 left-0 -ml-32 -mb-32 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[100px] pointer-events-none group-hover:bg-purple-500/20 transition-colors duration-700"></div>
+          
+          <div className="relative z-10 max-w-3xl mx-auto">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-[#00FFA3] text-sm font-semibold mb-8 backdrop-blur-md">
+                <Rocket className="w-4 h-4" />
+                <span>Desafíos Especiales</span>
+              </div>
+
+              <h2 className="text-4xl md:text-6xl font-bold text-white mb-8 tracking-tight leading-tight">
                   ¿Tu problema no está en la lista?
               </h2>
-              <p className="text-primary-foreground/80 text-xl mb-10 font-light">
-                  Los mejores proyectos suelen ser los que no encajan en ninguna categoría estándar. Nos encantan los retos raros.
+              <p className="text-gray-400 text-xl md:text-2xl mb-12 font-light leading-relaxed">
+                  Los mejores proyectos suelen ser los que no encajan en ninguna categoría estándar. <span className="text-[#00FFA3]">Nos encantan los retos raros.</span>
               </p>
+              
               <Button 
                   size="lg" 
                   onClick={() => setIsContactOpen(true)}
-                  className="bg-[#00FFA3] hover:bg-[#00FFA3]/90 text-black font-bold h-14 px-10 text-lg rounded-full shadow-[0_0_20px_rgba(0,255,163,0.3)] hover:scale-105 transition-all"
+                  className="h-16 px-10 text-lg rounded-full shadow-[0_0_40px_rgba(0,255,163,0.2)] bg-[#00FFA3] hover:bg-[#00e692] text-slate-950 hover:scale-105 transition-all font-bold group/btn border-none"
               >
-                  Cuéntanos el Reto <ArrowRight className="ml-2 w-5 h-5" />
+                  Cuéntanos el Reto <ArrowRight className="ml-2 w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
               </Button>
           </div>
         </div>
