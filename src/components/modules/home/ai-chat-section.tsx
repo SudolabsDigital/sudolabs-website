@@ -2,25 +2,25 @@
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ChevronDown, Code2, Cpu, Send, ShieldCheck, Terminal, User } from 'lucide-react';
+import { ChevronDown, Send, ShieldCheck, Trash2, User } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
-
-type Message = {
-  id: string;
-  role: 'user' | 'assistant';
-  content: string;
-};
+import { useManualChat } from '@/hooks/use-manual-chat';
 
 export function AiChatSection() {
-  const [mounted, setMounted] = useState(false);
-  const [input, setInput] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const { 
+    messages, 
+    input, 
+    setInput, 
+    isLoading, 
+    appendUserMessage, 
+    clearChat 
+  } = useManualChat();
   
   const [showScrollButton, setShowScrollButton] = useState(false);
   const [userScrolledUp, setUserScrolledUp] = useState(false);
+  const [mounted, setMounted] = useState(false);
   
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -62,71 +62,19 @@ export function AiChatSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
-
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      role: 'user',
-      content: input,
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
-    setInput('');
-    setIsLoading(true);
+    
+    // UI Feedback inmediato (scroll)
     setUserScrolledUp(false);
     setTimeout(() => scrollToBottom('smooth'), 100);
+    
+    await appendUserMessage(input);
+  };
 
-    try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          messages: [...messages, userMessage].map(m => ({ role: m.role, content: m.content })),
-        }),
-      });
-
-      if (!response.ok) throw new Error(response.statusText);
-
-      const reader = response.body?.getReader();
-      const decoder = new TextDecoder();
-      let assistantMessage: Message = { id: (Date.now() + 1).toString(), role: 'assistant', content: '' };
-
-      setMessages((prev) => [...prev, assistantMessage]);
-
-      if (reader) {
-        let buffer = '';
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          const chunk = decoder.decode(value, { stream: true });
-          buffer += chunk;
-
-          const matches = buffer.matchAll(/0:"((?:[^"\\]|\\.)*)"/g);
-          let finalString = '';
-          let matchCount = 0;
-          for (const match of matches) {
-            matchCount++;
-            try { finalString += JSON.parse(`"${match[1]}"`); } catch { finalString += match[1]; }
-          }
-          if (matchCount === 0 && buffer.length > 0 && !buffer.includes('0:"')) finalString = buffer;
-
-          if (finalString.length > 0) {
-              assistantMessage.content = finalString;
-              setMessages((prev) => prev.map(m => m.id === assistantMessage.id ? { ...m, content: finalString } : m));
-          }
-        }
-      }
-
-    } catch (error) {
-      console.error('Chat error:', error);
-      const fallbackMessage: Message = { 
-        id: 'error-' + Date.now(), 
-        role: 'assistant', 
-        content: '¡Vaya! 🔋 Me he quedado sin energía o hay demasiadas personas hablando conmigo ahora mismo. No quiero que esperes, escríbenos directo a **contacto@sudolabs.space** o por **[WhatsApp (+51 923 384 303)](https://wa.me/51923384303)** y te atenderemos de inmediato. 🚀' 
-      };
-      setMessages((prev) => [...prev, fallbackMessage]);
-    } finally {
-      setIsLoading(false);
-    }
+  // Quick Starter Helper
+  const handleQuickStart = (text: string) => {
+    setUserScrolledUp(false);
+    setTimeout(() => scrollToBottom('smooth'), 100);
+    appendUserMessage(text);
   };
 
   if (!mounted) return <div className="h-[700px] w-full bg-zinc-950 animate-pulse" />;
@@ -203,7 +151,20 @@ export function AiChatSection() {
                  </div>
                  <span className="text-xs font-medium text-zinc-400 tracking-wider uppercase">Sesión Segura</span>
               </div>
-              {isLoading && <span className="text-[10px] text-cyan-500 animate-pulse font-mono uppercase tracking-widest">Debian escribiendo...</span>}
+              
+              <div className="flex items-center gap-4">
+                {isLoading && <span className="text-[10px] text-cyan-500 animate-pulse font-mono uppercase tracking-widest">Debian escribiendo...</span>}
+                
+                {messages.length > 0 && (
+                  <button 
+                    onClick={clearChat}
+                    className="text-zinc-500 hover:text-red-400 transition-colors p-1"
+                    title="Borrar historial"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Messages Area */}
@@ -271,7 +232,7 @@ export function AiChatSection() {
                                 </div>
                             )}
                             
-                            {/* Verified Badge for Debian - Filtered by content relevance */}
+                            {/* Verified Badge for Debian */}
                             {m.role === 'assistant' && (m.content.length > 80 || ['sudolabs', 'oficri', 'bárbaro', 'software', 'next.js', 'desarrollo'].some(kw => m.content.toLowerCase().includes(kw))) && (
                                 <div className="mt-4 pt-3 border-t border-zinc-800/50 flex items-center justify-between group/seal">
                                     <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-emerald-500/5 border border-emerald-500/10 group-hover/seal:border-emerald-500/30 transition-colors">
@@ -331,25 +292,25 @@ export function AiChatSection() {
                 [&::-webkit-scrollbar-thumb]:bg-zinc-800
                 [&::-webkit-scrollbar-thumb]:rounded-full">
                 <button 
-                  onClick={() => { setInput("📞 Quiero contactarme con el equipo de Sudolabs"); setTimeout(() => document.querySelector('form')?.requestSubmit(), 0); }}
+                  onClick={() => handleQuickStart("📞 Quiero contactarme con el equipo de Sudolabs")}
                   className="whitespace-nowrap px-3 py-1.5 rounded-full bg-zinc-900 border border-zinc-700 text-xs text-zinc-400 hover:text-orange-400 hover:border-orange-500/50 transition-colors flex items-center gap-1.5"
                 >
                   📞 Quiero contactarme
                 </button>
                 <button 
-                  onClick={() => { setInput("🚀 Quiero escalar mi startup de software"); setTimeout(() => document.querySelector('form')?.requestSubmit(), 0); }}
+                  onClick={() => handleQuickStart("🚀 Quiero escalar mi startup de software")}
                   className="whitespace-nowrap px-3 py-1.5 rounded-full bg-zinc-900 border border-zinc-700 text-xs text-zinc-400 hover:text-cyan-400 hover:border-cyan-500/50 transition-colors flex items-center gap-1.5"
                 >
                   🚀 Escalar startup
                 </button>
                 <button 
-                  onClick={() => { setInput("💰 Quiero cotizar un desarrollo a medida"); setTimeout(() => document.querySelector('form')?.requestSubmit(), 0); }}
+                  onClick={() => handleQuickStart("💰 Quiero cotizar un desarrollo a medida")}
                   className="whitespace-nowrap px-3 py-1.5 rounded-full bg-zinc-900 border border-zinc-700 text-xs text-zinc-400 hover:text-emerald-400 hover:border-emerald-500/50 transition-colors flex items-center gap-1.5"
                 >
                   💰 Cotizar proyecto
                 </button>
                 <button 
-                  onClick={() => { setInput("🛠️ ¿Qué tecnologías recomiendan para un MVP?"); setTimeout(() => document.querySelector('form')?.requestSubmit(), 0); }}
+                  onClick={() => handleQuickStart("🛠️ ¿Qué tecnologías recomiendan para un MVP?")}
                   className="whitespace-nowrap px-3 py-1.5 rounded-full bg-zinc-900 border border-zinc-700 text-xs text-zinc-400 hover:text-indigo-400 hover:border-indigo-500/50 transition-colors flex items-center gap-1.5"
                 >
                   🛠️ Stack recomendado

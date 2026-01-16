@@ -3,7 +3,13 @@ import path from 'path';
 
 const contentDir = path.join(process.cwd(), 'src/content');
 
+let cachedContext: string | null = null;
+
 export function getContext() {
+  if (cachedContext) {
+    return cachedContext;
+  }
+
   try {
     const blogDir = path.join(contentDir, 'blog');
     const projectsDir = path.join(contentDir, 'projects');
@@ -25,6 +31,7 @@ export function getContext() {
     readDir(blogDir, 'Blog Post');
     readDir(projectsDir, 'Caso de Estudio/Proyecto');
 
+    cachedContext = context;
     return context;
   } catch (error) {
     console.error("Error generating context:", error);
