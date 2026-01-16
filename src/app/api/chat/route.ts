@@ -8,23 +8,28 @@ export const runtime = 'nodejs';
 // Evitar cacheo estático de esta ruta
 export const dynamic = 'force-dynamic';
 
-export async function POST(req: Request) {
-  try {
-    // 1. Validar API Key
-    const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
-    if (!apiKey) {
-      return new Response(JSON.stringify({ error: "Configuración: Falta API Key" }), { status: 500 });
-    }
+// Orden de prioridad: Calidad -> Velocidad -> Disponibilidad Masiva
+const MODEL_CASCADE = [
+  'gemini-2.5-flash',       // Tier 1: Mejor calidad (Limite: ~20 RPD)
+  'gemini-2.5-flash-lite',  // Tier 2: Rápido (Limite: ~20 RPD)
+  'gemma-3-27b-it'          // Tier 3: Respaldo masivo (Limite: ~14,400 RPD)
+];
 
-    // 2. Parsear Body
+export async function POST(req: Request) {
+  const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+  if (!apiKey) {
+    return new Response(JSON.stringify({ error: "Configuración: Falta API Key" }), { status: 500 });
+  }
+
+  try {
     const { messages } = await req.json();
     
-    // Validar longitud de mensajes (Seguridad)
-    if (messages.some((m: any) => m.content.length > 600)) {
+    // Validar longitud de mensajes (Seguridad básica)
+    if (messages.some((m: any) => m.content.length > 2000)) {
       return new Response(JSON.stringify({ error: "Mensaje demasiado largo" }), { status: 400 });
     }
-    
-    // 3. Obtener Contexto (Sistema de Archivos)
+
+    // 1. Obtener Contexto (Cacheado en memoria)
     let context = "";
     try {
       context = getContext();
@@ -33,61 +38,82 @@ export async function POST(req: Request) {
       context = "Contexto no disponible.";
     }
 
-    // 4. Configurar AI
     const genAI = new GoogleGenerativeAI(apiKey);
-    // Usamos gemma-3-27b-it para tener cuota de 14,400 RPD
-    const model = genAI.getGenerativeModel({ model: 'gemma-3-27b-it' });
+    let lastError = null;
 
-    // 5. Construir Prompt
-    const lastMessage = messages[messages.length - 1].content;
-    
-    const history = messages.slice(0, -1).map((m: any) => 
-      `${m.role === 'user' ? 'USUARIO' : 'DEBIAN (TÚ)'}: ${m.content}`
-    ).join('\n');
+    // 2. Bucle de Cascada (Fallback System)
+    for (const modelName of MODEL_CASCADE) {
+      try {
+        const model = genAI.getGenerativeModel({ model: modelName });
 
-    const prompt = `
-      Eres Debian, Tech Lead y Consultora de Soluciones en Sudolabs.
-      
-      TU PERFIL:
-      - Experta técnica (Full Stack, Linux, Cloud) con enfoque en negocio.
-      - Actitud "Hands-on": práctica, directa y resolutiva. Cero burocracia.
-      - Imagen: Camisa azul arremangada, lista para construir. 👩‍💻
+        // 3. Gestión inteligente del Historial según el modelo
+        let historyToUse = messages.slice(0, -1);
+        const lastMessageContent = messages[messages.length - 1].content;
 
-      DATOS DE CONTACTO REALES (PROPORCIÓNALOS DE INMEDIATO SI TE LOS PIDEN):
-      - Email: contacto@sudolabs.space
-      - WhatsApp: +51 923 384 303
-      - Formulario/Botón Web: Sección al final de la página.
+        if (modelName.includes('gemma')) {
+           if (historyToUse.length > 2) {
+             historyToUse = historyToUse.slice(-2);
+           }
+        }
 
-      TU CONTEXTO DE PROYECTOS SUDOLABS:
-      ${context}
+        const historyString = historyToUse.map((m: any) => 
+          `${m.role === 'user' ? 'USUARIO' : 'DEBIAN (TÚ)'}: ${m.content}`
+        ).join('\n');
 
-      HISTORIAL DE LA CHARLA:
-      ${history}
+        const prompt = `
+          Eres Debian, Tech Lead y Consultora de Soluciones en Sudolabs.
+          
+          TU PERFIL:
+          - Experta técnica (Full Stack, Linux, Cloud) con enfoque en negocio.
+          - Actitud "Hands-on": práctica, directa y resolutiva. Cero burocracia.
+          - Imagen: Camisa azul arremangada, lista para construir. 👩‍💻
 
-      TUS REGLAS DE INTERACCIÓN:
-      1. **BREVEDAD EXTREMA:** 2 frases máximo. Sé concisa y humana. 😎
-      2. **DIRECTA:** Si piden contacto, dalo de una: "Escríbenos a contacto@sudolabs.space o al WhatsApp +51 923 384 303".
-      3. **AGENDA:** Si quieren agendar, usa este link: [Agendar Consultoría](#contacto).
-      4. **TONO:** Profesional, moderno y techie (💻, ⚡).
-      5. **OBJETIVO:** Resolver dudas técnicas y cerrar una reunión real.
-      6. **NO INVENTES:** NUNCA inventes números o datos que no estén aquí.
+          DATOS DE CONTACTO:
+          - Email: contacto@sudolabs.space
+          - WhatsApp: +51 923 384 303
+          
+          CONTEXTO DE SUDOLABS:
+          ${context}
 
-      USUARIO (AHORA MISMO): ${lastMessage}
-    `;
+          HISTORIAL (${historyToUse.length} mensajes previos):
+          ${historyString}
 
-    // 6. Generar Stream
-    const geminiStream = await model.generateContentStream(prompt);
+          REGLAS DE INTERACCIÓN (IMPORTANTE):
+          1. **CERO SALUDOS REPETITIVOS:** Si el historial no está vacío, NO saludes (nada de "Hola", "Qué tal"). Ve directo a la respuesta.
+          2. **MODELO ACTUAL:** Estás corriendo sobre ${modelName}. Si es un modelo 'Lite' o 'Gemma', sé extra concisa.
+          3. **BREVEDAD:** Máximo 2-3 oraciones. Estilo chat rápido.
+          4. **VENTAS:** Si hay interés, dirige a agendar: [Agendar Consultoría](#contacto).
+          
+          USUARIO (AHORA): ${lastMessageContent}
+        `;
 
-    // 7. Convertir a Response compatible con AI SDK
-    const stream = GoogleGenerativeAIStream(geminiStream);
+        // 4. Generar Stream
+        const geminiStream = await model.generateContentStream(prompt);
+        return new StreamingTextResponse(GoogleGenerativeAIStream(geminiStream));
 
-    return new StreamingTextResponse(stream);
+      } catch (error: any) {
+        lastError = error;
+        const isQuotaError = error.message?.includes('429') || error.status === 429;
+        const isOverloadError = error.message?.includes('503') || error.status === 503;
+        const isModelNotFoundError = error.message?.includes('404') || error.status === 404;
+        const isContextError = error.message?.includes('400') || error.status === 400;
 
-  } catch (error) {
-    console.error("CRITICAL API ERROR:", error);
+        if (isQuotaError || isOverloadError || isModelNotFoundError || isContextError) {
+          continue; 
+        } else {
+          throw error;
+        }
+      }
+    }
+
+    // Si el bucle termina sin éxito
+    throw lastError || new Error("Todos los modelos fallaron.");
+
+  } catch (error: any) {
+    console.error("CRITICAL CHAT ERROR:", error);
     return new Response(JSON.stringify({ 
-      error: "Error interno en Debian", 
-      details: error instanceof Error ? error.message : String(error) 
+      error: "Error en el sistema de IA", 
+      details: error.message 
     }), { 
       status: 500,
       headers: { 'Content-Type': 'application/json' }
