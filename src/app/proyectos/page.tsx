@@ -1,4 +1,4 @@
-import { getAllContent } from "@/lib/mdx";
+import { getAllContent, ProjectMeta } from "@/lib/mdx";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Sparkles } from "lucide-react";
@@ -9,19 +9,10 @@ export const metadata = {
 };
 
 export default async function ProyectosPage() {
-  const allProjects = await getAllContent("projects");
+  const allProjects = await getAllContent<ProjectMeta>("projects");
   
-  const rawFeaturedProject = allProjects.find(p => p.isFeatured) || allProjects[0];
-  const otherProjects = allProjects.filter(p => p.slug !== rawFeaturedProject?.slug);
-
-  // Type Guard Helper for Featured Project
-  const featuredProject = rawFeaturedProject ? {
-    ...rawFeaturedProject,
-    title: typeof rawFeaturedProject.title === 'string' ? rawFeaturedProject.title : 'Proyecto Destacado',
-    description: typeof rawFeaturedProject.description === 'string' ? rawFeaturedProject.description : '',
-    image: typeof rawFeaturedProject.image === 'string' ? rawFeaturedProject.image : '',
-    tags: Array.isArray(rawFeaturedProject.tags) ? rawFeaturedProject.tags as string[] : []
-  } : null;
+  const featuredProject = allProjects.find(p => p.isFeatured) || allProjects[0];
+  const otherProjects = allProjects.filter(p => p.slug !== featuredProject?.slug);
 
   return (
     <div className="min-h-screen flex flex-col font-sans bg-background selection:bg-primary/20 relative overflow-hidden">
@@ -61,9 +52,9 @@ export default async function ProyectosPage() {
                             </p>
                             
                             <div className="flex flex-wrap gap-2 mb-8">
-                                {featuredProject.tags.slice(0, 3).map((tag) => (
-                                    <span key={tag} className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest bg-primary/5 border border-primary/10 text-primary/80">
-                                        {tag}
+                                {featuredProject.tags?.slice(0, 3).map((tech) => (
+                                    <span key={tech} className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest bg-primary/5 border border-primary/10 text-primary/80">
+                                        {tech}
                                     </span>
                                 ))}
                             </div>
@@ -98,16 +89,7 @@ export default async function ProyectosPage() {
                 <div className="h-px w-full bg-border/40 mb-16" />
                 <h3 className="text-lg font-bold text-foreground mb-8 uppercase tracking-[0.2em] opacity-50">Más Proyectos</h3>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {otherProjects.map((rawProject) => {
-                        // Type Guard inside map
-                        const project = {
-                            ...rawProject,
-                            title: typeof rawProject.title === 'string' ? rawProject.title : 'Proyecto',
-                            description: typeof rawProject.description === 'string' ? rawProject.description : '',
-                            image: typeof rawProject.image === 'string' ? rawProject.image : '',
-                        };
-
-                        return (
+                    {otherProjects.map((project) => (
                         <Link key={project.slug} href={`/proyectos/${project.slug}`} className="group block h-full">
                             <article className="h-full flex flex-col rounded-2xl overflow-hidden border border-border/50 bg-card/20 hover:bg-card hover:border-primary/50 transition-all shadow-sm">
                                 <div className="relative aspect-[16/10] bg-muted overflow-hidden border-b border-border/50">
@@ -134,7 +116,7 @@ export default async function ProyectosPage() {
                                 </div>
                             </article>
                         </Link>
-                    )})}
+                    ))}
                 </div>
             </section>
         )}
