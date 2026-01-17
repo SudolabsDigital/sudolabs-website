@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, BookOpen, Briefcase, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { ProblemSolverCTA } from "@/components/modules/blog/problem-solver-cta";
 
 export async function generateStaticParams() {
   const projects = await getAllContent<ProjectMeta>("projects");
@@ -157,6 +158,10 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
                 </div>
              </section>
            )}
+
+           <div className="mt-20">
+              <ProblemSolverCTA />
+           </div>
 
         </div>
       </div>

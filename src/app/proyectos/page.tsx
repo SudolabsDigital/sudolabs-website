@@ -2,6 +2,7 @@ import { getAllContent, ProjectMeta } from "@/lib/mdx";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { ProblemSolverCTA } from "@/components/modules/blog/problem-solver-cta";
 
 export const metadata = {
   title: "Portafolio y Casos de Éxito | Sudolabs",
@@ -120,6 +121,10 @@ export default async function ProyectosPage() {
                 </div>
             </section>
         )}
+
+        <section className="container mx-auto px-6 mb-24">
+            <ProblemSolverCTA />
+        </section>
 
       </div>
     </div>
