@@ -29,7 +29,7 @@ export function ProblemSolverCTA() {
           
           <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center md:justify-start">
             <Button asChild size="lg" className="font-bold shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all">
-              <Link href="/contacto">
+              <Link href="/#contacto">
                 <Zap className="w-4 h-4 mr-2 fill-current" /> Implementar Esto
               </Link>
             </Button>
