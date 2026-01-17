@@ -13,8 +13,10 @@ const TubeCursorBackground = dynamic(
 )
 
 export const metadata = {
-  title: "Sudolabs Perú | Consultora de software en Huancayo",
-  description: "Consultora de software especializada en Next.js, Cloud Architecture y Transformación Digital. Convertimos complejidad operativa en ventajas competitivas.",
+  title: {
+    absolute: "Sudolabs Perú: Consultora de Software y Tecnología en Huancayo"
+  },
+  description: "Socios tecnológicos para empresas ambiciosas. Desarrollamos software a medida, aplicaciones web modernas y arquitectura cloud de alto rendimiento desde Huancayo para el mundo.",
 }
 
 export default function Home() {

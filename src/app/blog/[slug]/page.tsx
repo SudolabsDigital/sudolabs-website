@@ -1,136 +1,140 @@
-import { notFound } from "next/navigation"
-import Link from "next/link"
-import { ArrowLeft, ArrowRight, Calendar, Clock, ChevronLeft, Grid } from "lucide-react"
-import { getContentBySlug } from "@/lib/mdx"
-import { MDXRemote } from "next-mdx-remote/rsc"
-import { siteConfig } from "@/core/config"
-import { Button } from "@/components/ui/button"
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
+import { ArrowLeft, Calendar, Clock, Tag } from "lucide-react";
+import { MDXRemote } from "next-mdx-remote/rsc";
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
-  const post = await getContentBySlug("blog", slug)
-  if (!post) return {}
-  
-  return {
-    title: `${post.meta.title} | Blog de Ingeniería`,
-    description: post.meta.description,
-  }
+import { getContentBySlug, getAllContent, BlogMeta, getHeadings } from "@/lib/mdx";
+import { ProblemSolverCTA } from "@/components/modules/blog/problem-solver-cta";
+import { Badge } from "@/components/ui/badge";
+import { CustomComponents } from "@/components/modules/blog/mdx-components";
+import { TableOfContents } from "@/components/modules/blog/table-of-contents";
+import { Button } from "@/components/ui/button";
+import { ShareButtons } from "@/components/modules/blog/share-buttons";
+import BlogJsonLd from "@/components/seo/blog-json-ld";
+
+export async function generateStaticParams() {
+  const posts = await getAllContent<BlogMeta>("blog");
+  return posts.map((post) => ({ slug: post.slug }));
 }
 
-export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
-  const post = await getContentBySlug("blog", slug)
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
+  const post = await getContentBySlug<BlogMeta>("blog", params.slug);
+  if (!post) return {};
+  
+  return {
+    title: `${post.meta.title} | Blog Sudolabs`,
+    description: post.meta.description,
+    openGraph: {
+      title: post.meta.title,
+      description: post.meta.description,
+      type: "article",
+      publishedTime: post.meta.date,
+      authors: [post.meta.author || "Sudolabs Team"],
+      images: post.meta.image ? [{ url: post.meta.image }] : undefined,
+    },
+  };
+}
+
+export default async function BlogPost(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
+  const post = await getContentBySlug<BlogMeta>("blog", params.slug);
 
   if (!post) {
-    notFound()
+    notFound();
   }
 
+  const headings = getHeadings(post.content);
+
   return (
-    <article className="min-h-screen bg-background relative selection:bg-gray-300 dark:selection:bg-gray-700 selection:text-foreground">
-      
-      {/* --- NAVEGACIÓN SUPERIOR (Sticky - Estilo Dark Glass Fijo) --- */}
-      <nav className="sticky top-0 z-50 w-full border-b border-white/10 bg-[#020617]/80 backdrop-blur-md">
-        <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-          
-          {/* Volver al Blog */}
-          <Link 
-            href="/blog" 
-            className="flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-white transition-colors"
-          >
-            <ChevronLeft className="w-4 h-4" />
-            <span className="hidden sm:inline">Volver al Blog</span>
-            <span className="sm:hidden">Blog</span>
-          </Link>
-
-          {/* Volver a Soluciones */}
-          <Link 
-            href="/#soluciones"
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-bold uppercase tracking-wider text-white hover:bg-white/10 transition-all"
-          >
-            <Grid className="w-4 h-4" />
-            <span className="hidden sm:inline">Explorar Soluciones</span>
-            <span className="sm:hidden">Soluciones</span>
-          </Link>
-
-        </div>
-      </nav>
-
-      {/* --- CONTENIDO DEL ARTÍCULO --- */}
-      <div className="container mx-auto px-6 py-12 md:py-20 max-w-4xl">
+    <div className="min-h-screen bg-background font-sans pb-24">
+      <BlogJsonLd post={post.meta} />
+      <div className="container mx-auto px-6 max-w-[1400px] pt-32">
         
-        {/* Header del Post (Estilos controlados por CSS global .article-header) */}
-        <header className="article-header mb-12 md:mb-16 text-center">
-          
-          {/* Tags */}
-          <div className="flex flex-wrap gap-2 justify-center mb-6">
-            {post.meta.tags?.map((tag) => (
-              <span key={tag} className="tag-badge px-3 py-1 rounded-full text-xs font-bold border uppercase tracking-wide">
-                #{tag}
-              </span>
-            ))}
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            
+            {/* LEFT SIDEBAR (Navigation & Share) */}
+            <aside className="hidden lg:block lg:col-span-2 relative">
+                <div className="sticky top-32 flex flex-col gap-8">
+                    <Link 
+                        href="/blog" 
+                        className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors group"
+                    >
+                        <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+                        Volver
+                    </Link>
 
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
-            {post.meta.title}
-          </h1>
+                    <div className="space-y-4">
+                        <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Compartir</span>
+                        <ShareButtons title={post.meta.title} slug={post.meta.slug} />
+                    </div>
+                </div>
+            </aside>
 
-          <p className="text-xl max-w-2xl mx-auto mb-8 leading-relaxed font-medium">
-            {post.meta.description}
-          </p>
+            {/* MAIN CONTENT */}
+            <main className="lg:col-span-7">
+                {/* Mobile Back Link */}
+                <Link 
+                    href="/blog" 
+                    className="lg:hidden inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors mb-8"
+                >
+                    <ArrowLeft className="w-4 h-4 mr-2" />
+                    Volver al Blog
+                </Link>
 
-          <div className="meta-text flex items-center justify-center gap-6 text-sm font-bold">
-            <div className="flex items-center gap-2">
-              <Calendar className="w-4 h-4" />
-              <time dateTime={post.meta.date}>
-                {new Date(post.meta.date).toLocaleDateString("es-ES", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </time>
-            </div>
-            <div className="flex items-center gap-2">
-               <Clock className="w-4 h-4" />
-               <span>5 min de lectura</span>
-            </div>
-          </div>
-        </header>
+                <header className="mb-12">
+                    <div className="flex flex-wrap gap-4 items-center text-sm text-muted-foreground mb-6">
+                        <span className="flex items-center gap-1.5">
+                            <Calendar className="w-4 h-4" /> 
+                            {format(new Date(post.meta.date), "d 'de' MMMM, yyyy", { locale: es })}
+                        </span>
+                        {post.meta.readTime && (
+                            <>
+                            <span className="hidden md:inline">•</span>
+                            <span className="flex items-center gap-1.5">
+                                <Clock className="w-4 h-4" /> 
+                                {post.meta.readTime}
+                            </span>
+                            </>
+                        )}
+                    </div>
 
-        {/* Cuerpo Markdown (Estilos controlados por CSS global .article-content) */}
-        <div className="article-content prose prose-lg md:prose-xl max-w-none">
-          <MDXRemote source={post.content} />
+                    <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-foreground mb-8 leading-tight">
+                        {post.meta.title}
+                    </h1>
+
+                    {post.meta.tags && (
+                        <div className="flex flex-wrap gap-2">
+                            {post.meta.tags.map((tag) => (
+                                <Badge key={tag} variant="secondary" className="px-3 py-1 text-xs uppercase tracking-wider font-bold">
+                                <Tag className="w-3 h-3 mr-1.5 opacity-50" />
+                                {tag}
+                                </Badge>
+                            ))}
+                        </div>
+                    )}
+                </header>
+
+                <div className="max-w-none text-foreground text-lg leading-relaxed">
+                    <MDXRemote source={post.content} components={CustomComponents} />
+                </div>
+
+                <div className="mt-20 border-t border-border pt-12">
+                    <ProblemSolverCTA />
+                </div>
+            </main>
+
+            {/* RIGHT SIDEBAR (TOC) */}
+            <aside className="hidden lg:block lg:col-span-3 relative">
+                 <div className="sticky top-32">
+                     <TableOfContents headings={headings} />
+                 </div>
+            </aside>
+
         </div>
-
       </div>
-
-      {/* --- CTA FINAL (Siempre Oscuro) --- */}
-      <section className="border-t border-white/10 bg-[#020617]">
-        <div className="container mx-auto px-6 py-20 text-center max-w-3xl">
-          <h2 className="text-3xl font-bold mb-6 text-white">¿Te identificas con este problema?</h2>
-          <p className="text-lg text-gray-400 mb-10 font-medium">
-            No tienes que resolverlo solo. Nuestros ingenieros ya tienen la arquitectura lista para implementarla en tu negocio.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {/* ÚNICA EXCEPCIÓN: Botón CTA principal en NEÓN */}
-            <a 
-              href={`https://wa.me/${siteConfig.contact.whatsapp}?text=Hola, leí sobre "${post.meta.title}" y quiero implementarlo.`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button size="lg" className="rounded-full bg-[#00FFA3] text-black hover:bg-[#00FFA3]/90 font-bold px-8 h-14 text-lg w-full sm:w-auto shadow-lg shadow-green-500/20 border-none">
-                Implementar Esto
-              </Button>
-            </a>
-            {/* Botón Secundario (Estilo Dark Fijo) */}
-            <Link href="/#soluciones">
-              <Button size="lg" variant="outline" className="rounded-full border-white/20 text-white hover:bg-white hover:text-black h-14 px-8 text-lg w-full sm:w-auto font-bold transition-all">
-                Explorar más Soluciones
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-    </article>
-  )
+    </div>
+  );
 }

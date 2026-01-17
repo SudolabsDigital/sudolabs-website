@@ -57,7 +57,7 @@ export function Header() {
         <header className="pointer-events-auto flex items-center justify-between w-full max-w-4xl h-16 md:h-20 px-4 rounded-full border border-white/10 bg-[#020617]/70 backdrop-blur-md shadow-lg transition-all duration-300">
           
           {/* Logo Section - Inverted for Dark Mode */}
-          <Link href="/" className="flex items-center gap-2 group mr-4">
+          <Link href="/" aria-label="Ir al inicio" className="flex items-center gap-2 group mr-4">
             <div 
               className="flex items-center justify-center relative h-10 md:h-12 w-[140px] md:w-[180px] brightness-0 invert filter"
             >
@@ -73,19 +73,20 @@ export function Header() {
             </div>
           </Link>
           
-          {/* DESKTOP NAVIGATION - Glass Pills */}
-          <nav 
-            className="hidden md:flex items-center gap-2"
-          >
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="relative px-5 py-2 text-sm font-semibold text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-full shadow-sm transition-all hover:scale-105"
-              >
-                {item.name}
-              </Link>
-            ))}
+          {/* DESKTOP NAVIGATION - Semantic List */}
+          <nav aria-label="Navegación principal" className="hidden md:block">
+            <ul className="flex items-center gap-2 m-0 p-0 list-none">
+              {navItems.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    href={item.href}
+                    className="relative block px-5 py-2 text-sm font-semibold text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-full shadow-sm transition-all hover:scale-105"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </nav>
 
           {/* DESKTOP CTA */}
@@ -130,23 +131,29 @@ export function Header() {
                   </SheetDescription>
                 </SheetHeader>
                 
-                              <div className="flex flex-col gap-4">
-                                <Link
-                                  href="/"
-                                  onClick={() => setIsOpen(false)}
-                                  className="flex items-center py-4 text-lg font-medium text-gray-300 hover:text-white border-b border-white/10 transition-colors"
-                                >
-                                  Inicio
-                                </Link>
-                                {navItems.map((item) => (                    <Link
-                      key={item.name}
-                      href={item.href}
-                      onClick={() => setIsOpen(false)}
-                      className="flex items-center py-4 text-lg font-medium text-gray-300 hover:text-white border-b border-white/10 transition-colors"
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
+                <nav aria-label="Navegación móvil" className="flex flex-col gap-4">
+                  <ul className="flex flex-col gap-4 list-none p-0 m-0">
+                    <li>
+                      <Link
+                        href="/"
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center py-4 text-lg font-medium text-gray-300 hover:text-white border-b border-white/10 transition-colors w-full"
+                      >
+                        Inicio
+                      </Link>
+                    </li>
+                    {navItems.map((item) => (
+                      <li key={item.name}>
+                        <Link
+                          href={item.href}
+                          onClick={() => setIsOpen(false)}
+                          className="flex items-center py-4 text-lg font-medium text-gray-300 hover:text-white border-b border-white/10 transition-colors w-full"
+                        >
+                          {item.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
                   
                   <div className="mt-6">
                       <Button 
@@ -159,7 +166,7 @@ export function Header() {
                           Contactar Ahora
                       </Button>
                   </div>
-                </div>
+                </nav>
               </SheetContent>
             </Sheet>
           </div>

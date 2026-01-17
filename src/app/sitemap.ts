@@ -1,12 +1,12 @@
 import { MetadataRoute } from 'next'
-import { getAllContent } from '@/lib/mdx'
+import { getAllContent, BlogMeta, ProjectMeta } from '@/lib/mdx'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://sudolabs.space'
   
   // Obtener contenido dinámico
-  const blogs = await getAllContent('blog')
-  const projects = await getAllContent('projects')
+  const blogs = await getAllContent<BlogMeta>('blog')
+  const projects = await getAllContent<ProjectMeta>('projects')
 
   const blogsUrls = blogs.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
@@ -33,6 +33,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${baseUrl}/servicios`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
       priority: 0.8,
     },
     {
@@ -45,7 +51,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${baseUrl}/nosotros`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
-      priority: 0.8,
+      priority: 0.7,
     },
   ]
 

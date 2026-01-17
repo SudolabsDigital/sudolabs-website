@@ -4,14 +4,38 @@ import matter from "gray-matter";
 
 const contentDirectory = path.join(process.cwd(), "src/content");
 
-export type MdxMeta = {
+export interface BaseMdxMeta {
   title: string;
   description: string;
   date: string;
   slug: string;
+  image?: string; // Renamed from coverImage to match existing content
+}
+
+export interface BlogMeta extends BaseMdxMeta {
   tags?: string[];
-  [key: string]: string | string[] | boolean | number | undefined | unknown;
-};
+  author?: string;
+  readTime?: string; // Renamed from readingTime to match content
+}
+
+export interface ProjectStat {
+  label: string;
+  value: string;
+}
+
+export interface ProjectMeta extends BaseMdxMeta {
+  client?: string;
+  industry?: string;
+  tags?: string[]; // Kept as 'tags' to match content (represents technologies)
+  technologies?: string[]; // Alias or alternative if needed future-wise
+  websiteUrl?: string;
+  isFeatured?: boolean;
+  role?: string; // Added found field
+  stats?: ProjectStat[]; // Added found field
+  relatedPosts?: string[]; // Added found field
+}
+
+export type MdxMeta = BlogMeta | ProjectMeta;
 
 export const slugify = (text: string) => {
   return text
@@ -23,7 +47,10 @@ export const slugify = (text: string) => {
     .replace(/\-\-+/g, "-");
 };
 
-export const getContentBySlug = async (type: "blog" | "projects", slug: string) => {
+export const getContentBySlug = async <T extends BaseMdxMeta>(
+  type: "blog" | "projects",
+  slug: string
+): Promise<{ meta: T; content: string } | null> => {
   const filePath = path.join(contentDirectory, type, `${slug}.mdx`);
   if (!fs.existsSync(filePath)) return null;
 
@@ -31,32 +58,34 @@ export const getContentBySlug = async (type: "blog" | "projects", slug: string) 
   const { data, content } = matter(fileContent);
 
   return {
-    meta: { ...data, slug } as MdxMeta,
+    meta: { ...data, slug } as T,
     content,
   };
 };
 
-export const getAllContent = async (type: "blog" | "projects") => {
+export const getAllContent = async <T extends BaseMdxMeta>(
+  type: "blog" | "projects"
+): Promise<T[]> => {
   const dirPath = path.join(contentDirectory, type);
   if (!fs.existsSync(dirPath)) return [];
 
   const files = fs.readdirSync(dirPath);
-  const posts = files
+  const items = files
     .filter((file) => file.endsWith(".mdx"))
     .map((file) => {
       const slug = file.replace(".mdx", "");
       const filePath = path.join(dirPath, file);
       const fileContent = fs.readFileSync(filePath, "utf8");
       const { data } = matter(fileContent);
-      return { ...data, slug } as MdxMeta;
+      return { ...data, slug } as T;
     })
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  return posts;
+  return items;
 };
 
-export const getPostsByTag = async (tagSlug: string) => {
-  const allPosts = await getAllContent("blog");
+export const getPostsByTag = async (tagSlug: string): Promise<BlogMeta[]> => {
+  const allPosts = await getAllContent<BlogMeta>("blog");
   return allPosts.filter((post) => {
     if (!post.tags) return false;
     const slugifiedTags = post.tags.map((t) => slugify(t));
@@ -65,7 +94,7 @@ export const getPostsByTag = async (tagSlug: string) => {
 };
 
 export const getAllTags = async () => {
-  const posts = await getAllContent("blog");
+  const posts = await getAllContent<BlogMeta>("blog");
   const tagsCount: Record<string, number> = {};
   const tagsMap: Record<string, string> = {};
 
@@ -88,7 +117,21 @@ export const getAllTags = async () => {
     .sort((a, b) => b.count - a.count);
 };
 
-export const getPostsBySlugs = async (slugs: string[]) => {
-  const allPosts = await getAllContent("blog");
+export const getPostsBySlugs = async (slugs: string[]): Promise<BlogMeta[]> => {
+  const allPosts = await getAllContent<BlogMeta>("blog");
   return allPosts.filter((post) => slugs.includes(post.slug));
+};
+
+export const getHeadings = (source: string) => {
+  const headingLines = source.split("\n").filter((line) => {
+    return line.match(/^###?\s/);
+  });
+
+  return headingLines.map((raw) => {
+    const text = raw.replace(/^###?\s/, "");
+    const level = raw.startsWith("###") ? 3 : 2;
+    const id = slugify(text);
+
+    return { text, level, id };
+  });
 };
