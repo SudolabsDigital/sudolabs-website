@@ -12,6 +12,7 @@ import { CustomComponents } from "@/components/modules/blog/mdx-components";
 import { TableOfContents } from "@/components/modules/blog/table-of-contents";
 import { Button } from "@/components/ui/button";
 import { ShareButtons } from "@/components/modules/blog/share-buttons";
+import BlogJsonLd from "@/components/seo/blog-json-ld";
 
 export async function generateStaticParams() {
   const posts = await getAllContent<BlogMeta>("blog");
@@ -49,6 +50,7 @@ export default async function BlogPost(props: { params: Promise<{ slug: string }
 
   return (
     <div className="min-h-screen bg-background font-sans pb-24">
+      <BlogJsonLd post={post.meta} />
       <div className="container mx-auto px-6 max-w-[1400px] pt-32">
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">

@@ -27,32 +27,64 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://sudolabs.space"),
   alternates: {
-    canonical: './',
+    canonical: 'https://sudolabs.space',
   },
   title: {
-    default: "SudolabsDigital | Ingeniería de Software y Consultoría",
-    template: "%s | SudolabsDigital",
+    default: "Sudolabs Perú | Consultora de Software y Tecnología en Huancayo",
+    template: "%s | Sudolabs Perú",
   },
-  description: "Transformamos negocios mediante software a medida. Especialistas en Next.js, arquitectura de sistemas y transformación digital para empresas ambiciosas.",
-  keywords: ["Desarrollo de Software", "Consultoría Tecnológica", "Next.js", "Transformación Digital", "Software a medida Perú"],
-  authors: [{ name: "SudolabsDigital" }],
-  creator: "SudolabsDigital",
+  description: "Impulsa tu empresa con software a medida y tecnología de alto rendimiento. Expertos en desarrollo web, aplicaciones móviles y transformación digital desde Huancayo para el mundo.",
+  keywords: [
+    "Desarrollo de Software Huancayo", 
+    "Consultora Tecnológica Perú", 
+    "Sistemas a medida", 
+    "Aplicaciones Web", 
+    "Transformación Digital", 
+    "Sudolabs Perú",
+    "Ingeniería de Software"
+  ],
+  authors: [{ name: "Sudolabs Perú" }],
+  creator: "Sudolabs Perú",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Sudolabs Perú",
+  },
+  verification: {
+    google: "google-site-verification-id",
+  },
   openGraph: {
-    title: "SudolabsDigital | Ingeniería de Software",
-    description: "Convertimos tus problemas operativos en software eficiente y rentable.",
+    title: "Sudolabs Perú | Consultora de Software y Tecnología",
+    description: "Desarrollamos software a medida y soluciones de tecnología para empresas ambiciosas.",
     url: "https://sudolabs.space",
-    siteName: "SudolabsDigital",
+    siteName: "Sudolabs Perú",
     locale: "es_PE",
     type: "website",
+    images: [
+      {
+        url: '/opengraph-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Sudolabs Perú - Ingeniería de Software y Tecnología',
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "SudolabsDigital",
-    description: "Ingeniería de software con propósito.",
+    title: "Sudolabs Perú | Innovación y Tecnología desde Huancayo",
+    description: "Expertos en desarrollo de software y tecnología para negocios modernos.",
+    images: ['/opengraph-image.png'],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 
