@@ -7,6 +7,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { GlobalSpotlight } from "@/components/ui/global-spotlight";
+import { GoogleTagManager } from '@next/third-parties/google';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,7 +52,7 @@ export const metadata: Metadata = {
     title: "Sudolabs Perú",
   },
   verification: {
-    google: "google-site-verification-id",
+    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION,
   },
   openGraph: {
     title: "Sudolabs Perú | Consultora de Software y Tecnología",
@@ -101,6 +102,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
+        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID as string} />
         <JsonLd />
         <GlobalSpotlight />
         <Header />
