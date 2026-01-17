@@ -35,6 +35,15 @@ export const metadata: Metadata = {
     template: "%s | Sudolabs Perú",
   },
   description: "Impulsa tu empresa con software a medida y tecnología de alto rendimiento. Expertos en desarrollo web, aplicaciones móviles y transformación digital desde Huancayo para el mundo.",
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/apple-icon.png',
+    other: {
+      rel: 'apple-touch-icon-precomposed',
+      url: '/apple-icon.png',
+    },
+  },
   keywords: [
     "Desarrollo de Software Huancayo", 
     "Consultora Tecnológica Perú", 
