@@ -1,4 +1,4 @@
-import { getContentBySlug, getAllContent, getPostsBySlugs } from "@/lib/mdx";
+import { getContentBySlug, getAllContent, getPostsBySlugs, ProjectMeta } from "@/lib/mdx";
 import { MDXContent } from "@/components/modules/blog/mdx-content";
 import { notFound } from "next/navigation";
 import { ArrowLeft, BookOpen, Briefcase, ArrowRight } from "lucide-react";
@@ -6,47 +6,36 @@ import Link from "next/link";
 import Image from "next/image";
 
 export async function generateStaticParams() {
-  const projects = await getAllContent("projects");
+  const projects = await getAllContent<ProjectMeta>("projects");
   return projects.map((project) => ({
     slug: project.slug,
   }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const project = await getContentBySlug("projects", slug);
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
+  const project = await getContentBySlug<ProjectMeta>("projects", params.slug);
   if (!project) return {};
   return {
-    title: `${typeof project.meta.title === 'string' ? project.meta.title : 'Proyecto'} | Portafolio Sudolabs`,
-    description: typeof project.meta.description === 'string' ? project.meta.description : '',
+    title: `${project.meta.title} | Portafolio Sudolabs`,
+    description: project.meta.description,
   };
 }
 
-export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const project = await getContentBySlug("projects", slug);
+export default async function ProjectPage(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
+  const project = await getContentBySlug<ProjectMeta>("projects", params.slug);
 
   if (!project) {
     notFound();
   }
 
-  // Type Guard for Related Posts
-  const relatedPostSlugs = (Array.isArray(project.meta.relatedPosts) && project.meta.relatedPosts.every(s => typeof s === 'string'))
-    ? project.meta.relatedPosts as string[]
-    : [];
+  // Ahora el tipado es seguro, no necesitamos validaciones manuales excesivas
+  const relatedPostSlugs = project.meta.relatedPosts || [];
 
   const relatedPosts = relatedPostSlugs.length > 0 
     ? await getPostsBySlugs(relatedPostSlugs) 
     : [];
-
-  // Type Guards for Project Meta
-  const projectTitle = typeof project.meta.title === 'string' ? project.meta.title : 'Proyecto';
-  const projectDesc = typeof project.meta.description === 'string' ? project.meta.description : '';
-  const projectImage = typeof project.meta.image === 'string' ? project.meta.image : '';
-  const projectClient = typeof project.meta.client === 'string' ? project.meta.client : 'Confidencial';
-  const projectRole = typeof project.meta.role === 'string' ? project.meta.role : 'Desarrollo';
-  const projectDate = typeof project.meta.date === 'string' ? project.meta.date : '';
-  const projectTags = Array.isArray(project.meta.tags) ? project.meta.tags as string[] : [];
 
   return (
     <div className="flex flex-col bg-background font-sans selection:bg-primary/20">
@@ -55,10 +44,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         {/* 1. IMMERSIVE HERO */}
         <div className="relative h-[60vh] md:h-[70vh] w-full bg-muted overflow-hidden flex items-end">
            {/* Background Image */}
-           {projectImage && (
+           {project.meta.image && (
               <Image 
-                src={projectImage} 
-                alt={projectTitle} 
+                src={project.meta.image} 
+                alt={project.meta.title} 
                 fill 
                 className="object-cover brightness-[0.3]"
                 priority
@@ -70,20 +59,20 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                  <ArrowLeft className="w-4 h-4 mr-2" /> Volver al Portafolio
               </Link>
               <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight text-white mb-4 leading-tight max-w-5xl">
-                {projectTitle}
+                {project.meta.title}
               </h1>
               <p className="text-lg md:text-2xl text-white/80 max-w-2xl leading-relaxed">
-                {projectDesc}
+                {project.meta.description}
               </p>
            </div>
         </div>
 
         <div className="container mx-auto px-6 py-16 max-w-6xl">
            
-           {/* 2. KEY STATS (KPIs) - CORREGIDO AQUÍ */}
-           {Array.isArray(project.meta.stats) && (
+           {/* 2. KEY STATS (KPIs) */}
+           {project.meta.stats && (
              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 -mt-24 relative z-20">
-                {(project.meta.stats as { label: string, value: string }[]).map((stat, i) => (
+                {project.meta.stats.map((stat, i) => (
                   <div key={i} className="bg-card border border-border/50 p-8 rounded-3xl shadow-xl shadow-black/5 flex flex-col items-center text-center backdrop-blur-sm">
                       <span className="text-4xl md:text-5xl font-extrabold text-primary mb-2 block">{stat.value}</span>
                       <span className="text-sm font-bold uppercase tracking-widest text-muted-foreground">{stat.label}</span>
@@ -103,24 +92,26 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                     <div className="space-y-6">
                        <div>
                           <div className="text-xs font-bold uppercase text-muted-foreground mb-1">Cliente</div>
-                          <div className="font-medium text-foreground">{projectClient}</div>
+                          <div className="font-medium text-foreground">{project.meta.client || 'Confidencial'}</div>
                        </div>
                        <div>
                           <div className="text-xs font-bold uppercase text-muted-foreground mb-1">Rol</div>
-                          <div className="font-medium text-foreground">{projectRole}</div>
+                          <div className="font-medium text-foreground">{project.meta.role || 'Desarrollo'}</div>
                        </div>
                        <div>
                           <div className="text-xs font-bold uppercase text-muted-foreground mb-1">Fecha</div>
-                          <div className="font-medium text-foreground">{projectDate}</div>
+                          <div className="font-medium text-foreground">{project.meta.date}</div>
                        </div>
-                       <div>
-                          <div className="text-xs font-bold uppercase text-muted-foreground mb-2">Tech Stack</div>
-                          <div className="flex flex-wrap gap-2">
-                             {projectTags.map((tag) => (
-                                <span key={tag} className="text-xs bg-background border border-border px-2 py-1 rounded font-mono text-muted-foreground">{tag}</span>
-                             ))}
-                          </div>
-                       </div>
+                       {project.meta.tags && (
+                           <div>
+                              <div className="text-xs font-bold uppercase text-muted-foreground mb-2">Tech Stack</div>
+                              <div className="flex flex-wrap gap-2">
+                                 {project.meta.tags.map((tag) => (
+                                    <span key={tag} className="text-xs bg-background border border-border px-2 py-1 rounded font-mono text-muted-foreground">{tag}</span>
+                                 ))}
+                              </div>
+                           </div>
+                       )}
                     </div>
                  </div>
               </aside>
