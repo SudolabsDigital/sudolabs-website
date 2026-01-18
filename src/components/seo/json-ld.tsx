@@ -1,18 +1,20 @@
+import { siteConfig } from "@/core/config";
+
 export default function JsonLd() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "ProfessionalService",
-        "@id": "https://sudolabs.space/#organization",
+        "@id": `${siteConfig.siteUrl}/#organization`,
         "name": "Sudolabs Perú",
         "alternateName": "Sudolabs Digital",
-        "image": "https://sudolabs.space/assets/logo-full.webp",
-        "logo": "https://sudolabs.space/assets/logo-symbol.webp",
+        "image": `${siteConfig.siteUrl}/assets/logo-full.webp`,
+        "logo": `${siteConfig.siteUrl}/assets/logo-symbol.webp`,
         "description": "Consultora de Ingeniería de Software y Transformación Digital en Huancayo.",
-        "url": "https://sudolabs.space",
-        "telephone": "+51923384303",
-        "email": "contacto@sudolabs.space",
+        "url": siteConfig.siteUrl,
+        "telephone": siteConfig.contact.phone,
+        "email": siteConfig.contact.email,
         "priceRange": "$$",
         "areaServed": [
           {
@@ -51,25 +53,25 @@ export default function JsonLd() {
         ],
         "sameAs": [
           "https://github.com/sudolabs-digital",
-          "https://www.facebook.com/profile.php?id=61585696276461",
-          "https://www.instagram.com/sudolabsperu/",
-          "https://www.tiktok.com/@sudolabs_peru"
+          siteConfig.social.facebook,
+          siteConfig.social.instagram,
+          siteConfig.social.tiktok
         ]
       },
       {
         "@type": "WebSite",
-        "@id": "https://sudolabs.space/#website",
-        "url": "https://sudolabs.space",
+        "@id": `${siteConfig.siteUrl}/#website`,
+        "url": siteConfig.siteUrl,
         "name": "Sudolabs Perú",
         "description": "Consultora de Software y Tecnología en Huancayo",
         "publisher": {
-          "@id": "https://sudolabs.space/#organization"
+          "@id": `${siteConfig.siteUrl}/#organization`
         },
         "potentialAction": {
           "@type": "SearchAction",
           "target": {
             "@type": "EntryPoint",
-            "urlTemplate": "https://sudolabs.space/blog?search={search_term_string}"
+            "urlTemplate": `${siteConfig.siteUrl}/blog?search={search_term_string}`
           },
           "query-input": "required name=search_term_string"
         }

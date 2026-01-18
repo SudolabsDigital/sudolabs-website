@@ -4,6 +4,8 @@ import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { ArrowLeft, Calendar, Clock, Tag, ArrowUpRight } from "lucide-react";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import remarkGfm from "remark-gfm";
+import rehypePrettyCode from "rehype-pretty-code";
 
 import { getContentBySlug, getAllContent, getHeadings } from "@/lib/mdx";
 import { BlogMeta, ProjectMeta } from "@/lib/mdx-utils";
@@ -37,6 +39,12 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
       publishedTime: post.meta.date,
       authors: [post.meta.author || "Sudolabs Team"],
       images: post.meta.image ? [{ url: post.meta.image }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${post.meta.title} | Blog Sudolabs`,
+      description: post.meta.description,
+      images: post.meta.image ? [post.meta.image] : undefined,
     },
   };
 }
@@ -170,7 +178,25 @@ export default async function BlogPost(props: { params: Promise<{ slug: string }
                     </header>
 
                     <div className="max-w-none text-foreground text-lg leading-relaxed">
-                        <MDXRemote source={post.content} components={CustomComponents} />
+                        <MDXRemote 
+                            source={post.content} 
+                            components={CustomComponents} 
+                            options={{
+                                mdxOptions: {
+                                    remarkPlugins: [remarkGfm],
+                                    rehypePlugins: [
+                                        [
+                                            rehypePrettyCode,
+                                            {
+                                                theme: "github-dark",
+                                                keepBackground: false,
+                                                defaultLang: "plaintext",
+                                            }
+                                        ]
+                                    ]
+                                }
+                            }}
+                        />
                     </div>
                 </article>
 

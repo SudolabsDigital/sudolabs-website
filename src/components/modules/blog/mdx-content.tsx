@@ -3,6 +3,7 @@ import type { MDXComponents } from 'mdx/types'
 import Image from 'next/image'
 import Link from 'next/link'
 import rehypePrettyCode from 'rehype-pretty-code';
+import remarkGfm from 'remark-gfm';
 
 const components: MDXComponents = {
   a: (props) => (
@@ -13,13 +14,14 @@ const components: MDXComponents = {
     />
   ),
   img: (props) => (
-    <div className="my-10">
+    <div className="my-10 relative">
        <Image 
          src={props.src as string} 
          alt={props.alt as string} 
-         width={800} 
-         height={450}
+         width={1200} 
+         height={675}
          className="rounded-2xl border border-border shadow-sm w-full h-auto"
+         style={{ objectFit: 'contain' }}
        />
        {props.title && <p className="text-center text-sm text-muted-foreground mt-3 italic">{props.title}</p>}
     </div>
@@ -63,6 +65,7 @@ export function MDXContent({ source }: { source: string }) {
         components={components}
         options={{
           mdxOptions: {
+            remarkPlugins: [remarkGfm],
             rehypePlugins: [
               [
                 rehypePrettyCode, 

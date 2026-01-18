@@ -1,6 +1,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { GoogleGenerativeAIStream, StreamingTextResponse } from 'ai';
 import { getContext } from '@/lib/ai/context';
+import { siteConfig } from '@/core/config';
 
 // Forzamos Node.js para poder usar 'fs' en getContext
 export const runtime = 'nodejs';
@@ -69,8 +70,8 @@ export async function POST(req: Request) {
           - Imagen: Camisa azul arremangada, lista para construir. 👩‍💻
 
           DATOS DE CONTACTO:
-          - Email: contacto@sudolabs.space
-          - WhatsApp: +51 923 384 303
+          - Email: ${siteConfig.contact.email}
+          - WhatsApp: ${siteConfig.contact.phone}
           
           CONTEXTO DE SUDOLABS:
           ${context}

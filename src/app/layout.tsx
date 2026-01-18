@@ -8,6 +8,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { GlobalSpotlight } from "@/components/ui/global-spotlight";
 import { GoogleTagManager } from '@next/third-parties/google';
+import { siteConfig } from "@/core/config";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,9 +27,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sudolabs.space"),
+  metadataBase: new URL(siteConfig.siteUrl),
   alternates: {
-    canonical: 'https://sudolabs.space',
+    canonical: siteConfig.siteUrl,
   },
   title: {
     default: "Sudolabs Perú | Consultora de Software y Tecnología en Huancayo",
@@ -66,13 +67,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Sudolabs Perú | Consultora de Software y Tecnología",
     description: "Desarrollamos software a medida y soluciones de tecnología para empresas ambiciosas.",
-    url: "https://sudolabs.space",
+    url: siteConfig.siteUrl,
     siteName: "Sudolabs Perú",
     locale: "es_PE",
     type: "website",
     images: [
       {
-        url: '/opengraph-image.png',
+        url: '/opengraph-image.webp',
         width: 1200,
         height: 630,
         alt: 'Sudolabs Perú - Ingeniería de Software y Tecnología',
@@ -83,7 +84,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Sudolabs Perú | Innovación y Tecnología desde Huancayo",
     description: "Expertos en desarrollo de software y tecnología para negocios modernos.",
-    images: ['/opengraph-image.png'],
+    images: ['/opengraph-image.webp'],
   },
   robots: {
     index: true,

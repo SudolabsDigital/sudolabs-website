@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Link2, Linkedin, Check, Twitter, Facebook } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { siteConfig } from "@/core/config";
 
 interface ShareButtonsProps {
   title: string;
@@ -11,7 +12,7 @@ interface ShareButtonsProps {
 
 export function ShareButtons({ title, slug }: ShareButtonsProps) {
   const [copied, setCopied] = useState(false);
-  const url = typeof window !== 'undefined' ? `${window.location.origin}/blog/${slug}` : `https://sudolabs.space/blog/${slug}`;
+  const url = `${siteConfig.siteUrl}/blog/${slug}`;
   const encodedUrl = encodeURIComponent(url);
   const encodedTitle = encodeURIComponent(title);
 
@@ -55,7 +56,7 @@ export function ShareButtons({ title, slug }: ShareButtonsProps) {
          variant="outline"
          size="icon"
          className="rounded-full w-10 h-10 hover:text-foreground hover:border-foreground transition-all"
-         onClick={() => window.open(`https://x.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`, '_blank')}
+         onClick={() => window.open(`https://x.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}&via=sudolabs_pe&hashtags=Desarrollo,Tecnología,Software`, '_blank')}
          title="Compartir en X"
        >
           <div className="w-4 h-4 relative">
