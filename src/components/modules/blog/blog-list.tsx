@@ -4,87 +4,140 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { Search, Calendar, Clock, ArrowRight, Hash, Sparkles } from "lucide-react";
-import { BlogMeta } from "@/lib/mdx";
+import { Search, Calendar, Clock, ArrowRight, Hash, Sparkles, Filter, ChevronDown } from "lucide-react";
+import { BlogMeta, slugify } from "@/lib/mdx-utils";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { getDifficultyColor, getDifficultyLabel } from "@/lib/blog-ui-utils";
 
 interface BlogListProps {
   posts: BlogMeta[];
   tags: { slug: string; name: string; count: number }[];
+  categories: { slug: string; name: string; count: number }[];
 }
 
-export function BlogList({ posts, tags }: BlogListProps) {
+export function BlogList({ posts, tags, categories }: BlogListProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
 
-  // Filter logic
   const filteredPosts = useMemo(() => {
     return posts.filter((post) => {
       const matchesSearch =
         post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         post.description.toLowerCase().includes(searchQuery.toLowerCase());
       
-      const slugify = (text: string) => text.toLowerCase().trim().replace(/\s+/g, "-");
-      
       const matchesTag = selectedTag 
         ? post.tags?.some(t => slugify(t) === selectedTag) 
         : true;
-      
-      return matchesSearch && matchesTag;
-    });
-  }, [posts, searchQuery, selectedTag]);
 
-  // View logic: If filters are active, show all results. If not, separate Hero from Grid.
-  const hasActiveFilters = searchQuery.length > 0 || selectedTag !== null;
-  const heroPost = !hasActiveFilters && posts.length > 0 ? posts[0] : null;
-  const displayPosts = hasActiveFilters ? filteredPosts : posts.slice(1);
+      const matchesCategory = selectedCategory
+        ? post.category && slugify(post.category) === selectedCategory
+        : true;
+
+      const matchesDifficulty = selectedDifficulty
+        ? post.difficulty === selectedDifficulty
+        : true;
+      
+      return matchesSearch && matchesTag && matchesCategory && matchesDifficulty;
+    });
+  }, [posts, searchQuery, selectedTag, selectedCategory, selectedDifficulty]);
+
+  const hasActiveFilters = searchQuery.length > 0 || selectedTag !== null || selectedCategory !== null || selectedDifficulty !== null;
+  
+  const featuredPost = posts.find(p => p.featured);
+  
+  const heroPost = !hasActiveFilters && featuredPost ? featuredPost : (!hasActiveFilters && posts.length > 0 ? posts[0] : null);
+  
+  const displayPosts = hasActiveFilters ? filteredPosts : posts.filter(p => p.slug !== heroPost?.slug);
 
   return (
     <div className="space-y-12 animate-in fade-in duration-700 slide-in-from-bottom-4">
       
-      {/* 1. Control Bar (Search & Filter) */}
-      <div className="flex flex-col md:flex-row gap-6 justify-between items-center bg-card/30 p-6 rounded-3xl border border-border/40 backdrop-blur-md shadow-sm">
-         <div className="relative w-full md:w-96 group">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
-            <Input 
-               placeholder="Buscar artículos..." 
-               className="pl-11 bg-background/50 border-border/50 focus:border-primary/50 transition-all rounded-xl h-12"
-               value={searchQuery}
-               onChange={(e) => setSearchQuery(e.target.value)}
-            />
-         </div>
-         
-         <div className="flex flex-wrap gap-2 justify-center md:justify-end">
+      {/* 1. Control Bar (Categories, Search & Filters) */}
+      <div className="space-y-6">
+        {/* Category Pills */}
+        <div className="flex flex-wrap gap-2 justify-center md:justify-start">
             <button
-               onClick={() => setSelectedTag(null)}
+               onClick={() => setSelectedCategory(null)}
                className={cn(
-                  "px-4 py-2 rounded-full text-sm font-medium transition-all border",
-                  selectedTag === null 
-                     ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20" 
-                     : "bg-background/50 text-muted-foreground border-border hover:border-primary/50 hover:bg-card"
+                  "px-4 py-2 rounded-full text-sm font-bold transition-all border",
+                  selectedCategory === null 
+                     ? "bg-foreground text-background border-foreground" 
+                     : "bg-background text-muted-foreground border-border hover:border-foreground/50 hover:bg-muted/50"
                )}
             >
-               Todos
+               Todo
             </button>
-            {tags.slice(0, 5).map(tag => (
+            {categories.map(cat => (
                <button
-                  key={tag.slug}
-                  onClick={() => setSelectedTag(selectedTag === tag.slug ? null : tag.slug)}
+                  key={cat.slug}
+                  onClick={() => setSelectedCategory(selectedCategory === cat.slug ? null : cat.slug)}
                   className={cn(
-                     "px-4 py-2 rounded-full text-sm font-medium transition-all border",
-                     selectedTag === tag.slug
-                        ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20"
-                        : "bg-background/50 text-muted-foreground border-border hover:border-primary/50 hover:bg-card"
+                     "px-4 py-2 rounded-full text-sm font-bold transition-all border",
+                     selectedCategory === cat.slug
+                        ? "bg-foreground text-background border-foreground"
+                        : "bg-background text-muted-foreground border-border hover:border-foreground/50 hover:bg-muted/50"
                   )}
                >
-                  {tag.name}
+                  {cat.name}
                </button>
             ))}
-         </div>
+        </div>
+
+        {/* Search & Fine Grained Filters */}
+        <div className="flex flex-col md:flex-row gap-4 justify-between items-center bg-card/30 p-4 rounded-2xl border border-border/40 backdrop-blur-md shadow-sm">
+            <div className="relative w-full md:w-96 group">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                <Input 
+                placeholder="Buscar por título o contenido..." 
+                className="pl-11 bg-background/50 border-border/50 focus:border-primary/50 transition-all rounded-xl h-10"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                />
+            </div>
+            
+            <div className="flex flex-wrap gap-2 w-full md:w-auto">
+                 {/* Difficulty Select */}
+                 <div className="relative">
+                    <select 
+                        className="h-10 pl-9 pr-8 rounded-xl border border-border/50 bg-background/50 appearance-none focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm font-medium cursor-pointer hover:bg-card/50 transition-colors w-full md:w-auto"
+                        value={selectedDifficulty || ""}
+                        onChange={(e) => setSelectedDifficulty(e.target.value || null)}
+                    >
+                        <option value="">Nivel: Todos</option>
+                        <option value="beginner">Principiante</option>
+                        <option value="intermediate">Intermedio</option>
+                        <option value="advanced">Avanzado</option>
+                    </select>
+                    <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-3 h-3 opacity-50 pointer-events-none" />
+                 </div>
+
+                 {/* Tags Select */}
+                 <div className="relative">
+                    <select 
+                        className="h-10 pl-9 pr-8 rounded-xl border border-border/50 bg-background/50 appearance-none focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm font-medium cursor-pointer hover:bg-card/50 transition-colors w-full md:w-auto max-w-[200px]"
+                        value={selectedTag || ""}
+                        onChange={(e) => setSelectedTag(e.target.value || null)}
+                    >
+                        <option value="">Tecnología: Todas</option>
+                        {tags.map(tag => (
+                            <option key={tag.slug} value={tag.slug}>
+                                {tag.name} ({tag.count})
+                            </option>
+                        ))}
+                    </select>
+                    <Hash className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-3 h-3 opacity-50 pointer-events-none" />
+                 </div>
+            </div>
+        </div>
       </div>
 
-      {/* 2. Hero Section (Conditional) */}
+      {/* 2. Hero Section */}
       {heroPost && (
          <section className="relative group">
              <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-purple-500/20 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-1000" />
@@ -100,10 +153,17 @@ export function BlogList({ posts, tags }: BlogListProps) {
                             <Hash className="w-32 h-32 text-foreground/5" />
                         </div>
                      )}
-                     <div className="absolute top-6 left-6 z-20">
-                         <span className="px-3 py-1 rounded-full bg-primary text-primary-foreground text-xs font-bold uppercase tracking-widest flex items-center gap-2 shadow-lg">
-                             <Sparkles className="w-3 h-3" /> Nuevo
-                         </span>
+                     <div className="absolute top-6 left-6 z-20 flex gap-2 flex-wrap">
+                        {heroPost.featured && (
+                            <span className="px-3 py-1 rounded-full bg-primary text-primary-foreground text-xs font-bold uppercase tracking-widest flex items-center gap-2 shadow-lg">
+                                <Sparkles className="w-3 h-3" /> Destacado
+                            </span>
+                        )}
+                        {heroPost.category && (
+                             <span className="px-3 py-1 rounded-full bg-background/80 backdrop-blur text-foreground text-xs font-bold uppercase tracking-widest border border-border/50 shadow-sm">
+                                {heroPost.category}
+                            </span>
+                        )}
                      </div>
                   </div>
                   
@@ -121,8 +181,15 @@ export function BlogList({ posts, tags }: BlogListProps) {
                         {heroPost.description}
                      </p>
                      
-                     <div className="mt-auto flex items-center gap-2 text-primary font-bold text-sm uppercase tracking-widest">
-                        Leer Artículo <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                     <div className="mt-auto flex items-center justify-between">
+                        {heroPost.difficulty && (
+                            <Badge variant="outline" className={cn("uppercase tracking-wider text-[10px] py-1", getDifficultyColor(heroPost.difficulty))}>
+                                {getDifficultyLabel(heroPost.difficulty)}
+                            </Badge>
+                        )}
+                        <span className="flex items-center gap-2 text-primary font-bold text-sm uppercase tracking-widest">
+                            Leer Artículo <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </span>
                      </div>
                   </div>
                </div>
@@ -145,14 +212,22 @@ export function BlogList({ posts, tags }: BlogListProps) {
                         </div>
                       )}
                       
-                      {/* Floating Tags */}
-                      <div className="absolute top-4 right-4 z-20 flex flex-col gap-2 items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-x-4 group-hover:translate-x-0">
-                        {post.tags?.slice(0, 2).map(tag => (
-                           <span key={tag} className="px-2 py-1 rounded-md text-[10px] font-bold bg-background/80 backdrop-blur text-foreground border border-border/50 shadow-sm uppercase tracking-wider">
-                              {tag}
-                           </span>
-                        ))}
+                      <div className="absolute top-4 left-4 z-20">
+                        {post.category && (
+                             <span className="px-2 py-1 rounded-md bg-background/90 backdrop-blur text-foreground text-[10px] font-bold uppercase tracking-widest border border-border/50 shadow-sm">
+                                {post.category}
+                            </span>
+                        )}
                       </div>
+
+                      {/* Difficulty Badge */}
+                       {post.difficulty && (
+                          <div className="absolute bottom-4 right-4 z-20">
+                             <Badge variant="outline" className={cn("uppercase tracking-wider text-[10px] py-0.5 bg-background/90 backdrop-blur border-border/50 shadow-sm", getDifficultyColor(post.difficulty))}>
+                                {getDifficultyLabel(post.difficulty)}
+                             </Badge>
+                          </div>
+                       )}
                   </div>
                   
                   <div className="p-8 flex flex-col flex-1">
@@ -177,7 +252,7 @@ export function BlogList({ posts, tags }: BlogListProps) {
                </div>
                <p className="text-muted-foreground text-lg mb-2 font-medium">No encontramos resultados</p>
                <p className="text-muted-foreground/60 text-sm mb-6">Intenta con otros términos o limpia los filtros</p>
-               <button onClick={() => { setSearchQuery(""); setSelectedTag(null); }} className="text-primary hover:text-primary/80 font-bold text-sm uppercase tracking-widest hover:underline decoration-2 underline-offset-4">
+               <button onClick={() => { setSearchQuery(""); setSelectedTag(null); setSelectedCategory(null); setSelectedDifficulty(null); }} className="text-primary hover:text-primary/80 font-bold text-sm uppercase tracking-widest hover:underline decoration-2 underline-offset-4">
                   Limpiar filtros
                </button>
             </div>

@@ -1,8 +1,13 @@
 ---
 title: "SEO Técnico Avanzado: Más allá de las Keywords"
 description: "Cómo el Server-Side Rendering (SSR) y los metadatos dinámicos colocan tu aplicación en la primera página de Google."
-date: "2026-01-10"
-tags: ["frontend", "seo", "nextjs"]
+date: "2026-01-14"
+readTime: "6 min read"
+tags: ["Next.js", "SEO", "SSR", "Google"]
+category: "Ingeniería"
+difficulty: "advanced"
+featured: false
+author: "Equipo de Ingeniería"
 ---
 
 ## El Dolor: El Sitio Invisible
@@ -17,10 +22,33 @@ Implementamos arquitectura **Next.js con App Router** para garantizar que el con
 
 1.  **Metadatos Dinámicos:** Cada producto, servicio o entrada de blog genera sus propios títulos, descripciones e imágenes (Open Graph) automáticamente basados en la base de datos.
 2.  **Sitemap XML Automático:** Un script que se actualiza cada vez que publicas nuevo contenido, avisando a Google al instante.
-3.  **Core Web Vitals:** Optimizamos la carga de imágenes (LCP) y la estabilidad visual (CLS) para cumplir con las métricas de experiencia de usuario de Google.
+3.  **JSON-LD Estructurado:** Inyectamos datos que Google entiende perfectamente.
+
+```typescript
+// Ejemplo real de nuestra generación de metadata dinámica
+export async function generateMetadata({ params }) {
+  const product = await getProduct(params.slug);
+  
+  return {
+    title: `${product.name} | Sudolabs Store`,
+    openGraph: {
+      images: [product.coverImage],
+    },
+    // Esto es lo que hace que Google muestre precios en los resultados
+    other: {
+      'product:price:amount': product.price,
+      'product:price:currency': 'PEN'
+    }
+  }
+}
+```
+
+### Core Web Vitals
+
+No solo se trata de contenido. Google penaliza los sitios lentos. Optimizamos la carga de imágenes (LCP) y la estabilidad visual (CLS) para cumplir con las métricas de experiencia de usuario de Google, usando formatos modernos como **AVIF** y fuentes optimizadas con `next/font`.
 
 ## Resultado
 
-*   Indexación completa de todas tus páginas.
-*   Previsualizaciones ricas en redes sociales (WhatsApp, Twitter, LinkedIn).
-*   Aumento orgánico del tráfico cualificado.
+*   **Indexación completa** de todas tus páginas en menos de 24 horas.
+*   **Previsualizaciones ricas** al compartir enlaces en WhatsApp, Twitter y LinkedIn.
+*   **Aumento del tráfico orgánico** cualificado sin gastar en anuncios.

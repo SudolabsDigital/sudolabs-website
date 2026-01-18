@@ -2,16 +2,21 @@
 title: "Progressive Web Apps (PWA): Software que funciona sin internet"
 description: "Cómo convertimos tu web en una aplicación instalable con modo offline y sincronización en segundo plano."
 date: "2026-01-11"
-tags: ["pwa", "mobile", "architecture"]
+readTime: "7 min read"
+tags: ["PWA", "Mobile", "Architecture"]
+category: "Ingeniería"
+difficulty: "advanced"
+featured: false
+author: "Equipo de Desarrollo"
 ---
 
 ## El Problema: La Conectividad Intermitente
 
-Tus operarios de campo (almacén, logística, ventas en ruta) entran a zonas sin señal y la aplicación se queda en blanco. "Sin conexión" significa "No puedo trabajar".
+Tus operarios de campo (almacén, logística, ventas en ruta) entran a zonas sin señal y la aplicación se queda en blanco. "Sin conexión" significa "No puedo trabajar", lo que se traduce en pérdidas directas.
 
 ## La Solución: Service Workers & Local Storage
 
-Transformamos tu web en una **PWA (Progressive Web App)**.
+Transformamos tu web en una **PWA (Progressive Web App)**. No es una web normal, es una aplicación que vive en el dispositivo.
 
 ### ¿Qué permite esto?
 
@@ -19,8 +24,21 @@ Transformamos tu web en una **PWA (Progressive Web App)**.
 2.  **Persistencia Local:** Los datos que el usuario ingresa (formularios, pedidos) se guardan en una base de datos interna del navegador (IndexedDB).
 3.  **Background Sync:** Apenas el dispositivo recupera señal, el Service Worker despierta y envía todos los datos pendientes al servidor automáticamente.
 
+```javascript
+// Ejemplo de registro de Service Worker para caché offline
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').then(function(registration) {
+      console.log('ServiceWorker registrado con éxito: ', registration.scope);
+    }, function(err) {
+      console.log('ServiceWorker falló: ', err);
+    });
+  });
+}
+```
+
 ### Beneficios
 
-*   Continuidad operativa absoluta.
-*   Instalable en el Home Screen como una app nativa (sin pasar por App Store/Play Store).
-*   Experiencia de usuario fluida y resiliente.
+*   **Continuidad operativa absoluta:** El negocio no se detiene porque se caiga el Wi-Fi.
+*   **Instalable:** Se instala en el Home Screen como una app nativa (sin pasar por App Store/Play Store).
+*   **Experiencia fluida:** Las transiciones de página son instantáneas porque los recursos ya están en el teléfono.

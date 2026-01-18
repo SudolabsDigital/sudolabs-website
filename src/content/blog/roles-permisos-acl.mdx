@@ -2,7 +2,12 @@
 title: "Seguridad Granular: Roles y Permisos (ACL)"
 description: "Control total sobre quién ve qué. Protege tu información sensible con un sistema de control de acceso robusto."
 date: "2026-01-03"
-tags: ["seguridad", "backend", "arquitectura"]
+readTime: "5 min read"
+tags: ["Seguridad", "Backend", "Arquitectura"]
+category: "Ingeniería"
+difficulty: "intermediate"
+featured: false
+author: "Equipo de Seguridad"
 ---
 
 ## El Riesgo: Demasiada Información
@@ -18,6 +23,21 @@ Implementamos un esquema de seguridad basado en **Roles y Permisos Granulares**.
 1.  **Sujetos (Usuarios):** Las personas que usan el sistema.
 2.  **Roles (Perfiles):** Agrupadores lógicos (e.g., Administrador, Vendedor, Contador).
 3.  **Permisos (Acciones):** La unidad mínima de autorización (e.g., `crear_factura`, `ver_reportes`, `editar_precio`).
+
+```typescript
+// Middleware de protección en Next.js
+export async function middleware(req: NextRequest) {
+  const token = await getToken({ req });
+  const userPermissions = token?.permissions || [];
+  
+  // Si intenta acceder a rutas de admin sin permiso
+  if (req.nextUrl.pathname.startsWith('/admin')) {
+    if (!userPermissions.includes('view_admin_panel')) {
+      return NextResponse.redirect(new URL('/unauthorized', req.url));
+    }
+  }
+}
+```
 
 ### Implementación Técnica
 

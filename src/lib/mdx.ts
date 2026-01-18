@@ -1,51 +1,12 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import { BlogMeta, ProjectMeta, BaseMdxMeta, slugify } from "./mdx-utils";
+
+
+export * from "./mdx-utils";
 
 const contentDirectory = path.join(process.cwd(), "src/content");
-
-export interface BaseMdxMeta {
-  title: string;
-  description: string;
-  date: string;
-  slug: string;
-  image?: string; // Renamed from coverImage to match existing content
-}
-
-export interface BlogMeta extends BaseMdxMeta {
-  tags?: string[];
-  author?: string;
-  readTime?: string; // Renamed from readingTime to match content
-}
-
-export interface ProjectStat {
-  label: string;
-  value: string;
-}
-
-export interface ProjectMeta extends BaseMdxMeta {
-  client?: string;
-  industry?: string;
-  tags?: string[]; // Kept as 'tags' to match content (represents technologies)
-  technologies?: string[]; // Alias or alternative if needed future-wise
-  websiteUrl?: string;
-  isFeatured?: boolean;
-  role?: string; // Added found field
-  stats?: ProjectStat[]; // Added found field
-  relatedPosts?: string[]; // Added found field
-}
-
-export type MdxMeta = BlogMeta | ProjectMeta;
-
-export const slugify = (text: string) => {
-  return text
-    .toString()
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, "-")
-    .replace(/[^\w\-]+/g, "")
-    .replace(/\-\-+/g, "-");
-};
 
 export const getContentBySlug = async <T extends BaseMdxMeta>(
   type: "blog" | "projects",
@@ -112,6 +73,31 @@ export const getAllTags = async () => {
     .map(([slug, count]) => ({
       slug,
       name: tagsMap[slug],
+      count,
+    }))
+    .sort((a, b) => b.count - a.count);
+};
+
+export const getAllCategories = async () => {
+  const posts = await getAllContent<BlogMeta>("blog");
+  const categoriesCount: Record<string, number> = {};
+  const categoriesMap: Record<string, string> = {};
+
+  posts.forEach((post) => {
+    if (post.category) {
+      const slug = slugify(post.category);
+      categoriesCount[slug] = (categoriesCount[slug] || 0) + 1;
+      // Keep the first formatted name found
+      if (!categoriesMap[slug]) {
+        categoriesMap[slug] = post.category;
+      }
+    }
+  });
+
+  return Object.entries(categoriesCount)
+    .map(([slug, count]) => ({
+      slug,
+      name: categoriesMap[slug],
       count,
     }))
     .sort((a, b) => b.count - a.count);

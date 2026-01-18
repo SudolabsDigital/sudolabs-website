@@ -1,4 +1,5 @@
 export const siteConfig = {
+  siteUrl: process.env.NEXT_PUBLIC_APP_URL || "https://sudolabs.space",
   contact: {
     email: "contacto@sudolabs.space",
     phone: "+51 923 384 303",

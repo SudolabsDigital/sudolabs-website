@@ -2,7 +2,12 @@
 title: "Internacionalización (i18n): Tu software sin fronteras"
 description: "Arquitectura escalable para soportar múltiples idiomas sin duplicar código ni romper el SEO."
 date: "2026-01-16"
-tags: ["i18n", "frontend", "expansion"]
+readTime: "6 min read"
+tags: ["i18n", "Frontend", "Next.js"]
+category: "Ingeniería"
+difficulty: "intermediate"
+featured: false
+author: "Equipo de Ingeniería"
 ---
 
 ## El Dolor: El Mercado Limitado
@@ -15,10 +20,20 @@ Implementamos **Next-Intl** o librerías robustas de i18n integradas en el enrut
 
 ### Características
 
-1.  **URL Semánticas:** `/es/contacto` vs `/en/contact`. Esto es crucial para que Google indexe cada versión por separado.
-2.  **Detección Automática:** Redirigimos al usuario a su idioma preferido basándonos en la configuración de su navegador.
+1.  **URL Semánticas:** `/es/contacto` vs `/en/contact`. Esto es crucial para que Google indexe cada versión por separado y muestre el idioma correcto según el país del usuario.
+2.  **Detección Automática:** Redirigimos al usuario a su idioma preferido basándonos en la configuración de su navegador (`Accept-Language` header).
 3.  **Gestión de Contenido:** Archivos JSON de traducción separados del código, permitiendo que traductores profesionales trabajen sin tocar la programación.
+
+```json
+// Ejemplo de estructura de locales (es.json)
+{
+  "HomePage": {
+    "title": "Bienvenido al Futuro",
+    "cta": "Empieza Ahora"
+  }
+}
+```
 
 ### Resultado
 
-Una plataforma global lista para escalar a cualquier mercado.
+Una plataforma global lista para escalar a cualquier mercado sin deuda técnica.

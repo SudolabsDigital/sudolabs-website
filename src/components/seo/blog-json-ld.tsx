@@ -1,11 +1,13 @@
-import { BlogMeta } from "@/lib/mdx";
+import { BlogMeta } from "@/lib/mdx-utils";
+import { siteConfig } from "@/core/config";
+import { absoluteUrl } from "@/lib/utils";
 
 interface BlogJsonLdProps {
   post: BlogMeta;
 }
 
 export default function BlogJsonLd({ post }: BlogJsonLdProps) {
-  const url = `https://sudolabs.space/blog/${post.slug}`;
+  const url = absoluteUrl(`/blog/${post.slug}`);
   
   const jsonLd = {
     "@context": "https://schema.org",
@@ -16,22 +18,23 @@ export default function BlogJsonLd({ post }: BlogJsonLdProps) {
     },
     "headline": post.title,
     "description": post.description,
-    "image": post.image ? `https://sudolabs.space${post.image}` : "https://sudolabs.space/opengraph-image.png",
+    "image": post.image ? absoluteUrl(post.image) : absoluteUrl("/opengraph-image.webp"),
     "datePublished": post.date,
     "dateModified": post.date,
     "author": {
       "@type": "Organization",
       "name": "Sudolabs Perú",
-      "url": "https://sudolabs.space"
+      "url": siteConfig.siteUrl
     },
     "publisher": {
       "@type": "Organization",
       "name": "Sudolabs Perú",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://sudolabs.space/assets/logo-symbol.webp"
+        "url": absoluteUrl("/assets/logo-symbol.webp")
       }
     },
+    "articleSection": post.category || "Technology",
     "keywords": post.tags?.join(", ")
   };
 

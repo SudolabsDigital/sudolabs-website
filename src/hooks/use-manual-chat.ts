@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { siteConfig } from '@/core/config';
 
 type Message = {
   id: string;
@@ -100,7 +101,7 @@ export function useManualChat() {
       const fallbackMessage: Message = { 
         id: 'error-' + Date.now(), 
         role: 'assistant', 
-        content: '¡Vaya! 🔋 Me he quedado sin energía o hay demasiadas personas hablando conmigo ahora mismo. No quiero que esperes, escríbenos directo a **contacto@sudolabs.space** o por **[WhatsApp (+51 923 384 303)](https://wa.me/51923384303)** y te atenderemos de inmediato. 🚀' 
+        content: `¡Vaya! 🔋 Me he quedado sin energía o hay demasiadas personas hablando conmigo ahora mismo. No quiero que esperes, escríbenos directo a **${siteConfig.contact.email}** o por **[WhatsApp (${siteConfig.contact.phone})](https://wa.me/${siteConfig.contact.whatsapp})** y te atenderemos de inmediato. 🚀` 
       };
       setMessages((prev) => [...prev, fallbackMessage]);
     } finally {

@@ -1,27 +1,30 @@
 ---
-title: "Control de Stock en Tiempo Real: Recetas y Descuento Automático"
-description: "Algoritmos que gestionan tu inventario basándose en la composición de tus productos, evitando quiebres de stock."
+title: "Control de Stock e Insumos: Inventario en Tiempo Real"
+description: "Sistemas Kárdex digitales para evitar el robo hormiga y optimizar tus compras."
 date: "2026-01-08"
-tags: ["logistica", "base-de-datos", "erp"]
+readTime: "6 min read"
+tags: ["Logística", "ERP", "Base de Datos"]
+category: "Soluciones"
+difficulty: "intermediate"
+featured: false
+author: "Equipo de Producto"
 ---
 
-## El Dolor: La Caja Negra del Inventario
+## El Dolor: El Cuaderno Perdido
 
-¿Vendes productos compuestos (como un kit o un plato de comida) y no sabes cuánto material bruto te queda realmente? Gestionar el stock de productos terminados es fácil, pero controlar los insumos que los componen es donde la mayoría de los sistemas fallan.
+Llevar el inventario en Excel o cuadernos es una receta para el desastre. No sabes cuánto tienes realmente, no sabes cuánto vale tu stock inmovilizado y, lo peor, no te das cuenta si te están robando.
 
-## Ingeniería de Inventarios
+## La Solución: Kárdex Digital Automatizado
 
-Implementamos un sistema de **Recetas y Descuento en Cascada**.
+Implementamos un sistema transaccional donde **nada entra ni sale sin dejar huella**.
 
-### Arquitectura Lógica
+### Funcionalidades Críticas
 
-1.  **Definición de Recetas:** Cada producto vendible (Padre) tiene una lista de insumos (Hijos) con sus cantidades exactas.
-    *   *Ejemplo:* 1 Silla = 4 Patas de madera + 1 Asiento + 8 Tornillos.
-2.  **Trigger de Venta:** Cuando se factura una "Silla", el sistema no solo resta 1 silla del stock virtual, sino que descuenta automáticamente los insumos correspondientes del almacén de materia prima.
-3.  **Alertas de Reabastecimiento:** El sistema monitorea los niveles de insumos críticos y te alerta antes de que se agoten.
+1.  **Cálculo de Costo Promedio Ponderado:** Valorización automática de tu inventario según las normas contables.
+2.  **Alertas de Reposición:** El sistema te avisa cuándo comprar antes de que te quedes sin insumos críticos.
+3.  **Movimientos Vinculados:** Una venta descuenta stock automáticamente. Una compra lo aumenta.
 
-## Impacto en el Negocio
+### Impacto
 
-*   **Visibilidad Total:** Sabes exactamente qué puedes producir hoy.
-*   **Menos Mermas:** Identificas robos o desperdicios al comparar el consumo teórico vs real.
-*   **Compras Inteligentes:** Pides insumos basándote en la demanda real de productos.
+*   **Reducción de Mermas:** Al tener trazabilidad, el "robo hormiga" desaparece.
+*   **Optimización de Flujo de Caja:** Compras solo lo que necesitas, cuando lo necesitas.

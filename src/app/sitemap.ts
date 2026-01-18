@@ -1,8 +1,9 @@
 import { MetadataRoute } from 'next'
 import { getAllContent, BlogMeta, ProjectMeta } from '@/lib/mdx'
+import { siteConfig } from '@/core/config'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://sudolabs.space'
+  const baseUrl = siteConfig.siteUrl
   
   // Obtener contenido dinámico
   const blogs = await getAllContent<BlogMeta>('blog')

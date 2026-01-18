@@ -1,8 +1,14 @@
 ---
 title: "Logs de Auditoría: Trazabilidad Total"
 description: "El 'Caja Negra' de tu software. Registra cada movimiento para garantizar responsabilidad y seguridad."
-date: "2026-01-14"
-tags: ["seguridad", "backend", "compliance"]
+date: "2026-01-15"
+readTime: "5 min read"
+tags: ["Seguridad", "Backend", "Compliance"]
+category: "Ingeniería"
+difficulty: "intermediate"
+featured: false
+relatedProject: "oficri-pnp"
+author: "Equipo de Seguridad"
 ---
 
 ## El Problema: "¿Quién borró eso?"
@@ -11,7 +17,7 @@ Un registro importante desaparece. Un precio cambia misteriosamente. Nadie sabe 
 
 ## La Solución: Historial Inmutable
 
-Implementamos un módulo de **Audit Logs** que actúa como el notario del sistema.
+Implementamos un módulo de **Audit Logs** que actúa como el notario del sistema. No es solo un archivo de texto, es una colección estructurada de eventos.
 
 ### ¿Qué registramos?
 
@@ -22,8 +28,29 @@ Cada vez que se modifica el estado del sistema (Crear, Editar, Eliminar), guarda
 4.  **Payload:** El "Antes" y el "Después" de los datos (Snapshot).
 5.  **Timestamp y IP:** Cuándo y desde dónde.
 
+```json
+// Ejemplo de un registro de auditoría real
+{
+  "event_id": "evt_89234",
+  "timestamp": "2026-01-15T14:30:00Z",
+  "actor": {
+    "user_id": "usr_123",
+    "ip": "192.168.1.50"
+  },
+  "action": "UPDATE_PRICE",
+  "resource": {
+    "type": "product",
+    "id": "prod_555"
+  },
+  "changes": {
+    "old_value": 150.00,
+    "new_value": 120.00
+  }
+}
+```
+
 ### Utilidad Práctica
 
 *   **Seguridad:** Detecta patrones de uso sospechosos.
-*   **Recuperación:** Permite deshacer cambios erróneos volviendo a versiones anteriores.
+*   **Recuperación:** Permite deshacer cambios erróneos volviendo a versiones anteriores ("Time Travel").
 *   **Compliance:** Requisito indispensable para normativas legales y de calidad.

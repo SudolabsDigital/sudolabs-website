@@ -1,4 +1,4 @@
-import { getContentBySlug, getAllContent, getPostsBySlugs, ProjectMeta } from "@/lib/mdx";
+import { getContentBySlug, getAllContent, getPostsBySlugs, ProjectMeta, BlogMeta } from "@/lib/mdx";
 import { MDXContent } from "@/components/modules/blog/mdx-content";
 import { notFound } from "next/navigation";
 import { ArrowLeft, BookOpen, Briefcase, ArrowRight } from "lucide-react";
@@ -31,12 +31,19 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
     notFound();
   }
 
-  // Ahora el tipado es seguro, no necesitamos validaciones manuales excesivas
-  const relatedPostSlugs = project.meta.relatedPosts || [];
-
-  const relatedPosts = relatedPostSlugs.length > 0 
-    ? await getPostsBySlugs(relatedPostSlugs) 
+  const manualPostSlugs = project.meta.relatedPosts || [];
+  const manualPosts = manualPostSlugs.length > 0 
+    ? await getPostsBySlugs(manualPostSlugs) 
     : [];
+
+  const allBlogPosts = await getAllContent<BlogMeta>("blog");
+  const linkedPosts = allBlogPosts.filter(post => post.relatedProject === params.slug);
+
+  const uniquePostsMap = new Map();
+  [...manualPosts, ...linkedPosts].forEach(post => {
+      uniquePostsMap.set(post.slug, post);
+  });
+  const relatedPosts = Array.from(uniquePostsMap.values());
 
   return (
     <div className="flex flex-col bg-background font-sans selection:bg-primary/20">
