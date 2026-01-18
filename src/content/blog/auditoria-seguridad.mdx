@@ -2,7 +2,12 @@
 title: "Auditoría de Seguridad Web: ¿Qué tan expuesto estás?"
 description: "Evaluación técnica de vulnerabilidades comunes (OWASP Top 10) para proteger tu reputación y tus datos."
 date: "2026-01-13"
-tags: ["seguridad", "consultoria", "auditoria"]
+readTime: "4 min read"
+tags: ["Seguridad", "Consultoría", "Auditoría"]
+category: "Ingeniería"
+difficulty: "advanced"
+featured: false
+author: "Equipo de Seguridad"
 ---
 
 ## El Riesgo: La Brecha Invisible
@@ -11,15 +16,22 @@ Tu sitio web parece funcionar bien, pero podría tener puertos abiertos, librer�
 
 ## La Solución: Pentesting de Caja Blanca/Gris
 
-Realizamos un escaneo exhaustivo de tu infraestructura digital.
+Realizamos un escaneo exhaustivo de tu infraestructura digital simulando ataques reales.
 
 ### Puntos de Control
 
-*   **Configuración SSL/TLS:** Certificados válidos y cifrado fuerte.
-*   **Cabeceras de Seguridad:** HSTS, CSP, X-Frame-Options para prevenir ataques XSS y Clickjacking.
-*   **Dependencias:** Detección de versiones de software con vulnerabilidades conocidas (CVEs).
-*   **Exposición de Datos:** Revisión de fugas de información sensible en código fuente o APIs públicas.
+1.  **Configuración SSL/TLS:** Certificados válidos y cifrado fuerte.
+2.  **Cabeceras de Seguridad:** Implementación estricta de HSTS, CSP (Content Security Policy) y X-Frame-Options para prevenir ataques XSS y Clickjacking.
+3.  **Dependencias:** Detección de versiones de software con vulnerabilidades conocidas (CVEs) usando herramientas automatizadas.
+4.  **Exposición de Datos:** Revisión de fugas de información sensible en código fuente o APIs públicas.
+
+```bash
+# Ejemplo de lo que buscamos en tus cabeceras HTTP
+Content-Security-Policy: default-src 'self'; script-src 'self' https://analytics.google.com;
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+X-Content-Type-Options: nosniff
+```
 
 ### Entregable
 
-Un reporte ejecutivo tipo semáforo (Rojo/Amarillo/Verde) con instrucciones claras de remediación para tu equipo de TI.
+Un reporte ejecutivo tipo semáforo (Rojo/Amarillo/Verde) con instrucciones claras de remediación para tu equipo de TI. No solo te decimos qué está mal, te decimos cómo arreglarlo.

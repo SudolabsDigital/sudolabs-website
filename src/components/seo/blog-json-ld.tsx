@@ -1,4 +1,4 @@
-import { BlogMeta } from "@/lib/mdx";
+import { BlogMeta } from "@/lib/mdx-utils";
 
 interface BlogJsonLdProps {
   post: BlogMeta;
@@ -32,6 +32,7 @@ export default function BlogJsonLd({ post }: BlogJsonLdProps) {
         "url": "https://sudolabs.space/assets/logo-symbol.webp"
       }
     },
+    "articleSection": post.category || "Technology",
     "keywords": post.tags?.join(", ")
   };
 

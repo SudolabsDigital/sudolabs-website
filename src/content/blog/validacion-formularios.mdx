@@ -1,26 +1,37 @@
 ---
-title: "Formularios a Prueba de Balas"
-description: "Validación en tiempo real con Zod y React Hook Form para asegurar datos limpios desde el origen."
-date: "2026-01-15"
-tags: ["frontend", "ux", "data-quality"]
+title: "Validación de Formularios: Datos Limpios desde el Origen"
+description: "Cómo usamos Zod y React Hook Form para garantizar que nunca entre basura a tu base de datos."
+date: "2026-01-06"
+readTime: "5 min read"
+tags: ["Frontend", "UX", "Calidad de Datos"]
+category: "Ingeniería"
+difficulty: "beginner"
+featured: false
+author: "Equipo de Frontend"
 ---
 
-## El Dolor: "Garbage In, Garbage Out"
+## El Problema: "Garbage In, Garbage Out"
 
-Recibes pedidos con teléfonos incompletos, correos sin arroba o DNIs con letras. Tu equipo de ventas pierde tiempo llamando para corregir datos o los correos de confirmación rebotan.
+Si permites que un usuario escriba "veinte soles" en un campo numérico o un email sin arroba, tu base de datos se llena de basura. Esto rompe reportes, facturación y análisis futuros.
 
-## La Solución: Validación de Esquemas (Zod)
+## La Solución: Schemas Fuertemente Tipados
 
-Dejamos atrás las validaciones simples de HTML5. Implementamos esquemas de validación robustos que guían al usuario.
+Combinamos **Zod** (validación de esquemas) con **React Hook Form** para una experiencia de usuario impecable.
 
-### Características
+### Beneficios Técnicos
 
-1.  **Feedback Inmediato:** El campo se pone rojo y muestra un mensaje de ayuda *mientras* el usuario escribe, no después de hacer click en "Enviar".
-2.  **Validación Asíncrona:** Verificar si el correo ya está registrado en la base de datos antes de permitir el envío.
-3.  **Formatos Complejos:** Validación de RUC, DNI, Tarjetas de Crédito con algoritmo de Luhn, y fuerza de contraseñas.
+1.  **Feedback Instantáneo:** El usuario ve el error apenas deja de escribir ("Debes ingresar un número válido"), sin esperar a enviar el formulario.
+2.  **Seguridad de Tipos:** TypeScript infiere automáticamente los tipos desde el esquema de validación.
+3.  **Lógica Compleja:** Validaciones como "La contraseña debe coincidir" o "La fecha de fin debe ser posterior a la de inicio" son triviales de implementar.
+
+```typescript
+// Ejemplo de esquema Zod
+const UserSchema = z.object({
+  email: z.string().email({ message: "Email inválido" }),
+  age: z.number().min(18, { message: "Debes ser mayor de edad" }),
+});
+```
 
 ### Resultado
 
-*   Bases de datos limpias y normalizadas.
-*   Menor fricción para el usuario (sabe qué corregir al instante).
-*   Aumento en la tasa de finalización de formularios.
+Datos estructurados, limpios y listos para ser procesados. Cero sorpresas en el backend.

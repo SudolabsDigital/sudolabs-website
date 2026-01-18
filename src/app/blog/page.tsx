@@ -1,4 +1,4 @@
-import { getAllContent, getAllTags, BlogMeta } from "@/lib/mdx";
+import { getAllContent, getAllTags, getAllCategories, BlogMeta } from "@/lib/mdx";
 import { BlogList } from "@/components/modules/blog/blog-list";
 
 export const metadata = {
@@ -10,6 +10,7 @@ export default async function BlogIndex() {
   // Fetch data on the server
   const posts = await getAllContent<BlogMeta>("blog");
   const tags = await getAllTags();
+  const categories = await getAllCategories();
 
   return (
     <div className="min-h-screen bg-background selection:bg-primary/20 font-sans pb-24">
@@ -29,7 +30,7 @@ export default async function BlogIndex() {
           </div>
 
           {/* Interactive Client Component */}
-          <BlogList posts={posts} tags={tags} />
+          <BlogList posts={posts} tags={tags} categories={categories} />
           
        </div>
     </div>

@@ -4,6 +4,11 @@ description: "El email tiene una tasa de apertura del 20%. WhatsApp supera el 98
 date: "2026-01-07"
 readTime: "5 min read"
 tags: ["Node.js", "WhatsApp API", "Automatización", "SaaS"]
+category: "Tutorial"
+difficulty: "intermediate"
+featured: false
+relatedProject: "estilo-barbaro"
+author: "Equipo de Desarrollo"
 ---
 
 Para un negocio de servicios (barbería, consultorio dental, taller), el enemigo número uno no es la competencia, es el **"No-Show"**: el cliente que reserva y olvida asistir.
@@ -24,17 +29,19 @@ A diferencia de la app de WhatsApp que tienes en tu celular, la **API de WhatsAp
 En el proyecto **Estilo Bárbaro**, construimos un microservicio que monitorea la agenda en tiempo real.
 
 ```javascript
-// Pseudocódigo del Job de Cron
+// Pseudocódigo del Job de Cron para recordatorios
 cron.schedule('*/15 * * * *', async () => {
-  const citas = await getCitasProximas(2); // Citas en 2 horas
+  const citas = await getCitasProximas(2); // Citas en las próximas 2 horas
   
   for (const cita of citas) {
     if (!cita.recordatorioEnviado) {
+      // Enviamos usando una plantilla pre-aprobada por Meta
       await WhatsAppService.sendTemplate({
         to: cita.cliente.telefono,
         template: 'recordatorio_cita_v1',
         params: [cita.hora, cita.barbero]
       });
+      
       await markAsSent(cita.id);
     }
   }
