@@ -1,8 +1,9 @@
 import { getAllContent, ProjectMeta } from "@/lib/mdx";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles, ExternalLink } from "lucide-react";
 import { ProblemSolverCTA } from "@/components/modules/blog/problem-solver-cta";
+import { LivePreviewBadge } from "@/components/ui/live-preview-badge";
 
 export const metadata = {
   title: "Portafolio y Casos de Éxito | Sudolabs",
@@ -60,8 +61,13 @@ export default async function ProyectosPage() {
                                 ))}
                             </div>
 
-                            <div className="flex items-center gap-2 font-bold text-xs text-primary uppercase tracking-widest">
-                                Ver Caso de Estudio <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                            <div className="flex items-center gap-6">
+                                <div className="flex items-center gap-2 font-bold text-xs text-primary uppercase tracking-widest">
+                                    Ver Caso de Estudio <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                                </div>
+                                {featuredProject.websiteUrl && (
+                                    <LivePreviewBadge url={featuredProject.websiteUrl} />
+                                )}
                             </div>
                         </div>
 
@@ -102,6 +108,14 @@ export default async function ProyectosPage() {
                                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                             className="object-cover group-hover:scale-105 transition-transform duration-500"
                                         />
+                                    )}
+                                    {project.websiteUrl && (
+                                        <div className="absolute top-4 right-4 z-20">
+                                            <LivePreviewBadge 
+                                                url={project.websiteUrl} 
+                                                className="bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10"
+                                            />
+                                        </div>
                                     )}
                                 </div>
                                 <div className="p-6 flex flex-col flex-1">
