@@ -1,10 +1,11 @@
 import { getContentBySlug, getAllContent, getPostsBySlugs, ProjectMeta, BlogMeta } from "@/lib/mdx";
 import { MDXContent } from "@/components/modules/blog/mdx-content";
 import { notFound } from "next/navigation";
-import { ArrowLeft, BookOpen, Briefcase, ArrowRight } from "lucide-react";
+import { ArrowLeft, BookOpen, Briefcase, ArrowRight, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { ProblemSolverCTA } from "@/components/modules/blog/problem-solver-cta";
+import { LivePreviewBadge } from "@/components/ui/live-preview-badge";
 
 export async function generateStaticParams() {
   const projects = await getAllContent<ProjectMeta>("projects");
@@ -119,6 +120,22 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
                                  ))}
                               </div>
                            </div>
+                       )}
+
+                       {project.meta.websiteUrl && (
+                          <div className="pt-4 border-t border-border/50">
+                             <a 
+                                href={project.meta.websiteUrl} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground py-4 rounded-2xl font-bold text-sm uppercase tracking-widest hover:brightness-110 transition-all shadow-lg shadow-primary/20"
+                             >
+                                Visitar Proyecto <ExternalLink className="w-4 h-4" />
+                             </a>
+                             <div className="mt-3 flex justify-center">
+                                <LivePreviewBadge url={project.meta.websiteUrl} />
+                             </div>
+                          </div>
                        )}
                     </div>
                  </div>
