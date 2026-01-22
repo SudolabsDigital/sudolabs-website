@@ -1,5 +1,5 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import { GoogleGenerativeAIStream, StreamingTextResponse } from 'ai';
+import { google } from '@ai-sdk/google';
+import { streamText } from 'ai';
 import { getContext } from '@/lib/ai/context';
 import { siteConfig } from '@/core/config';
 
@@ -39,14 +39,11 @@ export async function POST(req: Request) {
       context = "Contexto no disponible.";
     }
 
-    const genAI = new GoogleGenerativeAI(apiKey);
     let lastError = null;
 
     // 2. Bucle de Cascada (Fallback System)
     for (const modelName of MODEL_CASCADE) {
       try {
-        const model = genAI.getGenerativeModel({ model: modelName });
-
         // 3. Gestión inteligente del Historial según el modelo
         let historyToUse = messages.slice(0, -1);
         const lastMessageContent = messages[messages.length - 1].content;
@@ -88,9 +85,13 @@ export async function POST(req: Request) {
           USUARIO (AHORA): ${lastMessageContent}
         `;
 
-        // 4. Generar Stream
-        const geminiStream = await model.generateContentStream(prompt);
-        return new StreamingTextResponse(GoogleGenerativeAIStream(geminiStream));
+        // 4. Generar Stream con AI SDK v4
+        const result = streamText({
+          model: google(modelName),
+          prompt: prompt,
+        });
+
+        return result.toTextStreamResponse();
 
       } catch (error: any) {
         lastError = error;
