@@ -31,13 +31,12 @@ export function Footer() {
           
           {/* COL 1: IDENTIDAD (5 columnas) */}
           <div className="md:col-span-5 space-y-6">
-            <div className="brightness-0 invert filter">
+            <div className="brightness-0 invert filter relative h-10 md:h-12 w-[140px] md:w-[180px]">
                 <Image 
                     src="/assets/logo-full.webp" 
                     alt="Sudolabs Digital" 
-                    width={200} 
-                    height={55} 
-                    className="h-10 md:h-12 w-auto"
+                    fill
+                    className="object-contain object-left"
                 />
             </div>
             <p className="text-gray-400 text-xs leading-relaxed max-w-sm">
@@ -95,6 +94,14 @@ export function Footer() {
           <div className="md:col-span-4 md:col-start-10 space-y-4">
             <h3 className="font-bold text-white text-[10px] uppercase tracking-widest opacity-60">Contacto</h3>
             <ul className="space-y-3 text-xs">
+              <li>
+                <Link href="/contacto" className="text-gray-400 hover:text-white flex items-center gap-3 transition-colors group">
+                  <div className="p-1 rounded bg-white/5 group-hover:bg-white/10 transition-colors">
+                    <Mail className="w-3 h-3 text-[#00FFA3]" />
+                  </div>
+                  <span className="truncate">Escribir Mensaje</span>
+                </Link>
+              </li>
               <li>
                 <a href={`mailto:${siteConfig.contact.email}`} className="text-gray-400 hover:text-white flex items-center gap-3 transition-colors">
                   <Mail className="w-4 h-4 text-[#00FFA3]" /> 

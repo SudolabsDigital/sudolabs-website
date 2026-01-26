@@ -14,7 +14,7 @@ const TubeCursorBackground = dynamic(
 
 export const metadata = {
   title: {
-    absolute: "Sudolabs Perú: Consultora de Software y Tecnología en Huancayo"
+    absolute: "Sudolabs Perú - Consultora de Software y Tecnología en Huancayo"
   },
   description: "Socios tecnológicos para empresas ambiciosas. Desarrollamos software a medida, aplicaciones web modernas y arquitectura cloud de alto rendimiento desde Huancayo para el mundo.",
 }
