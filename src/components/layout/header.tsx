@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from "@/components/ui/sheet"
 import { Menu } from "lucide-react"
 import dynamic from "next/dynamic"
-import DarkThemeToggle from "../ui/darkTheme";
+import DarkThemeToggle from "../ui/dark-theme-toggle";
 import { cn } from "@/lib/utils";
 import { TechButton } from "@/components/ui/design-system/tech-button";
 import { HeaderNav, navItems } from "./header-nav";
