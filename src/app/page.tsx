@@ -8,10 +8,6 @@ const AiChatSection = dynamic(() => import("@/components/modules/home/ai-chat-se
 const FaqSection = dynamic(() => import("@/components/layout/faq-section").then(mod => mod.FaqSection))
 const CtaSection = dynamic(() => import("@/components/modules/home/cta-section").then(mod => mod.CtaSection))
 
-const TubeCursorBackground = dynamic(
-  () => import("@/components/ui/tube-cursor-background").then(mod => mod.TubeCursorBackground)
-)
-
 export const metadata = {
   title: {
     absolute: "Sudolabs Perú - Consultora de Software y Tecnología en Huancayo"
@@ -21,18 +17,30 @@ export const metadata = {
 
 export default function Home() {
   return (
-    // FORZAMOS EL MODO OSCURO SOLO PARA EL HOME
-    // Quitamos bg-background para que se vea el TubeCursorBackground
-    <div className="forced-dark-mode text-foreground min-h-screen">
-      <div className="relative min-h-screen overflow-x-hidden">
-        <TubeCursorBackground />
+    <div className="bg-background text-foreground min-h-screen transition-colors duration-300 relative selection:bg-primary/20">
+      
+      {/* FONDO SUTIL (Blanco Limpio en Light Mode) */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        {/* Orbes Suaves que respiran en las esquinas, manteniendo el centro limpio */}
+        <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-primary/10 rounded-full blur-[120px] mix-blend-multiply dark:mix-blend-screen animate-pulse" style={{ animationDuration: '8s' }} />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-accent/10 rounded-full blur-[120px] mix-blend-multiply dark:mix-blend-screen animate-pulse" style={{ animationDuration: '12s', animationDelay: '2s' }} />
+      </div>
 
+      <div className="relative z-10 min-h-screen overflow-x-hidden">
         <div className="relative z-10">
-          {/* ISLA INTERACTIVA 1: HERO (Carga Inmediata para LCP) */}
-          <HeroSection />
+          
+          {/* PRIMERA IMPRESIÓN INMERSIVA (100vh) */}
+          <div className="flex flex-col min-h-[100svh] pt-24 md:pt-28">
+            {/* ISLA INTERACTIVA 1: HERO (Carga Inmediata para LCP) */}
+            <div className="flex-1 flex flex-col justify-center">
+              <HeroSection />
+            </div>
 
-          {/* ISLA INTERACTIVA 2: TICKER */}
-          <TechTicker />
+            {/* ISLA INTERACTIVA 2: TICKER (Footer de la primera impresión) */}
+            <div className="mt-auto">
+              <TechTicker />
+            </div>
+          </div>
 
           {/* SECCIÓN ESTÁTICA */}
           <SolutionsGrid />

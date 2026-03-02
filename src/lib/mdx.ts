@@ -18,8 +18,13 @@ export const getContentBySlug = async <T extends BaseMdxMeta>(
   const fileContent = fs.readFileSync(filePath, "utf8");
   const { data, content } = matter(fileContent);
 
+  // Auto-assign image if it exists in public/assets/images/blogs/
+  const imagePath = `/assets/images/blogs/${slug}.webp`;
+  const publicImagePath = path.join(process.cwd(), "public", imagePath);
+  const finalImage = fs.existsSync(publicImagePath) ? imagePath : data.image;
+
   return {
-    meta: { ...data, slug } as T,
+    meta: { ...data, slug, image: finalImage } as T,
     content,
   };
 };
@@ -38,7 +43,13 @@ export const getAllContent = async <T extends BaseMdxMeta>(
       const filePath = path.join(dirPath, file);
       const fileContent = fs.readFileSync(filePath, "utf8");
       const { data } = matter(fileContent);
-      return { ...data, slug } as T;
+      
+      // Auto-assign image if it exists in public/assets/images/blogs/
+      const imagePath = `/assets/images/blogs/${slug}.webp`;
+      const publicImagePath = path.join(process.cwd(), "public", imagePath);
+      const finalImage = fs.existsSync(publicImagePath) ? imagePath : data.image;
+
+      return { ...data, slug, image: finalImage } as T;
     })
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 

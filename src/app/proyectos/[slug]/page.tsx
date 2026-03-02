@@ -64,13 +64,13 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
            )}
            
            <div className="container mx-auto px-6 relative z-10 pb-16 md:pb-24">
-              <Link href="/proyectos" className="inline-flex items-center text-sm text-white/70 hover:text-white mb-6 transition-colors backdrop-blur-md bg-black/20 px-3 py-1 rounded-full border border-white/10">
+              <Link href="/proyectos" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors backdrop-blur-md bg-secondary/80 px-3 py-1 rounded-full border border-border">
                  <ArrowLeft className="w-4 h-4 mr-2" /> Volver al Portafolio
               </Link>
-              <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight text-white mb-4 leading-tight max-w-5xl">
+              <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight text-foreground mb-4 leading-tight max-w-5xl">
                 {project.meta.title}
               </h1>
-              <p className="text-lg md:text-2xl text-white/80 max-w-2xl leading-relaxed">
+              <p className="text-lg md:text-2xl text-muted-foreground max-w-2xl leading-relaxed">
                 {project.meta.description}
               </p>
            </div>

@@ -1,5 +1,7 @@
+import { Suspense } from "react";
 import { getAllContent, getAllTags, getAllCategories, BlogMeta } from "@/lib/mdx";
 import { BlogList } from "@/components/modules/blog/blog-list";
+import PageHero from "@/components/ui/page-hero";
 
 export const metadata = {
   title: "Blog de Ingeniería | Sudolabs",
@@ -14,24 +16,21 @@ export default async function BlogIndex() {
 
   return (
     <div className="min-h-screen bg-background selection:bg-primary/20 font-sans pb-24">
-       <div className="container mx-auto px-6 max-w-6xl pt-32">
-          
-          {/* Header Section */}
-          <div className="mb-16 md:mb-24 text-center md:text-left">
-             <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-[1.1]">
-               Blog de <br className="hidden md:block" />
-               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-400">
-                 Ingeniería
-               </span>
-             </h1>
-             <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl leading-relaxed">
-               Bitácora de nuestras decisiones técnicas, experimentos fallidos y victorias arquitectónicas.
-             </p>
-          </div>
+       {/* Page Hero Section */}
+       <PageHero 
+         title="Blog de Ingeniería"
+         subtitle="BITÁCORA TÉCNICA"
+         description="Nuestras decisiones técnicas, experimentos fallidos y victorias arquitectónicas contadas desde las trincheras."
+         imageSrc="/assets/images/blogs/bienvenidos-a-sudolabs.webp"
+         size="compact"
+         align="left"
+         breadcrumbs={[{ label: "Blog" }]}
+       />
 
-          {/* Interactive Client Component */}
-          <BlogList posts={posts} tags={tags} categories={categories} />
-          
+       <div className="container mx-auto px-6 max-w-6xl pt-16">
+          <Suspense fallback={<div className="h-96 flex items-center justify-center">Cargando artículos...</div>}>
+            <BlogList posts={posts} tags={tags} categories={categories} />
+          </Suspense>
        </div>
     </div>
   );

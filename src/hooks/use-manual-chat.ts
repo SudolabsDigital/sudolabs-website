@@ -68,7 +68,7 @@ export function useManualChat() {
 
       const reader = response.body?.getReader();
       const decoder = new TextDecoder();
-      let assistantMessage: Message = { id: (Date.now() + 1).toString(), role: 'assistant', content: '' };
+      const assistantMessage: Message = { id: (Date.now() + 1).toString(), role: 'assistant', content: '' };
 
       setMessages((prev) => [...prev, assistantMessage]);
 

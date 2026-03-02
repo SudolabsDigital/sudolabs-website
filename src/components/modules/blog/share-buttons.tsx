@@ -39,29 +39,28 @@ export function ShareButtons({ title, slug }: ShareButtonsProps) {
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-wrap gap-2">
        {/* LinkedIn */}
        <Button
          variant="outline"
          size="icon"
-         className="rounded-full w-10 h-10 hover:text-[#0077b5] hover:border-[#0077b5] transition-all"
+         className="rounded-full w-8 h-8 hover:text-[#0077b5] hover:border-[#0077b5] transition-all bg-background/50 backdrop-blur-sm"
          onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`, '_blank')}
          title="Compartir en LinkedIn"
        >
-          <Linkedin className="w-4 h-4" />
+          <Linkedin className="w-3.5 h-3.5" />
        </Button>
 
        {/* X (Twitter) */}
        <Button
          variant="outline"
          size="icon"
-         className="rounded-full w-10 h-10 hover:text-foreground hover:border-foreground transition-all"
+         className="rounded-full w-8 h-8 hover:text-foreground hover:border-foreground transition-all bg-background/50 backdrop-blur-sm"
          onClick={() => window.open(`https://x.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}&via=sudolabs_pe&hashtags=Desarrollo,Tecnología,Software`, '_blank')}
          title="Compartir en X"
        >
-          <div className="w-4 h-4 relative">
-             {/* Simple X Logo SVG Path */}
-            <svg viewBox="0 0 24 24" aria-hidden="true" className="w-4 h-4 fill-current"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+          <div className="w-3.5 h-3.5 relative">
+            <svg viewBox="0 0 24 24" aria-hidden="true" className="w-3.5 h-3.5 fill-current"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
           </div>
        </Button>
 
@@ -69,22 +68,22 @@ export function ShareButtons({ title, slug }: ShareButtonsProps) {
        <Button
          variant="outline"
          size="icon"
-         className="rounded-full w-10 h-10 hover:text-[#1877F2] hover:border-[#1877F2] transition-all"
+         className="rounded-full w-8 h-8 hover:text-[#1877F2] hover:border-[#1877F2] transition-all bg-background/50 backdrop-blur-sm"
          onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`, '_blank')}
          title="Compartir en Facebook"
        >
-          <Facebook className="w-4 h-4" />
+          <Facebook className="w-3.5 h-3.5" />
        </Button>
 
        {/* Copy Link / Native Share */}
        <Button
          variant="outline"
          size="icon"
-         className="rounded-full w-10 h-10 hover:text-primary hover:border-primary transition-all"
+         className="rounded-full w-8 h-8 hover:text-primary hover:border-primary transition-all bg-background/50 backdrop-blur-sm"
          onClick={handleShare}
          title="Copiar Enlace"
        >
-          {copied ? <Check className="w-4 h-4 text-green-500" /> : <Link2 className="w-4 h-4" />}
+          {copied ? <Check className="w-3.5 h-3.5 text-green-500" /> : <Link2 className="w-3.5 h-3.5" />}
        </Button>
     </div>
   );
