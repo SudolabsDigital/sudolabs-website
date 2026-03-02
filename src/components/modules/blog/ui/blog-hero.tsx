@@ -1,7 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
 import { Calendar, Clock, Hash, ArrowRight, Sparkles } from "lucide-react";
 import { BlogMeta } from "@/lib/mdx-utils";
 import { Badge } from "@/components/ui/badge";
@@ -13,6 +11,12 @@ interface BlogHeroProps {
 }
 
 export function BlogHero({ post }: BlogHeroProps) {
+  const formattedDate = new Intl.DateTimeFormat('es-ES', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  }).format(new Date(post.date));
+
   return (
     <section className="relative group mb-12 animate-in fade-in zoom-in duration-500">
       <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-purple-500/20 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-1000" />
@@ -55,7 +59,7 @@ export function BlogHero({ post }: BlogHeroProps) {
             <div className="flex items-center gap-3 text-xs font-bold text-muted-foreground mb-6 uppercase tracking-widest">
               <span className="flex items-center gap-1.5">
                 <Calendar className="w-3.5 h-3.5" /> 
-                {format(new Date(post.date), "MMM d, yyyy", { locale: es })}
+                {formattedDate}
               </span>
               {post.readTime && (
                 <span className="flex items-center gap-1.5">

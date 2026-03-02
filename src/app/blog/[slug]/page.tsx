@@ -1,8 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
-import { Calendar, Tag, ArrowUpRight, ArrowLeft } from "lucide-react";
+import { Tag, ArrowLeft } from "lucide-react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypePrettyCode from "rehype-pretty-code";
@@ -55,10 +53,10 @@ export default async function BlogPost(props: { params: Promise<{ slug: string }
     notFound();
   }
 
-  let relatedProject = null;
+  let relatedProject: ProjectMeta | null = null;
   if (post.meta.relatedProject) {
       const projectData = await getContentBySlug<ProjectMeta>("projects", post.meta.relatedProject);
-      relatedProject = projectData?.meta;
+      relatedProject = projectData ? projectData.meta : null;
   }
 
   const headings = getHeadings(post.content);

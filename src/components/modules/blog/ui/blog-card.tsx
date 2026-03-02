@@ -1,7 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
 import { Calendar, Clock, Hash } from "lucide-react";
 import { BlogMeta } from "@/lib/mdx-utils";
 import { Badge } from "@/components/ui/badge";
@@ -13,6 +11,11 @@ interface BlogCardProps {
 }
 
 export function BlogCard({ post }: BlogCardProps) {
+  const formattedDate = new Intl.DateTimeFormat('es-ES', {
+    day: 'numeric',
+    month: 'short',
+  }).format(new Date(post.date));
+
   return (
     <Link 
       href={`/blog/${post.slug}`} 
@@ -68,7 +71,7 @@ export function BlogCard({ post }: BlogCardProps) {
         <div className="flex items-center justify-between text-xs font-medium text-muted-foreground mt-auto pt-6 border-t border-border/30">
           <span className="flex items-center gap-1.5">
             <Calendar className="w-3 h-3" /> 
-            {format(new Date(post.date), "d MMM", { locale: es })}
+            {formattedDate}
           </span>
           <span className="flex items-center gap-1.5">
             <Clock className="w-3 h-3" /> 

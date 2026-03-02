@@ -35,7 +35,6 @@ export default function PageHero({
   imageSrc,
   actions = [],
   breadcrumbs = [],
-  align = "left",
   size = "full",
 }: PageHeroProps) {
   const isCompact = size === "compact";

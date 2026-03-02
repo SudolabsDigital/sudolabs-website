@@ -1,7 +1,7 @@
 import { getAllContent, ProjectMeta } from "@/lib/mdx";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Sparkles, ExternalLink } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { ProblemSolverCTA } from "@/components/modules/blog/problem-solver-cta";
 import { LivePreviewBadge } from "@/components/ui/live-preview-badge";
 

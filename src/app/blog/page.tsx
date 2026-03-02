@@ -1,7 +1,7 @@
-import { Suspense } from "react";
 import { getAllContent, getAllTags, getAllCategories, BlogMeta } from "@/lib/mdx";
 import { BlogList } from "@/components/modules/blog/blog-list";
 import PageHero from "@/components/ui/page-hero";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "Blog de Ingeniería | Sudolabs",
@@ -28,7 +28,7 @@ export default async function BlogIndex() {
        />
 
        <div className="container mx-auto px-6 max-w-6xl pt-16">
-          <Suspense fallback={<div className="h-96 flex items-center justify-center">Cargando artículos...</div>}>
+          <Suspense fallback={<div className="h-96 flex items-center justify-center text-muted-foreground font-medium">Cargando bitácora...</div>}>
             <BlogList posts={posts} tags={tags} categories={categories} />
           </Suspense>
        </div>

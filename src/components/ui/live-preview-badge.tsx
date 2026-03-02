@@ -1,27 +1,26 @@
+'use client';
+
 import React from 'react';
-import { ExternalLink } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface LivePreviewBadgeProps {
-  url?: string;
+  url: string;
   className?: string;
-  showText?: boolean;
 }
 
-export function LivePreviewBadge({ url, className, showText = true }: LivePreviewBadgeProps) {
-  if (!url) return null;
-
+export const LivePreviewBadge = ({ url, className }: LivePreviewBadgeProps) => {
   return (
-    <div className={cn("inline-flex items-center gap-2", className)}>
-      <span className="relative flex h-2 w-2">
-        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-      </span>
-      {showText && (
-        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-500/90">
-          Live Project
-        </span>
+    <a 
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cn(
+        "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 transition-all",
+        className
       )}
-    </div>
+    >
+      <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+      <span className="text-[10px] font-bold uppercase tracking-widest">Live Preview</span>
+    </a>
   );
-}
+};

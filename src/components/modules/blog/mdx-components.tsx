@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { cn, slugify } from "@/lib/utils";
 
 interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
@@ -67,6 +66,7 @@ export const CustomComponents = {
   }: React.ImgHTMLAttributes<HTMLImageElement>) => (
      
     <div className="my-8 rounded-md border bg-muted/50 p-2 shadow-sm">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
             className={cn("rounded-md border border-border/50 w-full", className)}
             alt={alt}
@@ -79,7 +79,7 @@ export const CustomComponents = {
         )}
     </div>
   ),
-  hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,
+  hr: ({ ...props }: React.HTMLAttributes<HTMLHRElement>) => <hr className="my-4 md:my-8" {...props} />,
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
     <div className="my-6 w-full overflow-y-auto rounded-lg border shadow-sm">
       <table className={cn("w-full", className)} {...props} />

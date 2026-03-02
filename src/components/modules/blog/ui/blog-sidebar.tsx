@@ -2,8 +2,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
 import { Calendar, Clock, Share2, ArrowUpRight, ArrowLeft } from "lucide-react";
 import { BlogMeta, ProjectMeta } from "@/lib/mdx-utils";
 import { ShareButtons } from "../share-buttons";
@@ -16,6 +14,12 @@ interface BlogSidebarProps {
 }
 
 export function BlogSidebar({ post, relatedProject }: BlogSidebarProps) {
+  const formattedDate = new Intl.DateTimeFormat('es-ES', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric'
+  }).format(new Date(post.date));
+
   return (
     <div className="flex flex-col gap-8">
       {/* 1. Back Link - Now more integrated */}
@@ -33,7 +37,7 @@ export function BlogSidebar({ post, relatedProject }: BlogSidebarProps) {
           <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Fecha de publicación</span>
           <div className="text-sm font-semibold flex items-center gap-2 text-foreground">
             <Calendar className="w-3.5 h-3.5 text-primary" /> 
-            {format(new Date(post.date), "d MMM, yyyy", { locale: es })}
+            {formattedDate}
           </div>
         </div>
 

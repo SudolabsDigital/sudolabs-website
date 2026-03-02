@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ChevronDown, Send, ShieldCheck, Trash2, User } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { useManualChat } from '@/hooks/use-manual-chat';
 import { TechButton } from '@/components/ui/design-system/tech-button';
@@ -27,8 +27,7 @@ export function AiChatSection() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
-    timer = setTimeout(() => {
+    const timer = setTimeout(() => {
       setMounted(true);
     }, 0);
     return () => clearTimeout(timer);
@@ -48,7 +47,7 @@ export function AiChatSection() {
     }
   };
 
-  const scrollToBottom = (behavior: 'smooth' | 'auto' = 'smooth') => {
+  const scrollToBottom = useCallback((behavior: 'smooth' | 'auto' = 'smooth') => {
     if (scrollContainerRef.current) {
       const { scrollHeight, clientHeight } = scrollContainerRef.current;
       scrollContainerRef.current.scrollTo({
@@ -58,15 +57,14 @@ export function AiChatSection() {
       setUserScrolledUp(false);
       setShowScrollButton(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
-    timer = setTimeout(() => {
+    const timer = setTimeout(() => {
       if (!userScrolledUp) scrollToBottom('auto');
     }, 0);
     return () => clearTimeout(timer);
-  }, [messages, userScrolledUp]); 
+  }, [messages, userScrolledUp, scrollToBottom]); 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -131,7 +129,7 @@ export function AiChatSection() {
               {/* Info Overlay at the bottom of the image */}
               <div className="relative z-10 p-6 bg-gradient-to-t from-background via-background/80 to-transparent pt-32 flex flex-col justify-end h-full">
                 <div className="flex items-center gap-2 mb-1">
-                  <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
+                  <div className="w-2.5 h-2.5 bg-success rounded-full animate-pulse" />
                   <h3 className="text-xl lg:text-2xl font-bold text-foreground tracking-tight">Debian</h3>
                 </div>
                 <p className="text-primary text-xs lg:text-sm font-medium mb-1 lg:mb-4">Tech Lead & Solutions Architect</p>
@@ -219,10 +217,10 @@ export function AiChatSection() {
                             ) : (
                                 <div className="prose prose-sm dark:prose-invert max-w-none prose-p:leading-relaxed prose-pre:bg-secondary prose-pre:border prose-pre:border-border">
                                     <ReactMarkdown components={{
-                                        ul: ({node, ...props}) => <ul className="list-disc list-outside ml-4 mt-2 space-y-1 text-foreground" {...props} />,
-                                        ol: ({node, ...props}) => <ol className="list-decimal list-outside ml-4 mt-2 space-y-1 text-foreground" {...props} />,
-                                        strong: ({node, ...props}) => <strong className="font-bold text-primary bg-primary/10 px-1 rounded" {...props} />,
-                                        a: ({node, ...props}) => (
+                                        ul: ({node: _node, ...props}) => <ul className="list-disc list-outside ml-4 mt-2 space-y-1 text-foreground" {...props} />,
+                                        ol: ({node: _node, ...props}) => <ol className="list-decimal list-outside ml-4 mt-2 space-y-1 text-foreground" {...props} />,
+                                        strong: ({node: _node, ...props}) => <strong className="font-bold text-primary bg-primary/10 px-1 rounded" {...props} />,
+                                        a: ({node: _node, ...props}) => (
                                             <a 
                                                 className="inline-flex items-center gap-1 text-accent hover:text-primary underline underline-offset-4 decoration-accent/30 hover:decoration-primary transition-colors font-medium" 
                                                 target="_blank" 
@@ -230,7 +228,7 @@ export function AiChatSection() {
                                                 {...props} 
                                             />
                                         ),
-                                        p: ({node, ...props}) => <p className="text-foreground" {...props} />
+                                        p: ({node: _node, ...props}) => <p className="text-foreground" {...props} />
                                     }}>
                                         {m.content}
                                     </ReactMarkdown>

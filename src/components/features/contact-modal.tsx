@@ -3,9 +3,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, MessageSquare, Phone, Send, Sparkles, Mail, CheckCircle2, ExternalLink, Terminal as TerminalIcon } from "lucide-react";
+import { X, Send, Sparkles, Mail, CheckCircle2, ExternalLink, Terminal as TerminalIcon } from "lucide-react";
 import { TechButton } from "@/components/ui/design-system/tech-button";
-import { cn } from "@/lib/utils";
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -17,7 +16,6 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
   const [mounted, setMounted] = useState(false);
   const [step, setStep] = useState<"form" | "success">("form");
   const [goal, setGoal] = useState(defaultSubject || "Desarrollo a Medida");
-  const [preference, setPreference] = useState<"chat" | "call">("chat");
   const [email, setEmail] = useState("");
   const [details, setDetails] = useState("");
   const [whatsappUrl, setWhatsappUrl] = useState("");
@@ -28,8 +26,10 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setMounted(true);
-    return () => setMounted(false);
+    const frame = requestAnimationFrame(() => {
+      setMounted(true);
+    });
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   // Body scroll lock
@@ -69,7 +69,7 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
       "SOLICITUD DE INGENIERÍA",
       "---------------------------------",
       `> OBJETIVO:    [ ${goal.toUpperCase()} ]`,
-      `> CANAL:       [ ${preference === 'chat' ? 'CHAT_WHATSAPP' : 'LIDER_CALL'} ]`,
+      `> CANAL:       [ CHAT_WHATSAPP ]`,
       `> CONTACTO:    < ${email || "ANONYMOUS"} >`,
       "",
       "REQUERIMIENTOS:",
@@ -179,12 +179,8 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
                               key={opt}
                               type="button"
                               onClick={() => setGoal(opt)}
-                              className={cn(
-                                "text-left px-4 py-3 rounded-xl border text-[13px] font-bold transition-all duration-300",
-                                goal === opt 
-                                  ? "border-blue-500 bg-blue-500/20 text-blue-100 shadow-[0_0_15px_rgba(59,130,246,0.2)]" 
-                                  : "border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10 text-gray-400 hover:text-gray-200"
-                              )}
+                              className="text-left px-4 py-3 rounded-xl border text-[13px] font-bold transition-all duration-300 border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10 text-gray-400 hover:text-gray-200"
+                              style={goal === opt ? { borderColor: 'rgb(59 130 246)', backgroundColor: 'rgba(59, 130, 246, 0.2)', color: 'rgb(219 234 254)', boxShadow: '0 0 15px rgba(59,130,246,0.2)' } : {}}
                             >
                               {opt}
                             </button>
