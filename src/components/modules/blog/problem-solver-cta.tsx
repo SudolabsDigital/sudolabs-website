@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { ArrowRight, Terminal, Zap } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { TechButton } from "@/components/ui/design-system/tech-button";
 
 export function ProblemSolverCTA() {
   return (
@@ -28,17 +27,24 @@ export function ProblemSolverCTA() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center md:justify-start">
-            <Button asChild size="lg" className="font-bold shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all">
-              <Link href="/contacto?subject=Interés desde el Blog">
-                <Zap className="w-4 h-4 mr-2 fill-current" /> Implementar Esto
-              </Link>
-            </Button>
+            <TechButton 
+              href="/contacto?subject=Interés desde el Blog"
+              variant="primary"
+              size="lg"
+              iconLeft={<Zap className="w-4 h-4 fill-current" />}
+            >
+              Implementar Esto
+            </TechButton>
             
-            <Button asChild variant="outline" size="lg" className="bg-background/50 backdrop-blur border-primary/20 hover:bg-background/80">
-              <Link href="/servicios">
-                Explorar más Soluciones <ArrowRight className="w-4 h-4 ml-2" />
-              </Link>
-            </Button>
+            <TechButton 
+              href="/servicios"
+              variant="outline"
+              size="lg"
+              iconRight={<ArrowRight className="w-4 h-4" />}
+              className="bg-background/50 backdrop-blur"
+            >
+              Explorar más Soluciones
+            </TechButton>
           </div>
         </div>
       </div>

@@ -1,13 +1,10 @@
 "use client"
 import { Moon, Sun } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
 
 const DarkThemeToggle = () => {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [mounted, setMounted] = useState(false);
-  const pathname = usePathname();
-  const isHome = pathname === '/';
 
   // Efecto único de inicialización
   useEffect(() => {
@@ -33,8 +30,6 @@ const DarkThemeToggle = () => {
   }, []);
 
   const toggleTheme = () => {
-    if (isHome) return; // Deshabilitado en home
-
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
     
@@ -56,42 +51,36 @@ const DarkThemeToggle = () => {
     );
   }
 
-  // En Home forzamos visualmente el estado "dark" y deshabilitamos
-  const effectiveTheme = isHome ? 'dark' : theme;
-
   return (
     <button
       onClick={toggleTheme}
-      disabled={isHome}
-      className={`group p-2 rounded-lg transition-all duration-200 
-        ${isHome ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105 active:scale-95 cursor-pointer'}
-      `}
-      aria-label={`Cambiar a tema ${effectiveTheme === 'light' ? 'oscuro' : 'claro'}`}
-      title={isHome ? 'Tema oscuro forzado en Inicio' : `Cambiar a tema ${effectiveTheme === 'light' ? 'oscuro' : 'claro'}`}
+      className={`group p-2 rounded-lg transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer text-muted-foreground hover:text-foreground hover:bg-secondary/50`}
+      aria-label={`Cambiar a tema ${theme === 'light' ? 'oscuro' : 'claro'}`}
+      title={`Cambiar a tema ${theme === 'light' ? 'oscuro' : 'claro'}`}
     >
-      <div className="relative w-10 h-10 flex items-center justify-center">
+      <div className="relative w-6 h-6 flex items-center justify-center">
         {/* Sol - tema claro */}
         <span
           className={`absolute text-2xl transition-all duration-300 ${
-            effectiveTheme === 'light'
+            theme === 'light'
               ? 'opacity-100 rotate-0 scale-100'
               : 'opacity-0 rotate-90 scale-50'
           }`}
           aria-hidden="true"
         >
-            <Sun className='text-[#f8ff2c]'/>
+            <Sun className='w-6 h-6 text-yellow-500'/>
         </span>
         
         {/* Luna - tema oscuro */}
         <span
           className={`absolute text-2xl transition-all duration-300 ${
-            effectiveTheme === 'dark'
+            theme === 'dark'
               ? 'opacity-100 rotate-0 scale-100'
               : 'opacity-0 -rotate-90 scale-50'
           }`}
           aria-hidden="true"
         >
-           <Moon className='text-white'/>
+           <Moon className='w-6 h-6 text-slate-100'/>
         </span>
 
       </div>

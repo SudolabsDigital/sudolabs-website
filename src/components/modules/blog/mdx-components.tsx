@@ -1,25 +1,12 @@
 import Link from "next/link";
-import Image from "next/image";
-import { cn } from "@/lib/utils";
+import { cn, slugify } from "@/lib/utils";
 
 interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
   id?: string;
   children?: React.ReactNode;
 }
 
-// Simple slugify for client-side ID generation
-const slugify = (text: string) => {
-  return text
-    .toString()
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, "-")
-    .replace(/[^\w\-]+/g, "")
-    .replace(/\-\-+/g, "-");
-};
-
 const Heading = ({ as: Component, className, children, ...props }: HeadingProps & { as: 'h1' | 'h2' | 'h3' | 'h4' }) => {
-  // Generate ID from children if it's a string, otherwise use provided ID or undefined
   const id = typeof children === 'string' ? slugify(children) : props.id;
   
   return (
@@ -77,8 +64,9 @@ export const CustomComponents = {
     alt,
     ...props
   }: React.ImgHTMLAttributes<HTMLImageElement>) => (
-    // eslint-disable-next-line @next/next/no-img-element
+     
     <div className="my-8 rounded-md border bg-muted/50 p-2 shadow-sm">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
             className={cn("rounded-md border border-border/50 w-full", className)}
             alt={alt}
@@ -91,7 +79,7 @@ export const CustomComponents = {
         )}
     </div>
   ),
-  hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,
+  hr: ({ ...props }: React.HTMLAttributes<HTMLHRElement>) => <hr className="my-4 md:my-8" {...props} />,
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
     <div className="my-6 w-full overflow-y-auto rounded-lg border shadow-sm">
       <table className={cn("w-full", className)} {...props} />

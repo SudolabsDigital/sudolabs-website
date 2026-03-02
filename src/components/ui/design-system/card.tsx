@@ -1,0 +1,133 @@
+'use client';
+
+import React, { useState, useRef } from 'react';
+import { cn } from '@/lib/utils';
+import { ArrowUpRight } from 'lucide-react';
+import Link from 'next/link';
+
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  title: string;
+  description: string;
+  icon?: React.ReactNode;
+  tag?: string;
+  href?: string;
+  onCardClick?: () => void;
+  interactive?: boolean;
+}
+
+export function FloatingCard({
+  title,
+  description,
+  icon,
+  tag,
+  href,
+  onCardClick,
+  interactive = true,
+  className,
+  ...props
+}: CardProps) {
+  const [visible, setVisible] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const divRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (!divRef.current) return;
+    const bounds = divRef.current.getBoundingClientRect();
+    setPosition({ x: e.clientX - bounds.left, y: e.clientY - bounds.top });
+  };
+
+  const cardClasses = cn(
+    "relative rounded-[16px] p-[2px] overflow-visible group/card block", // Increased padding from p-[1px] to p-[2px] for thicker borders
+    "bg-border transition-all duration-500 h-full w-full",
+    interactive && "hover:-translate-y-1 cursor-pointer", // Removed shadow-sm hover:shadow-md to rely on custom glowing outer shadow
+    className
+  );
+
+  const innerContent = (
+    <>
+      {visible && interactive && (
+        <>
+          {/* Borde Iluminado Interior (Láser de 2px) */}
+          <div
+            className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300 opacity-100 rounded-[16px]"
+            style={{
+              background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, #3178c6 0%, #65318d 20%, transparent 40%)`,
+            }}
+          />
+          {/* Sombra Exterior Iluminada (Aura Difuminada) */}
+          <div
+            className="pointer-events-none absolute inset-0 z-[-1] transition-opacity duration-300 opacity-60 blur-xl rounded-[16px]"
+            style={{
+              background: `radial-gradient(300px circle at ${position.x}px ${position.y}px, #3178c6 0%, #65318d 40%, transparent 70%)`,
+            }}
+          />
+        </>
+      )}
+
+      {/* Main Card Surface - Fondo Sólido Utilitario (Sin sombras internas) */}
+      <div className={cn(
+        "relative z-10 h-full w-full rounded-[14px] p-5 lg:p-6 flex flex-col", // Ajuste del radio interno por el borde más grueso
+        "bg-card transition-colors duration-300", 
+        interactive && "group-hover/card:bg-card/95"
+      )}>
+        {/* Header: Icon & Arrow */}
+        <div className="flex justify-between items-start mb-4">
+          {icon && (
+            <div className="w-10 h-10 rounded-lg bg-secondary/50 flex items-center justify-center text-primary border border-border/50 group-hover/card:border-primary/30 transition-colors duration-300">
+              {icon}
+            </div>
+          )}
+          {interactive && (
+            <ArrowUpRight className="w-4 h-4 text-muted-foreground opacity-0 -translate-x-2 translate-y-2 group-hover/card:opacity-100 group-hover/card:translate-x-0 group-hover/card:translate-y-0 transition-all duration-300" />
+          )}
+        </div>
+
+        {/* Content & Metadata */}
+        <div className="flex flex-col flex-grow">
+          {tag && (
+            <span className="mb-3 w-fit px-2 py-0.5 text-[10px] sm:text-[11px] font-mono font-medium text-accent border border-accent/20 rounded bg-accent/5 uppercase tracking-wider">
+              {tag}
+            </span>
+          )}
+          <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2 leading-tight group-hover/card:text-primary transition-colors">
+            {title}
+          </h3>
+          <p className="text-sm text-muted-foreground leading-relaxed flex-grow">
+            {description}
+          </p>
+        </div>
+      </div>
+    </>
+  );
+
+  if (href) {
+    return (
+      <Link
+        href={href}
+        onClick={onCardClick as React.MouseEventHandler<HTMLAnchorElement>}
+        // @ts-expect-error type discrepancy with Link ref
+        ref={divRef}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setVisible(true)}
+        onMouseLeave={() => setVisible(false)}
+        className={cardClasses}
+      >
+        {innerContent}
+      </Link>
+    );
+  }
+
+  return (
+    <div
+      onClick={onCardClick as React.MouseEventHandler<HTMLDivElement>}
+      ref={divRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setVisible(true)}
+      onMouseLeave={() => setVisible(false)}
+      className={cardClasses}
+      {...props}
+    >
+      {innerContent}
+    </div>
+  );
+}

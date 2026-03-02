@@ -3,6 +3,12 @@ import { streamText } from 'ai';
 import { getContext } from '@/lib/ai/context';
 import { siteConfig } from '@/core/config';
 
+// Interface local para evitar problemas con cambios de exportación en la librería
+interface ChatMessage {
+  role: 'user' | 'assistant' | 'system';
+  content: string;
+}
+
 // Forzamos Node.js para poder usar 'fs' en getContext
 export const runtime = 'nodejs';
 
@@ -23,10 +29,11 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { messages } = await req.json();
+    const body = await req.json();
+    const messages = body.messages as ChatMessage[];
     
     // Validar longitud de mensajes (Seguridad básica)
-    if (messages.some((m: any) => m.content.length > 2000)) {
+    if (messages.some((m: ChatMessage) => m.content.length > 2000)) {
       return new Response(JSON.stringify({ error: "Mensaje demasiado largo" }), { status: 400 });
     }
 
@@ -39,7 +46,7 @@ export async function POST(req: Request) {
       context = "Contexto no disponible.";
     }
 
-    let lastError = null;
+    let lastError: unknown = null;
 
     // 2. Bucle de Cascada (Fallback System)
     for (const modelName of MODEL_CASCADE) {
@@ -54,7 +61,7 @@ export async function POST(req: Request) {
            }
         }
 
-        const historyString = historyToUse.map((m: any) => 
+        const historyString = historyToUse.map((m: ChatMessage) => 
           `${m.role === 'user' ? 'USUARIO' : 'DEBIAN (TÚ)'}: ${m.content}`
         ).join('\n');
 
@@ -93,12 +100,13 @@ export async function POST(req: Request) {
 
         return result.toTextStreamResponse();
 
-      } catch (error: any) {
+      } catch (error: unknown) {
         lastError = error;
-        const isQuotaError = error.message?.includes('429') || error.status === 429;
-        const isOverloadError = error.message?.includes('503') || error.status === 503;
-        const isModelNotFoundError = error.message?.includes('404') || error.status === 404;
-        const isContextError = error.message?.includes('400') || error.status === 400;
+        const err = error as { message?: string; status?: number };
+        const isQuotaError = err.message?.includes('429') || err.status === 429;
+        const isOverloadError = err.message?.includes('503') || err.status === 503;
+        const isModelNotFoundError = err.message?.includes('404') || err.status === 404;
+        const isContextError = err.message?.includes('400') || err.status === 400;
 
         if (isQuotaError || isOverloadError || isModelNotFoundError || isContextError) {
           continue; 
@@ -111,11 +119,12 @@ export async function POST(req: Request) {
     // Si el bucle termina sin éxito
     throw lastError || new Error("Todos los modelos fallaron.");
 
-  } catch (error: any) {
-    console.error("CRITICAL CHAT ERROR:", error);
+  } catch (error: unknown) {
+    const err = error as Error;
+    console.error("CRITICAL CHAT ERROR:", err);
     return new Response(JSON.stringify({ 
       error: "Error en el sistema de IA", 
-      details: error.message 
+      details: err.message 
     }), { 
       status: 500,
       headers: { 'Content-Type': 'application/json' }

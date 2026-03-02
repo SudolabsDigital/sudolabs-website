@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, MessageSquare, Phone, Send, Sparkles, Mail, CheckCircle2, ExternalLink } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { X, Send, Sparkles, Mail, CheckCircle2, ExternalLink, Terminal as TerminalIcon } from "lucide-react";
+import { TechButton } from "@/components/ui/design-system/tech-button";
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -16,17 +16,33 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
   const [mounted, setMounted] = useState(false);
   const [step, setStep] = useState<"form" | "success">("form");
   const [goal, setGoal] = useState(defaultSubject || "Desarrollo a Medida");
-  const [preference, setPreference] = useState<"chat" | "call">("chat");
   const [email, setEmail] = useState("");
   const [details, setDetails] = useState("");
   const [whatsappUrl, setWhatsappUrl] = useState("");
+  
+  // Spotlight state
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [visible, setVisible] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setMounted(true);
-    return () => setMounted(false);
+    const frame = requestAnimationFrame(() => {
+      setMounted(true);
+    });
+    return () => cancelAnimationFrame(frame);
   }, []);
 
-  // Reset state when opening
+  // Body scroll lock
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [isOpen]);
+
+  // Reset state on close
   useEffect(() => {
     if (!isOpen) {
       const timer = setTimeout(() => {
@@ -34,237 +50,245 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
         setGoal(defaultSubject || "Desarrollo a Medida");
         setEmail("");
         setDetails("");
-      }, 300); // Wait for exit animation
+      }, 300);
       return () => clearTimeout(timer);
     }
   }, [isOpen, defaultSubject]);
 
-  const generateWhatsappUrl = () => {
-    const phoneNumber = "51923384303";
-    
-    // Construimos el mensaje con formato estructurado tipo log
-    const message = [
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (!modalRef.current) return;
+    const bounds = modalRef.current.getBoundingClientRect();
+    setPosition({ x: e.clientX - bounds.left, y: e.clientY - bounds.top });
+  };
+
+  const generateWhatsappMessage = () => {
+    return [
       "Hola Sudolabs,",
       "",
       "---------------------------------",
-      "RESUMEN DE SOLICITUD",
+      "SOLICITUD DE INGENIERÍA",
       "---------------------------------",
-      `> Objetivo:    [ ${goal} ]`,
-      `> Preferencia: [ ${preference === 'chat' ? 'Chat Rápido' : 'Agendar Llamada'} ]`,
-      `> Correo:      < ${email || "No especificado"} >`,
+      `> OBJETIVO:    [ ${goal.toUpperCase()} ]`,
+      `> CANAL:       [ CHAT_WHATSAPP ]`,
+      `> CONTACTO:    < ${email || "ANONYMOUS"} >`,
       "",
-      "MENSAJE:",
-      details || "Sin detalles adicionales.",
+      "REQUERIMIENTOS:",
+      details || "Exploración inicial sin detalles previos.",
       "---------------------------------"
     ].join("\n");
-
-    return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const url = generateWhatsappUrl();
+    const message = generateWhatsappMessage();
+    const phoneNumber = "51923384303";
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    
     setWhatsappUrl(url);
-    
-    // Abrir inmediatamente
     window.open(url, '_blank');
-    
-    // Cambiar a estado de éxito/persistencia
     setStep("success");
   };
 
   if (!mounted) return null;
 
-  return createPortal(
+  const modalContent = (
     <AnimatePresence>
       {isOpen && (
-        <>
-          {/* Backdrop without blur */}
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
+          {/* Backdrop Blur & Overlay */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/60 z-[200]"
+            className="absolute inset-0 bg-background/60 backdrop-blur-sm"
           />
 
-          {/* Modal Content */}
+          {/* Modal Architecture */}
           <motion.div
+            ref={modalRef}
+            onMouseMove={handleMouseMove}
+            onMouseEnter={() => setVisible(true)}
+            onMouseLeave={() => setVisible(false)}
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="fixed inset-0 flex items-center justify-center z-[201] p-4 pointer-events-none"
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="relative w-full max-w-xl rounded-[2rem] p-[1.5px] overflow-visible shadow-2xl pointer-events-auto"
           >
-            <div className="bg-white text-black border border-gray-200 rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden pointer-events-auto flex flex-col max-h-[90vh] relative">
-              
-              {/* Decorative gradient blob */}
-              <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
+            {/* Spotlight Effect */}
+            {visible && (
+              <>
+                <div
+                  className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300 opacity-100 rounded-[2rem]"
+                  style={{
+                    background: `radial-gradient(500px circle at ${position.x}px ${position.y}px, var(--color-brand-core, #3178c6) 0%, var(--color-ts-blue, #65318d) 40%, transparent 70%)`,
+                  }}
+                />
+                <div
+                  className="pointer-events-none absolute inset-0 z-[-1] transition-opacity duration-300 opacity-50 blur-2xl rounded-[2rem]"
+                  style={{
+                    background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, var(--color-brand-core, #3178c6) 0%, var(--color-ts-blue, #65318d) 50%, transparent 100%)`,
+                  }}
+                />
+              </>
+            )}
 
-              {/* Header */}
-              <div className="p-6 md:p-8 pb-4 flex justify-between items-start relative z-10">
-                <div>
-                  <h2 className="text-2xl font-bold tracking-tight mb-1">
-                    {step === 'form' ? 'Hablemos de tu Proyecto' : '¡Casi listo!'}
+            {/* Content Core */}
+            <div className="relative z-10 w-full bg-[#0b0f1a] dark:bg-[#0b0f1a] rounded-[1.9rem] overflow-hidden flex flex-col max-h-[90vh] border border-white/5">
+              
+              {/* Header: Tech Console Style */}
+              <div className="p-6 md:p-8 border-b border-white/10 bg-[#0f172a]/50 flex justify-between items-center">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
+                    <span className="text-[10px] font-mono font-bold tracking-widest text-emerald-500/80 uppercase">System_Link: Active</span>
+                  </div>
+                  <h2 className="text-xl md:text-2xl font-extrabold tracking-tight text-white">
+                    {step === 'form' ? 'Nueva Solicitud' : 'Despliegue Exitoso'}
                   </h2>
-                  <p className="text-sm text-muted-foreground">
-                    {step === 'form' ? 'Cuéntanos tu idea, nosotros ponemos la ingeniería.' : 'Si WhatsApp no se abrió, usa los botones abajo.'}
-                  </p>
                 </div>
                 <button 
                   onClick={onClose}
-                  className="p-2 hover:bg-muted rounded-full transition-colors -mr-2 -mt-2"
+                  className="p-2.5 hover:bg-white/10 rounded-full transition-all hover:rotate-90 duration-300 text-gray-400 hover:text-white"
                 >
-                  <X className="w-5 h-5 text-muted-foreground" />
+                  <X className="w-5 h-5" />
                 </button>
               </div>
 
-              {/* Body */}
-              <div className="p-6 md:p-8 pt-2 overflow-y-auto relative z-10 custom-scrollbar">
-                {step === "form" ? (
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    
-                    {/* Field: Goal */}
-                    <div className="space-y-3">
-                      <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
-                        <Sparkles className="w-3 h-3 text-black" />
-                        ¿Cuál es tu objetivo?
-                      </label>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {["Desarrollo a Medida", "Consultoría Técnica", "Automatización", "Otro"].map((opt) => (
-                          <button
-                            key={opt}
-                            type="button"
-                            onClick={() => setGoal(opt)}
-                            className={`text-left px-4 py-3 rounded-xl border text-sm font-medium transition-all duration-200 ${
-                              goal === opt 
-                                ? "border-black bg-black text-white ring-1 ring-black shadow-md" 
-                                : "border-gray-200 bg-gray-50 hover:bg-gray-100 hover:border-black/30 text-gray-600"
-                            }`}
-                          >
-                            {opt}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Field: Email (New) */}
-                    <div className="space-y-3">
-                      <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                        Tu Correo (Opcional)
-                      </label>
-                      <div className="relative">
-                        <Mail className="absolute left-4 top-3.5 w-4 h-4 text-muted-foreground" />
-                        <input
-                          type="email"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          placeholder="ejemplo@empresa.com"
-                          className="w-full rounded-xl border border-gray-200 bg-gray-50 pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-black/50 transition-all text-black placeholder:text-gray-400"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Field: Preference */}
-                    <div className="space-y-3">
-                      <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                        ¿Cómo prefieres conectar?
-                      </label>
-                      <div className="grid grid-cols-2 gap-4">
-                        <button
-                          type="button"
-                          onClick={() => setPreference("chat")}
-                          className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl border transition-all duration-200 ${
-                            preference === "chat"
-                              ? "border-black bg-black text-white ring-1 ring-black shadow-md"
-                              : "border-gray-200 bg-gray-50 hover:bg-gray-100 hover:border-black/30 text-gray-600"
-                          }`}
-                        >
-                          <MessageSquare className={`w-6 h-6 ${preference === 'chat' ? 'text-white' : 'text-gray-400'}`} />
-                          <span className="text-sm font-medium">Chat WhatsApp</span>
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setPreference("call")}
-                          className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl border transition-all duration-200 ${
-                            preference === "call"
-                              ? "border-black bg-black text-white ring-1 ring-black shadow-md"
-                              : "border-gray-200 bg-gray-50 hover:bg-gray-100 hover:border-black/30 text-gray-600"
-                          }`}
-                        >
-                          <Phone className={`w-6 h-6 ${preference === 'call' ? 'text-white' : 'text-gray-400'}`} />
-                          <span className="text-sm font-medium">Agendar Llamada</span>
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Field: Details */}
-                    <div className="space-y-3">
-                      <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                        Detalles adicionales (Opcional)
-                      </label>
-                      <textarea
-                        value={details}
-                        onChange={(e) => setDetails(e.target.value)}
-                        placeholder="Breve descripción de tu idea..."
-                        className="w-full min-h-[80px] rounded-xl border border-gray-200 bg-gray-50 p-4 text-sm text-black placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-black/50 resize-none transition-all"
-                      />
-                    </div>
-
-                    <Button 
-                      type="submit" 
-                      size="lg" 
-                      className="w-full rounded-full text-base font-bold h-12 bg-black text-white hover:bg-gray-900 shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
+              {/* Scrollable Body */}
+              <div className="flex-1 overflow-y-auto p-6 md:p-8 scrollbar-hide bg-transparent">
+                <AnimatePresence mode="wait">
+                  {step === "form" ? (
+                    <motion.form 
+                      key="contact-form"
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 10 }}
+                      onSubmit={handleSubmit} 
+                      className="space-y-8"
                     >
-                      Continuar a WhatsApp <Send className="ml-2 w-4 h-4" />
-                    </Button>
-                  </form>
-                ) : (
-                  <div className="flex flex-col items-center justify-center py-8 text-center space-y-6">
-                    <div className="relative">
-                       <div className="absolute inset-0 bg-green-500/20 blur-3xl rounded-full" />
-                       <div className="w-24 h-24 rounded-full bg-background border border-border flex items-center justify-center relative z-10 shadow-xl">
-                          <CheckCircle2 className="w-12 h-12 text-green-500" />
-                       </div>
-                    </div>
-                    
+                      {/* Selection: Objective */}
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-blue-400">
+                          <Sparkles className="w-3.5 h-3.5" /> 01 // SELECCIONAR_OBJETIVO
+                        </div>
+                        <div className="grid grid-cols-2 gap-3">
+                          {["Desarrollo a Medida", "Consultoría Técnica", "Automatización", "Otro"].map((opt) => (
+                            <button
+                              key={opt}
+                              type="button"
+                              onClick={() => setGoal(opt)}
+                              className="text-left px-4 py-3 rounded-xl border text-[13px] font-bold transition-all duration-300 border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10 text-gray-400 hover:text-gray-200"
+                              style={goal === opt ? { borderColor: 'rgb(59 130 246)', backgroundColor: 'rgba(59, 130, 246, 0.2)', color: 'rgb(219 234 254)', boxShadow: '0 0 15px rgba(59,130,246,0.2)' } : {}}
+                            >
+                              {opt}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Input: Email */}
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-blue-400">
+                          <Mail className="w-3.5 h-3.5" /> 02 // IDENTIFICACIÓN_USER
+                        </div>
+                        <div className="relative group">
+                          <input
+                            type="email"
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="tu@correo.com"
+                            className="w-full h-14 rounded-xl border border-white/10 bg-black/40 pl-5 pr-4 text-sm font-medium focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all text-white placeholder:text-gray-600"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Input: Details (The "Terminal" Input) */}
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-blue-400">
+                          <TerminalIcon className="w-3.5 h-3.5" /> 03 // BUFFER_REQUERIMIENTOS
+                        </div>
+                        <div className="relative rounded-xl border border-white/10 bg-[#05070a] p-1 shadow-inner">
+                           <textarea
+                            value={details}
+                            onChange={(e) => setDetails(e.target.value)}
+                            placeholder="Describe brevemente el alcance, presupuesto o plazos..."
+                            className="w-full min-h-[120px] bg-transparent p-4 text-sm font-mono text-emerald-400/90 placeholder:text-emerald-900/50 focus:outline-none resize-none scrollbar-hide"
+                          />
+                          <div className="absolute bottom-3 right-4 text-[9px] font-mono text-emerald-500/30 tracking-tighter">
+                            STDOUT {">>"}_READY
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Action Zone */}
+                      <div className="pt-4">
+                        <TechButton 
+                          type="submit"
+                          variant="laser"
+                          size="xl"
+                          className="w-full h-16"
+                          iconRight={<Send className="w-5 h-5" />}
+                        >
+                          GENERAR_CONEXIÓN
+                        </TechButton>
+                        <p className="text-center mt-4 text-[9px] font-mono text-gray-500 uppercase tracking-[0.2em]">
+                          LATENCY_ESTIMATED: &lt; 120_MIN
+                        </p>
+                      </div>
+                    </motion.form>
+                  ) : (
                     <motion.div 
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.1 }}
-                      className="space-y-2"
+                      key="contact-success"
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="flex flex-col items-center justify-center py-10 text-center space-y-8"
                     >
-                      <h3 className="text-2xl font-bold">¡Ventana Abierta!</h3>
-                      <p className="text-muted-foreground max-w-xs mx-auto text-sm">
-                        WhatsApp debería haberse abierto. Si no, usa el botón de abajo.
-                      </p>
-                    </motion.div>
+                      <div className="relative">
+                         <div className="absolute inset-0 bg-emerald-500/20 blur-3xl rounded-full animate-pulse" />
+                         <div className="w-24 h-24 rounded-full bg-[#0b0f1a] border border-emerald-500/30 flex items-center justify-center relative z-10 shadow-2xl">
+                            <CheckCircle2 className="w-12 h-12 text-emerald-500" />
+                         </div>
+                      </div>
+                      
+                      <div className="space-y-3">
+                        <h3 className="text-2xl font-bold text-white tracking-tight">¡PAQUETE_ENVIADO!</h3>
+                        <p className="text-gray-400 max-w-xs mx-auto text-sm leading-relaxed">
+                          La conexión ha sido establecida con éxito. Si la terminal de WhatsApp no se activó, usa el reintento manual.
+                        </p>
+                      </div>
 
-                    <div className="flex flex-col gap-3 w-full">
-                       <Button 
-                         variant="outline" 
-                         className="w-full h-12 rounded-xl border-primary/20 hover:bg-primary/5 text-primary font-bold"
-                         onClick={() => window.open(whatsappUrl, '_blank')}
-                       >
-                          Reintentar Abrir WhatsApp <ExternalLink className="ml-2 w-4 h-4" />
-                       </Button>
-                       
-                       <Button 
-                         variant="ghost" 
-                         className="w-full h-12 rounded-xl text-muted-foreground hover:text-foreground"
-                         onClick={onClose}
-                       >
-                          Cerrar, ya envié el mensaje
-                       </Button>
-                    </div>
-                  </div>
-                )}
+                      <div className="flex flex-col gap-3 w-full">
+                         <TechButton 
+                           variant="primary" 
+                           size="lg"
+                           className="w-full h-14"
+                           onClick={() => window.open(whatsappUrl, '_blank')}
+                           iconRight={<ExternalLink className="w-4 h-4" />}
+                         >
+                            REABRIR_WHATSAPP
+                         </TechButton>
+                         
+                         <button 
+                           className="w-full py-3 text-[11px] font-bold text-gray-500 hover:text-white transition-colors uppercase tracking-[0.3em]"
+                           onClick={onClose}
+                         >
+                            [ TERMINAR_SESIÓN ]
+                         </button>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
             </div>
           </motion.div>
-        </>
+        </div>
       )}
-    </AnimatePresence>,
-    document.body
+    </AnimatePresence>
   );
+
+  return createPortal(modalContent, document.body);
 }

@@ -1,7 +1,5 @@
 import { getPostsByTag, getAllTags } from "@/lib/mdx";
 import Link from "next/link";
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
 import { ArrowLeft, Tag as TagIcon } from "lucide-react";
 import { notFound } from "next/navigation";
 
@@ -59,28 +57,36 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
         </div>
 
         <div className="grid gap-10 md:grid-cols-2">
-           {posts.map((post) => (
-             <Link key={post.slug} href={`/blog/${post.slug}`} className="group block">
-                <article className="h-full flex flex-col p-8 rounded-3xl border border-border bg-card/50 hover:bg-card hover:border-primary/50 transition-all shadow-sm hover:shadow-md">
-                   <div className="mb-4 flex items-center gap-3 text-sm text-muted-foreground">
-                      <time dateTime={post.date}>
-                        {format(new Date(post.date), "d 'de' MMMM, yyyy", { locale: es })}
-                      </time>
-                      <span>•</span>
-                      <span>{typeof post.readTime === 'string' ? post.readTime : "Lectura rápida"}</span>
-                   </div>
-                   <h2 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">
-                     {post.title}
-                   </h2>
-                   <p className="text-muted-foreground leading-relaxed mb-6 flex-1">
-                     {post.description}
-                   </p>
-                   <div className="flex items-center gap-2 text-sm font-semibold text-primary">
-                     Leer artículo <span className="group-hover:translate-x-1 transition-transform">→</span>
-                   </div>
-                </article>
-             </Link>
-           ))}
+           {posts.map((post) => {
+             const formattedDate = new Intl.DateTimeFormat('es-ES', {
+               day: 'numeric',
+               month: 'long',
+               year: 'numeric'
+             }).format(new Date(post.date));
+
+             return (
+               <Link key={post.slug} href={`/blog/${post.slug}`} className="group block">
+                  <article className="h-full flex flex-col p-8 rounded-3xl border border-border bg-card/50 hover:bg-card hover:border-primary/50 transition-all shadow-sm hover:shadow-md">
+                     <div className="mb-4 flex items-center gap-3 text-sm text-muted-foreground">
+                        <time dateTime={post.date}>
+                          {formattedDate}
+                        </time>
+                        <span>•</span>
+                        <span>{typeof post.readTime === 'string' ? post.readTime : "Lectura rápida"}</span>
+                     </div>
+                     <h2 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">
+                       {post.title}
+                     </h2>
+                     <p className="text-muted-foreground leading-relaxed mb-6 flex-1">
+                       {post.description}
+                     </p>
+                     <div className="flex items-center gap-2 text-sm font-semibold text-primary">
+                       Leer artículo <span className="group-hover:translate-x-1 transition-transform">→</span>
+                     </div>
+                  </article>
+               </Link>
+             );
+           })}
         </div>
     </main>
   );

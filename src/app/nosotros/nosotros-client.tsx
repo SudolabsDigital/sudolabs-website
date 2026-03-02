@@ -2,9 +2,9 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
 import { ArrowRight, Target, Eye, Shield, Sparkles, Zap, Users } from "lucide-react"
 import dynamic from "next/dynamic"
+import { TechButton } from "@/components/ui/design-system/tech-button"
 
 const ContactModal = dynamic(() => import("@/components/features/contact-modal").then(mod => mod.ContactModal), {
   ssr: false,
@@ -125,36 +125,37 @@ export default function NosotrosPage() {
             </div>
           </section>
 
-          {/* FINAL CTA - DARK ISLAND STYLE */}
-          <section className="relative group overflow-hidden rounded-[3rem] bg-zinc-950 border border-zinc-800 transition-all duration-500 hover:border-zinc-700 py-24 px-6 text-center shadow-2xl">
-             
-             {/* Background Gradients */}
-             <div className="absolute top-0 right-0 -mr-32 -mt-32 w-[600px] h-[600px] bg-[#00FFA3]/10 rounded-full blur-[120px] pointer-events-none group-hover:bg-[#00FFA3]/20 transition-colors duration-700"></div>
-             <div className="absolute bottom-0 left-0 -ml-32 -mb-32 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none group-hover:bg-blue-500/20 transition-colors duration-700"></div>
+          {/* FINAL CTA - DYNAMIC SEMANTIC STYLE */}
+          <section className="relative group overflow-hidden rounded-[3rem] bg-card border border-border transition-all duration-500 hover:border-primary/50 py-24 px-6 text-center shadow-2xl">
+
+             {/* Background Gradients (Auras) */}
+             <div className="absolute top-0 right-0 -mr-32 -mt-32 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none group-hover:bg-primary/10 transition-colors duration-700"></div>
+             <div className="absolute bottom-0 left-0 -ml-32 -mb-32 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] pointer-events-none group-hover:bg-accent/10 transition-colors duration-700"></div>
 
              <div className="relative z-10 max-w-3xl mx-auto">
-               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-[#00FFA3] text-sm font-semibold mb-8 backdrop-blur-md">
+               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border text-primary text-sm font-semibold mb-8 backdrop-blur-md">
                   <Users className="w-4 h-4" />
                   <span>Partnership a Largo Plazo</span>
                </div>
 
-               <h2 className="text-4xl md:text-6xl font-bold text-white mb-8 tracking-tight leading-tight">
+               <h2 className="text-4xl md:text-6xl font-bold text-foreground mb-8 tracking-tight leading-tight">
                  ¿Listo para construir el futuro?
                </h2>
-               <p className="text-gray-400 text-xl md:text-2xl mb-12 font-light leading-relaxed">
-                 Buscas un equipo que entienda tu visión y tenga la capacidad técnica para ejecutarla. <span className="text-[#00FFA3]">Ya nos encontraste.</span>
+               <p className="text-muted-foreground text-xl md:text-2xl mb-12 font-light leading-relaxed">
+                 Buscas un equipo que entienda tu visión y tenga la capacidad técnica para ejecutarla. <span className="text-primary font-semibold">Ya nos encontraste.</span>
                </p>
-               
-               <Button 
-                size="lg" 
-                onClick={() => setIsContactOpen(true)}
-                className="h-16 px-10 text-lg rounded-full shadow-[0_0_40px_rgba(0,255,163,0.2)] bg-[#00FFA3] hover:bg-[#00e692] text-slate-950 hover:scale-105 transition-all font-bold group/btn border-none"
+
+               <TechButton 
+                 variant="laser"
+                 size="xl" 
+                 onClick={() => setIsContactOpen(true)}
+                 iconRight={<ArrowRight className="ml-2 w-5 h-5" />}
+                 className="w-full sm:w-auto"
                >
-                 Iniciar Conversación <ArrowRight className="ml-2 w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
-               </Button>
+                 Iniciar Conversación
+               </TechButton>
              </div>
-          </section>
-                  </section>
+          </section>                  </section>
                 </div>
           
                 <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} defaultSubject="Hablemos de Nosotros" />

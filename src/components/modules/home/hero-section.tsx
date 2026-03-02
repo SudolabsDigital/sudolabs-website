@@ -3,39 +3,41 @@ import { HeroInteractive } from "./hero-interactive"
 
 export function HeroSection() {
   return (
-    <section className="container mx-auto px-6 flex items-start min-h-[82vh] pt-20 pb-12 md:pt-28 lg:pt-28 lg:pb-12">
+    <section className="container mx-auto px-6 flex items-center w-full pb-8 md:pb-12">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-20 items-center w-full">
           
           {/* COLUMNA 1: CONTENIDO */}
           <div className="max-w-2xl md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
             {/* LOGO MÓVIL */}
             <div className="lg:hidden mb-6 flex justify-start">
-               <Image
-                  src="/assets/logo-full.webp"
-                  alt="Sudolabs Digital Logo"
-                  width={250}
-                  height={80}
-                  priority
-                  fetchPriority="high"
-                  sizes="(max-width: 768px) 180px, 0px"
-                  className="w-[180px] h-auto drop-shadow-lg"
-                  style={{ height: 'auto' }}
-               />
+               <div className="dark:invert transition-all relative w-[180px]">
+                 <Image
+                    src="/assets/logo-full.webp"
+                    alt="Sudolabs Digital Logo"
+                    width={250}
+                    height={80}
+                    priority
+                    fetchPriority="high"
+                    sizes="(max-width: 768px) 180px, 0px"
+                    className="w-[180px] h-auto drop-shadow-lg"
+                    style={{ height: 'auto' }}
+                 />
+               </div>
             </div>
 
           {/* H1 optimizado para SEO */}
           <h1
             id="hero-title"
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tighter text-white mb-6 lg:mb-8 leading-[1.05] lg:leading-[0.95]"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tighter text-foreground mb-6 lg:mb-8 leading-[1.05] lg:leading-[0.95]"
           >
             Consultora de software en
-            <strong> Huancayo.</strong>
+            <strong className="text-primary block mt-1"> Huancayo.</strong>
           </h1>
 
           {/* Descripción con jerarquía H2 */}
-          <h2 className="text-lg md:text-xl text-gray-300 mb-8 lg:mb-12 leading-relaxed max-w-xl">
+          <h2 className="text-lg md:text-xl text-muted-foreground mb-8 lg:mb-12 leading-relaxed max-w-xl">
             Diseñamos y desarrollamos{" "}
-            <strong>sitios web, aplicaciones web y sistemas de software a medida</strong>.
+            <strong className="text-foreground">sitios web, aplicaciones web y sistemas de software a medida</strong>.
             Creamos soluciones digitales robustas, seguras y escalables que impulsan
             el crecimiento de tu negocio.
           </h2>
@@ -57,7 +59,7 @@ export function HeroSection() {
                   height={300}
                   loading="eager"
                   sizes="(min-width: 1024px) 600px, 100vw"
-                  className="w-full max-w-[600px] h-auto drop-shadow-2xl relative z-10"
+                  className="w-full max-w-[600px] h-auto drop-shadow-2xl relative z-10 dark:invert transition-all"
                   style={{ height: 'auto' }}
                />
              </div>

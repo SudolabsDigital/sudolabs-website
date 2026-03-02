@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 @plugin "@tailwindcss/typography";
@@ -7,114 +6,165 @@
 @theme {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* =========================================
+     SUDOLABS: 15-COLOR STRATEGIC MATRIX 
+     ========================================= */
+  
+  /* 1. Base & Neutrals (AWS/Anthropic feel) */
+  --color-white-absolute: #ffffff;
+  --color-soft-aura: #f4f7fa;
+  --color-subtle-border: #e2e8f0;
+  --color-anthropic-slate: #212830;
+  --color-github-ink: #151b23;
+  --color-pure-black: #000000;
+  
+  /* 2. Brand Identity (Corporate Trust) */
+  --color-deep-navy: #001b48;
+  --color-brand-core: #004481;
+  --color-ts-blue: #3178c6;
+  --color-sky-highlight: #97cadb;
+  
+  /* 3. Semantic States (Terminal logic) */
+  --color-success-green: #347d39;
+  --color-danger-red: #c93c37;
+  --color-warning-rust: #d77555;
+  
+  /* 4. Magic & Dynamics (AI & Highlights) */
+  --color-ai-purple: #65318d;
+  --color-ethereal-glow: #f0fdfa;
+  --color-transparent: transparent;
 }
 
-/* 1. Base Variables (Default = Light Mode) */
+/* 
+  SEMANTIC SYSTEM MAPPING 
+  Light Theme (Default - AWS Style: Clean, Breathable)
+*/
 :root {
-  /* Base - Neutral Tones */
+  /* Surfaces & Backgrounds */
+  --background: var(--color-white-absolute);
+  --foreground: var(--color-github-ink);
+  
+  --card: var(--color-white-absolute);
+  --card-foreground: var(--color-github-ink);
+  
+  --popover: var(--color-white-absolute);
+  --popover-foreground: var(--color-github-ink);
 
-  /* PRIMARY: Deep Tech Blue */
-  --primary: oklch(0.21 0.006 285.885);
-  --primary-foreground: oklch(0.985 0 0);
+  /* Brand & Accents */
+  --primary: var(--color-brand-core);
+  --primary-foreground: var(--color-white-absolute);
+  
+  --secondary: var(--color-soft-aura);
+  --secondary-foreground: var(--color-deep-navy);
 
-  /* SECONDARY: Evolution Green */
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.21 0.006 285.885);
+  --accent: var(--color-ts-blue);
+  --accent-foreground: var(--color-white-absolute);
 
-  /* ACCENT: Vibrant Blue */
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.21 0.006 285.885);
+  /* Muted & Borders */
+  --muted: var(--color-soft-aura);
+  --muted-foreground: var(--color-anthropic-slate);
 
-  /* MUTED */
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
+  --border: var(--color-subtle-border);
+  --input: var(--color-subtle-border);
+  --ring: var(--color-ts-blue);
 
-  /* BORDERS */
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.705 0.015 286.067);
+  /* Semantic States */
+  --success: var(--color-success-green);
+  --success-foreground: var(--color-white-absolute);
 
-  --radius: 0.625rem;
+  --destructive: var(--color-danger-red);
+  --destructive-foreground: var(--color-white-absolute);
 
-  --background: oklch(1 0 0);
+  --warning: var(--color-warning-rust);
+  --warning-foreground: var(--color-pure-black);
 
-  --foreground: oklch(0.141 0.005 285.823);
-
-  --card: oklch(1 0 0);
-
-  --card-foreground: oklch(0.141 0.005 285.823);
-
-  --popover: oklch(1 0 0);
-
-  --popover-foreground: oklch(0.141 0.005 285.823);
-
-  --destructive: oklch(0.577 0.245 27.325);
-
-  --chart-1: oklch(0.646 0.222 41.116);
-
-  --chart-2: oklch(0.6 0.118 184.704);
-
-  --chart-3: oklch(0.398 0.07 227.392);
-
-  --chart-4: oklch(0.828 0.189 84.429);
-
-  --chart-5: oklch(0.769 0.188 70.08);
-
-  --sidebar: oklch(0.985 0 0);
-
-  --sidebar-foreground: oklch(0.141 0.005 285.823);
-
-  --sidebar-primary: oklch(0.21 0.006 285.885);
-
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-
-  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
-
-  --sidebar-border: oklch(0.92 0.004 286.32);
-
-  --sidebar-ring: oklch(0.705 0.015 286.067);
+  --radius: 0.5rem;
 }
 
-/* 2. Dark Mode Overrides (Applied via .dark class) */
+/* 
+  Dark Theme (GitHub/Anthropic Style: Deep, Focused)
+*/
 .dark {
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.985 0 0);
+  /* Surfaces & Backgrounds */
+  --background: var(--color-github-ink);
+  --foreground: var(--color-soft-aura);
+  
+  --card: var(--color-anthropic-slate);
+  --card-foreground: var(--color-soft-aura);
+  
+  --popover: var(--color-anthropic-slate);
+  --popover-foreground: var(--color-soft-aura);
 
-  --primary: oklch(0.92 0.004 286.32);
-  --primary-foreground: oklch(0.21 0.006 285.885);
+  /* Brand & Accents (Vibrant on dark) */
+  --primary: var(--color-ts-blue);
+  --primary-foreground: var(--color-white-absolute);
+  
+  --secondary: var(--color-anthropic-slate);
+  --secondary-foreground: var(--color-white-absolute);
 
-  --secondary: oklch(0.274 0.006 286.033);
-  --secondary-foreground: oklch(0.985 0 0);
+  --accent: var(--color-sky-highlight);
+  --accent-foreground: var(--color-github-ink);
+  
+  /* Muted & Borders */
+  --muted: var(--color-anthropic-slate);
+  --muted-foreground: var(--color-subtle-border);
 
-  --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground: oklch(0.985 0 0);
+  --border: #30363d; /* Custom dark border matching GitHub aesthetics */
+  --input: #30363d;
+  --ring: var(--color-ts-blue);
 
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
+  /* Semantic States */
+  --success: var(--color-success-green);
+  --success-foreground: var(--color-white-absolute);
 
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.552 0.016 285.938);
-  --card: oklch(0.21 0.006 285.885);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.21 0.006 285.885);
-  --popover-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.21 0.006 285.885);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.552 0.016 285.938);
+  --destructive: var(--color-danger-red);
+  --destructive-foreground: var(--color-white-absolute);
+
+  --warning: var(--color-warning-rust);
+  --warning-foreground: var(--color-github-ink);
+}
+
+/* Exposing semantic variables to Tailwind v4 utilities */
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground transition-colors duration-300;
+  }
 }
 
 @layer utilities {
@@ -131,7 +181,7 @@
     }
   }
 
-  /* Animacion de scroll infinito par aminimizar js */
+  /* Animacion de scroll infinito para minimizar js */
   @keyframes infinite-scroll {
     from { transform: translateX(0); }
     to { transform: translateX(-100%); }
@@ -140,27 +190,34 @@
     animation: infinite-scroll 80s linear infinite;
   }
 
-  /* UTILITY: Force Dark Mode Variables explicitly for specific sections (Home) */
-  .forced-dark-mode {
-    --background: #02071b;
-    --foreground: hsl(210 40% 98%);
-    --primary: hsl(210 40% 98%);
-    --primary-foreground: hsl(222 47% 11%);
-    --secondary: hsl(160 84% 39%);
-    --secondary-foreground: hsl(222 47% 11%);
-    --accent: hsl(217 91% 60%);
-    --accent-foreground: hsl(210 40% 98%);
-    --muted: hsl(217.2 32.6% 17.5%);
-    --muted-foreground: hsl(215 20.2% 65.1%);
-    --border: hsl(217.2 32.6% 17.5%);
-    --input: hsl(217.2 32.6% 17.5%);
-    --ring: hsl(212.7 26.8% 83.9%);
-
-    background-color: var(--background);
-    color: var(--foreground);
+  @keyframes color-breathe {
+    0% {
+      opacity: 0.8;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.3;
+      transform: scale(1.2);
+    }
+    100% {
+      opacity: 0.8;
+      transform: scale(1);
+    }
   }
 
-  /* Hide scrollbar */
+  .animate-color-breathe {
+    animation: color-breathe 20s ease-in-out infinite;
+  }
+
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for a cleaner feel */
   html {
     scrollbar-width: none; 
     -ms-overflow-style: none; 
@@ -170,136 +227,85 @@
   }
 }
 
-/* Utilities base */
-@layer base {
-  * {
-    border-color: var(--border);
-  }
-  body {
-    background-color: var(--background);
-    color: var(--foreground);
-  }
-}
+/* =========================================
+   BLOG & ARTICLE TYPOGRAPHY (Contrast Fixes)
+   ========================================= */
 
-/* Blog Article Contrast Fix (Force High Contrast) */
 .article-content {
-  color: #111827; /* Gray-900 */
+  color: var(--color-github-ink);
 }
 .article-content :is(h1, h2, h3, h4, h5, h6, strong, b) {
-  color: #000000;
+  color: var(--color-pure-black);
   font-weight: 800;
 }
 .article-content a {
-  color: #000000;
+  color: var(--color-ts-blue);
   text-decoration-line: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
+  transition: color 0.2s ease;
+}
+.article-content a:hover {
+  color: var(--color-brand-core);
 }
 .article-content :is(ul, ol) > li::marker {
-  color: #000000;
+  color: var(--color-pure-black);
 }
 .article-content blockquote {
-  color: #374151;
-  border-left-color: #000000;
-  background-color: #f3f4f6;
+  color: var(--color-anthropic-slate);
+  border-left-color: var(--color-pure-black);
+  background-color: var(--color-soft-aura);
 }
 
-/* Article Header Contrast Fix */
+/* Article Header */
 .article-header h1 {
-  color: #000000;
+  color: var(--color-pure-black);
 }
 .article-header p {
-  color: #374151; /* Gray-700 */
+  color: var(--color-anthropic-slate); 
 }
 .article-header .meta-text {
-  color: #4b5563; /* Gray-600 */
+  color: var(--color-anthropic-slate);
 }
 .article-header .tag-badge {
-  background-color: #f3f4f6;
-  color: #1f2937;
-  border-color: #e5e7eb;
+  background-color: var(--color-soft-aura);
+  color: var(--color-github-ink);
+  border-color: var(--color-subtle-border);
 }
 
 /* Dark Mode Overrides for Blog */
 .dark .article-content {
-  color: #e5e7eb; /* Gray-200 */
+  color: var(--color-subtle-border);
 }
 .dark .article-content :is(h1, h2, h3, h4, h5, h6, strong, b) {
-  color: #ffffff;
+  color: var(--color-white-absolute);
 }
 .dark .article-content a {
-  color: #ffffff;
+  color: var(--color-sky-highlight);
+}
+.dark .article-content a:hover {
+  color: var(--color-ts-blue);
 }
 .dark .article-content :is(ul, ol) > li::marker {
-  color: #ffffff;
+  color: var(--color-white-absolute);
 }
 .dark .article-content blockquote {
-  color: #d1d5db;
-  border-left-color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--color-soft-aura);
+  border-left-color: var(--color-white-absolute);
+  background-color: var(--color-anthropic-slate);
 }
 
 .dark .article-header h1 {
-  color: #ffffff;
+  color: var(--color-white-absolute);
 }
 .dark .article-header p {
-  color: #d1d5db; /* Gray-300 */
+  color: var(--color-subtle-border);
 }
 .dark .article-header .meta-text {
-  color: #9ca3af; /* Gray-400 */
+  color: var(--color-subtle-border);
 }
 .dark .article-header .tag-badge {
-  background-color: #1f2937;
-  color: #e5e7eb;
-  border-color: #374151;
-}
-
-@theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+  background-color: var(--color-anthropic-slate);
+  color: var(--color-soft-aura);
+  border-color: #30363d;
 }

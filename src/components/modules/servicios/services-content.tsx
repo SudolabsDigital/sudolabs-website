@@ -118,37 +118,36 @@ export function ServicesContent() {
           ))}
         </div>
 
-        {/* CTA SECTION - DARK ISLAND STYLE */}
-        <div className="relative group overflow-hidden rounded-[2.5rem] bg-zinc-950 border border-zinc-800 transition-all duration-500 hover:border-zinc-700 px-6 py-20 md:py-28 text-center shadow-2xl">
-          
-          {/* Background Gradients */}
-          <div className="absolute top-0 right-0 -mr-32 -mt-32 w-[500px] h-[500px] bg-[#00FFA3]/10 rounded-full blur-[100px] pointer-events-none group-hover:bg-[#00FFA3]/20 transition-colors duration-700"></div>
-          <div className="absolute bottom-0 left-0 -ml-32 -mb-32 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[100px] pointer-events-none group-hover:bg-purple-500/20 transition-colors duration-700"></div>
-          
+        {/* CTA SECTION - DYNAMIC SEMANTIC STYLE */}
+        <div className="relative group overflow-hidden rounded-[2.5rem] bg-card border border-border transition-all duration-500 hover:border-primary/50 px-6 py-20 md:py-28 text-center shadow-2xl">
+
+          {/* Background Gradients (Auras) */}
+          <div className="absolute top-0 right-0 -mr-32 -mt-32 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] pointer-events-none group-hover:bg-primary/10 transition-colors duration-700"></div>
+          <div className="absolute bottom-0 left-0 -ml-32 -mb-32 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[100px] pointer-events-none group-hover:bg-accent/10 transition-colors duration-700"></div>
+
           <div className="relative z-10 max-w-3xl mx-auto">
               {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-[#00FFA3] text-sm font-semibold mb-8 backdrop-blur-md">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border text-primary text-sm font-semibold mb-8 backdrop-blur-md">
                 <Rocket className="w-4 h-4" />
                 <span>Desafíos Especiales</span>
               </div>
 
-              <h2 className="text-4xl md:text-6xl font-bold text-white mb-8 tracking-tight leading-tight">
+              <h2 className="text-4xl md:text-6xl font-bold text-foreground mb-8 tracking-tight leading-tight">
                   ¿Tu problema no está en la lista?
               </h2>
-              <p className="text-gray-400 text-xl md:text-2xl mb-12 font-light leading-relaxed">
-                  Los mejores proyectos suelen ser los que no encajan en ninguna categoría estándar. <span className="text-[#00FFA3]">Nos encantan los retos raros.</span>
+              <p className="text-muted-foreground text-xl md:text-2xl mb-12 font-light leading-relaxed">
+                  Los mejores proyectos suelen ser los que no encajan en ninguna categoría estándar. <span className="text-primary font-semibold">Nos encantan los retos raros.</span>
               </p>
-              
+
               <Button 
                   size="lg" 
                   onClick={() => setIsContactOpen(true)}
-                  className="h-16 px-10 text-lg rounded-full shadow-[0_0_40px_rgba(0,255,163,0.2)] bg-[#00FFA3] hover:bg-[#00e692] text-slate-950 hover:scale-105 transition-all font-bold group/btn border-none"
+                  className="h-16 px-10 text-lg rounded-full shadow-[0_0_30px_rgba(var(--color-brand-core),0.2)] bg-primary hover:brightness-110 text-primary-foreground hover:scale-105 transition-all font-bold group/btn border-none"
               >
                   Cuéntanos el Reto <ArrowRight className="ml-2 w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
               </Button>
           </div>
         </div>
-
       </section>
 
       <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} defaultSubject="Consulta de Servicios" />
