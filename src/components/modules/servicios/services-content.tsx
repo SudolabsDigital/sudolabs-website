@@ -2,9 +2,10 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Zap, ArrowRight, Globe, Cpu, Code2, ShieldCheck, Rocket } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Zap, Globe, Cpu, Code2, ShieldCheck, Rocket } from "lucide-react"
 import dynamic from "next/dynamic"
+import PageHero from "@/components/ui/page-hero"
+import { CtaCard } from "@/components/ui/design-system/cta-card"
 
 const ContactModal = dynamic(() => import("@/components/features/contact-modal").then(mod => mod.ContactModal), {
   ssr: false,
@@ -65,28 +66,17 @@ export function ServicesContent() {
   const [isContactOpen, setIsContactOpen] = useState(false);
 
   return (
-    <div className="pt-32 pb-24 relative z-10">
-      <section className="container mx-auto px-6 max-w-7xl">
-        
-        {/* HEADER */}
-        <div className="text-center mb-24 max-w-3xl mx-auto">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-extrabold tracking-tighter mb-8 text-foreground"
-          >
-            Capacidades <br/>
-            <span className="text-primary">Técnicas.</span>
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-xl text-muted-foreground leading-relaxed font-light"
-          >
-            Un stack completo de servicios diseñados para resolver problemas complejos. Sin relleno, solo ingeniería.
-          </motion.p>
-        </div>
+    <>
+      <PageHero 
+        title="Capacidades Técnicas."
+        subtitle="Catálogo de Servicios"
+        description="Un stack completo de servicios diseñados para resolver problemas complejos. Sin relleno, solo ingeniería."
+        imageSrc="/assets/images/Dashboards Ejecutivos.webp"
+        size="compact"
+      />
+      
+      <div className="pt-24 pb-24 relative z-10">
+        <section className="container mx-auto px-6 max-w-7xl">
 
         {/* BENTO GRID DE SERVICIOS */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-32">
@@ -118,39 +108,21 @@ export function ServicesContent() {
           ))}
         </div>
 
-        {/* CTA SECTION - DYNAMIC SEMANTIC STYLE */}
-        <div className="relative group overflow-hidden rounded-[2.5rem] bg-card border border-border transition duration-500 hover:border-primary/50 px-6 py-20 md:py-28 text-center shadow-2xl">
-
-          {/* Background Gradients (Auras) */}
-          <div className="absolute top-0 right-0 -mr-32 -mt-32 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] pointer-events-none group-hover:bg-primary/10 transition-colors duration-700"></div>
-          <div className="absolute bottom-0 left-0 -ml-32 -mb-32 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[100px] pointer-events-none group-hover:bg-accent/10 transition-colors duration-700"></div>
-
-          <div className="relative z-10 max-w-3xl mx-auto">
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border text-primary text-sm font-semibold mb-8 backdrop-blur-md">
-                <Rocket className="w-4 h-4" />
-                <span>Desafíos Especiales</span>
-              </div>
-
-              <h2 className="text-4xl md:text-6xl font-bold text-foreground mb-8 tracking-tight leading-tight">
-                  ¿Tu problema no está en la lista?
-              </h2>
-              <p className="text-muted-foreground text-xl md:text-2xl mb-12 font-light leading-relaxed">
-                  Los mejores proyectos suelen ser los que no encajan en ninguna categoría estándar. <span className="text-primary font-semibold">Nos encantan los retos raros.</span>
-              </p>
-
-              <Button 
-                  size="lg" 
-                  onClick={() => setIsContactOpen(true)}
-                  className="h-16 px-10 text-lg rounded-full shadow-[0_0_30px_rgba(var(--color-brand-core),0.2)] bg-primary hover:brightness-110 text-primary-foreground hover:scale-105 transition font-bold group/btn border-none"
-              >
-                  Cuéntanos el Reto <ArrowRight className="ml-2 w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
-              </Button>
-          </div>
+        {/* CTA SECTION - STANDARDIZED */}
+        <div className="mt-16">
+          <CtaCard
+            tag="Desafíos Especiales"
+            title="¿Tu problema no está en la lista?"
+            description="Los mejores proyectos suelen ser los que no encajan en ninguna categoría estándar. Nos encantan los retos raros."
+            buttonText="Cuéntanos el Reto"
+            onClick={() => setIsContactOpen(true)}
+            imageSrc="/assets/images/Buscadores Inteligentes.webp"
+          />
         </div>
       </section>
 
       <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} defaultSubject="Consulta de Servicios" />
-    </div>
+      </div>
+    </>
   )
 }

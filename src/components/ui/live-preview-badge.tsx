@@ -10,10 +10,12 @@ interface LivePreviewBadgeProps {
 
 export const LivePreviewBadge = ({ url, className }: LivePreviewBadgeProps) => {
   return (
-    <a 
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
+    <button 
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        window.open(url, '_blank', 'noopener,noreferrer');
+      }}
       className={cn(
         "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 transition",
         className
@@ -21,6 +23,6 @@ export const LivePreviewBadge = ({ url, className }: LivePreviewBadgeProps) => {
     >
       <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
       <span className="text-[10px] font-bold uppercase tracking-widest">Live Preview</span>
-    </a>
+    </button>
   );
 };

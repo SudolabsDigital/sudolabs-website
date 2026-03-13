@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, BookOpen, Briefcase, ArrowRight, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { ProblemSolverCTA } from "@/components/modules/blog/problem-solver-cta";
+import { CtaCard } from "@/components/ui/design-system/cta-card";
 import { LivePreviewBadge } from "@/components/ui/live-preview-badge";
 
 export async function generateStaticParams() {
@@ -184,7 +184,14 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
            )}
 
            <div className="mt-20">
-              <ProblemSolverCTA />
+              <CtaCard
+                tag="Siguiente Paso"
+                title="¿Tienes un desafío similar?"
+                description="Podemos replicar esta arquitectura o diseñar una nueva para tu caso específico. Habla con un arquitecto hoy mismo."
+                buttonText="Agendar Evaluación"
+                href={`/contacto?subject=Consulta sobre caso: ${project.meta.title}`}
+                imageSrc="/assets/images/Mapeo de Procesos.webp"
+              />
            </div>
 
         </div>

@@ -217,10 +217,10 @@ export function AiChatSection() {
                             ) : (
                                 <div className="prose prose-sm dark:prose-invert max-w-none prose-p:leading-relaxed prose-pre:bg-secondary prose-pre:border prose-pre:border-border">
                                     <ReactMarkdown components={{
-                                        ul: ({node: _node, ...props}) => <ul className="list-disc list-outside ml-4 mt-2 space-y-1 text-foreground" {...props} />,
-                                        ol: ({node: _node, ...props}) => <ol className="list-decimal list-outside ml-4 mt-2 space-y-1 text-foreground" {...props} />,
-                                        strong: ({node: _node, ...props}) => <strong className="font-bold text-primary bg-primary/10 px-1 rounded" {...props} />,
-                                        a: ({node: _node, ...props}) => (
+                                        ul: ({node, ...props}) => <ul className="list-disc list-outside ml-4 mt-2 space-y-1 text-foreground" {...props} />,
+                                        ol: ({node, ...props}) => <ol className="list-decimal list-outside ml-4 mt-2 space-y-1 text-foreground" {...props} />,
+                                        strong: ({node, ...props}) => <strong className="font-bold text-primary bg-primary/10 px-1 rounded" {...props} />,
+                                        a: ({node, ...props}) => (
                                             <a 
                                                 className="inline-flex items-center gap-1 text-accent hover:text-primary underline underline-offset-4 decoration-accent/30 hover:decoration-primary transition-colors font-medium" 
                                                 target="_blank" 
@@ -228,7 +228,7 @@ export function AiChatSection() {
                                                 {...props} 
                                             />
                                         ),
-                                        p: ({node: _node, ...props}) => <p className="text-foreground" {...props} />
+                                        p: ({node, ...props}) => <p className="text-foreground" {...props} />
                                     }}>
                                         {m.content}
                                     </ReactMarkdown>
