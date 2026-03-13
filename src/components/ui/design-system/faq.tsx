@@ -39,7 +39,7 @@ function FaqItemComponent({
       onMouseEnter={() => setVisible(true)}
       onMouseLeave={() => setVisible(false)}
       className={cn(
-        "relative rounded-[16px] p-[2px] overflow-visible group/faq transition-all duration-300",
+        "relative rounded-[16px] p-[2px] overflow-visible group/faq transition duration-300",
         isOpen ? "mb-4" : "mb-2"
       )}
     >
@@ -83,7 +83,7 @@ function FaqItemComponent({
           </h3>
           
           <div className={cn(
-            "ml-4 flex-shrink-0 flex h-8 w-8 items-center justify-center rounded-full transition-all duration-300 border",
+            "ml-4 flex-shrink-0 flex h-8 w-8 items-center justify-center rounded-full transition duration-300 border",
             isOpen 
               ? "bg-primary text-primary-foreground border-primary rotate-180 shadow-md" 
               : "bg-secondary text-muted-foreground border-border group-hover/faq:bg-primary/10 group-hover/faq:text-primary group-hover/faq:border-primary/20"
@@ -94,7 +94,7 @@ function FaqItemComponent({
         
         <div 
           className={cn(
-            "transition-all duration-500 ease-in-out origin-top",
+            "transition duration-500 ease-in-out origin-top",
             isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
           )}
         >

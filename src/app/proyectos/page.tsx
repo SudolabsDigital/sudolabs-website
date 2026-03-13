@@ -2,8 +2,9 @@ import { getAllContent, ProjectMeta } from "@/lib/mdx";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Sparkles } from "lucide-react";
-import { ProblemSolverCTA } from "@/components/modules/blog/problem-solver-cta";
+import { CtaCard } from "@/components/ui/design-system/cta-card";
 import { LivePreviewBadge } from "@/components/ui/live-preview-badge";
+import PageHero from "@/components/ui/page-hero";
 
 export const metadata = {
   title: "Portafolio y Casos de Éxito | Sudolabs",
@@ -19,20 +20,15 @@ export default async function ProyectosPage() {
   return (
     <div className="min-h-screen flex flex-col font-sans bg-background selection:bg-primary/20 relative overflow-hidden">
       
-      <div className="flex-1 pt-32 pb-24 relative z-10">
-        
-        {/* HERO HEADER */}
-        <section className="container mx-auto px-6 mb-16 md:mb-20 text-center md:text-left">
-            <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight text-foreground mb-6 leading-tight">
-              Portafolio <br />
-              <span className="text-primary">
-                & Casos de Éxito
-              </span>
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-              Software de alto impacto diseñado para escalar operaciones y dominar mercados.
-            </p>
-        </section>
+      <PageHero 
+        title="Portafolio & Casos de Éxito"
+        subtitle="Nuestro Trabajo"
+        description="Software de alto impacto diseñado para escalar operaciones y dominar mercados."
+        imageSrc="/assets/images/Digitalización que Funciona.webp"
+        size="compact"
+      />
+
+      <div className="flex-1 pt-16 pb-24 relative z-10">
 
         {/* SINGLE FEATURED PROJECT (Cinematic & Balanced) */}
         {featuredProject && (
@@ -42,7 +38,7 @@ export default async function ProyectosPage() {
              </div>
              
              <Link href={`/proyectos/${featuredProject.slug}`} className="group block">
-                <article className="relative rounded-[2rem] overflow-hidden border border-border/50 bg-card/30 hover:border-primary/50 transition-all duration-500 shadow-2xl">
+                <article className="relative rounded-[2rem] overflow-hidden border border-border/50 bg-card/30 hover:border-primary/50 transition duration-500 shadow-2xl">
                     <div className="grid lg:grid-cols-12 items-stretch">
                         {/* Content (5 cols) */}
                         <div className="lg:col-span-5 p-8 md:p-12 flex flex-col justify-center order-2 lg:order-1">
@@ -98,7 +94,7 @@ export default async function ProyectosPage() {
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {otherProjects.map((project) => (
                         <Link key={project.slug} href={`/proyectos/${project.slug}`} className="group block h-full">
-                            <article className="h-full flex flex-col rounded-2xl overflow-hidden border border-border/50 bg-card/20 hover:bg-card hover:border-primary/50 transition-all shadow-sm">
+                            <article className="h-full flex flex-col rounded-2xl overflow-hidden border border-border/50 bg-card/20 hover:bg-card hover:border-primary/50 transition shadow-sm">
                                 <div className="relative aspect-[16/10] bg-muted overflow-hidden border-b border-border/50">
                                     {project.image && (
                                         <Image 
@@ -137,7 +133,14 @@ export default async function ProyectosPage() {
         )}
 
         <section className="container mx-auto px-6 mb-24">
-            <ProblemSolverCTA />
+            <CtaCard
+              tag="Siguiente Paso"
+              title="¿Listo para tu propio caso de éxito?"
+              description="Diseñamos sistemas que reducen costos y multiplican la productividad. Convierte tu cuello de botella en tu ventaja competitiva."
+              buttonText="Quiero un proyecto similar"
+              href="/contacto?subject=Interés desde el Portafolio"
+              imageSrc="/assets/images/Mapeo de Procesos.webp"
+            />
         </section>
 
       </div>

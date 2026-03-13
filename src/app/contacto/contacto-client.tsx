@@ -105,7 +105,7 @@ export default function ContactoClient() {
                         key={opt}
                         type="button"
                         onClick={() => setGoal(opt)}
-                        className={`text-left px-4 py-3 rounded-xl border text-sm font-medium transition-all duration-200 ${ 
+                        className={`text-left px-4 py-3 rounded-xl border text-sm font-medium transition duration-200 ${ 
                           goal === opt 
                             ? "border-primary bg-primary text-primary-foreground shadow-md" 
                             : "border-border bg-secondary hover:bg-secondary/80 hover:border-primary/30 text-muted-foreground"
@@ -128,7 +128,7 @@ export default function ContactoClient() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="ejemplo@empresa.com"
-                      className="w-full rounded-xl border border-border bg-background pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all text-foreground placeholder:text-muted-foreground"
+                      className="w-full rounded-xl border border-border bg-background pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition text-foreground placeholder:text-muted-foreground"
                     />
                   </div>
                 </div>
@@ -141,7 +141,7 @@ export default function ContactoClient() {
                     <button
                       type="button"
                       onClick={() => setPreference("chat")}
-                      className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl border transition-all duration-200 ${ 
+                      className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl border transition duration-200 ${ 
                         preference === "chat"
                           ? "border-primary bg-primary text-primary-foreground shadow-md"
                           : "border-border bg-secondary hover:bg-secondary/80 hover:border-primary/30 text-muted-foreground"
@@ -153,7 +153,7 @@ export default function ContactoClient() {
                     <button
                       type="button"
                       onClick={() => setPreference("call")}
-                      className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl border transition-all duration-200 ${ 
+                      className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl border transition duration-200 ${ 
                         preference === "call"
                           ? "border-primary bg-primary text-primary-foreground shadow-md"
                           : "border-border bg-secondary hover:bg-secondary/80 hover:border-primary/30 text-muted-foreground"
@@ -173,14 +173,14 @@ export default function ContactoClient() {
                     value={details}
                     onChange={(e) => setDetails(e.target.value)}
                     placeholder="Breve descripción de tu idea..."
-                    className="w-full min-h-[100px] rounded-xl border border-border bg-background p-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none transition-all"
+                    className="w-full min-h-[100px] rounded-xl border border-border bg-background p-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none transition"
                   />
                 </div>
 
                 <Button 
                   type="submit" 
                   size="lg" 
-                  className="w-full rounded-full text-base font-bold h-12 bg-primary text-primary-foreground hover:brightness-110 shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98] border-none"
+                  className="w-full rounded-full text-base font-bold h-12 bg-primary text-primary-foreground hover:brightness-110 shadow-xl transition hover:scale-[1.02] active:scale-[0.98] border-none"
                 >
                   Enviar Mensaje <Send className="ml-2 w-4 h-4" />
                 </Button>              

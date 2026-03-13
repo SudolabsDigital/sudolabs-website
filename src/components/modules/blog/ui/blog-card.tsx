@@ -19,7 +19,7 @@ export function BlogCard({ post }: BlogCardProps) {
   return (
     <Link 
       href={`/blog/${post.slug}`} 
-      className="group flex flex-col h-full rounded-3xl border border-border/50 bg-card/20 hover:bg-card/40 hover:border-primary/30 transition-all duration-300 overflow-hidden hover:shadow-xl hover:shadow-primary/5"
+      className="group flex flex-col h-full rounded-3xl border border-border/50 bg-card/20 hover:bg-card/40 hover:border-primary/30 transition duration-300 overflow-hidden hover:shadow-xl hover:shadow-primary/5"
     >
       <div className="h-52 bg-muted/50 relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors z-10" />

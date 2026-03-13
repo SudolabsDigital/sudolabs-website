@@ -54,14 +54,14 @@ const DarkThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className={`group p-2 rounded-lg transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer text-muted-foreground hover:text-foreground hover:bg-secondary/50`}
+      className={`group p-2 rounded-lg transition duration-200 hover:scale-105 active:scale-95 cursor-pointer text-muted-foreground hover:text-foreground hover:bg-secondary/50`}
       aria-label={`Cambiar a tema ${theme === 'light' ? 'oscuro' : 'claro'}`}
       title={`Cambiar a tema ${theme === 'light' ? 'oscuro' : 'claro'}`}
     >
       <div className="relative w-6 h-6 flex items-center justify-center">
         {/* Sol - tema claro */}
         <span
-          className={`absolute text-2xl transition-all duration-300 ${
+          className={`absolute text-2xl transition duration-300 ${
             theme === 'light'
               ? 'opacity-100 rotate-0 scale-100'
               : 'opacity-0 rotate-90 scale-50'
@@ -73,7 +73,7 @@ const DarkThemeToggle = () => {
         
         {/* Luna - tema oscuro */}
         <span
-          className={`absolute text-2xl transition-all duration-300 ${
+          className={`absolute text-2xl transition duration-300 ${
             theme === 'dark'
               ? 'opacity-100 rotate-0 scale-100'
               : 'opacity-0 -rotate-90 scale-50'

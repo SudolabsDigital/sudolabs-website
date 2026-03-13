@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, BookOpen, Briefcase, ArrowRight, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { ProblemSolverCTA } from "@/components/modules/blog/problem-solver-cta";
+import { CtaCard } from "@/components/ui/design-system/cta-card";
 import { LivePreviewBadge } from "@/components/ui/live-preview-badge";
 
 export async function generateStaticParams() {
@@ -128,7 +128,7 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
                                 href={project.meta.websiteUrl} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground py-4 rounded-2xl font-bold text-sm uppercase tracking-widest hover:brightness-110 transition-all shadow-lg shadow-primary/20"
+                                className="w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground py-4 rounded-2xl font-bold text-sm uppercase tracking-widest hover:brightness-110 transition shadow-lg shadow-primary/20"
                              >
                                 Visitar Proyecto <ExternalLink className="w-4 h-4" />
                              </a>
@@ -165,7 +165,7 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
                 <div className="grid md:grid-cols-2 gap-8">
                    {relatedPosts.map((post) => (
                       <Link key={post.slug} href={`/blog/${post.slug}`} className="group block h-full">
-                         <article className="flex flex-col h-full p-6 rounded-2xl border border-border hover:border-primary/50 bg-card hover:bg-muted/50 transition-all">
+                         <article className="flex flex-col h-full p-6 rounded-2xl border border-border hover:border-primary/50 bg-card hover:bg-muted/50 transition">
                             <span className="text-xs font-bold text-primary mb-3 uppercase tracking-wider">Concepto Clave</span>
                             <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
                                {post.title}
@@ -184,7 +184,14 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
            )}
 
            <div className="mt-20">
-              <ProblemSolverCTA />
+              <CtaCard
+                tag="Siguiente Paso"
+                title="¿Tienes un desafío similar?"
+                description="Podemos replicar esta arquitectura o diseñar una nueva para tu caso específico. Habla con un arquitecto hoy mismo."
+                buttonText="Agendar Evaluación"
+                href={`/contacto?subject=Consulta sobre caso: ${project.meta.title}`}
+                imageSrc="/assets/images/Mapeo de Procesos.webp"
+              />
            </div>
 
         </div>

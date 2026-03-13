@@ -54,7 +54,7 @@ export function Header() {
       >
         <header 
           className={cn(
-            "pointer-events-auto flex items-center justify-between w-full px-6 md:px-12 transition-all duration-500 ease-in-out border-b",
+            "pointer-events-auto flex items-center justify-between w-full px-6 md:px-12 transition duration-500 ease-in-out border-b",
             isScrolled 
               ? "h-16 md:h-16 bg-background/80 backdrop-blur-md border-border shadow-sm" 
               : "h-24 md:h-28 bg-transparent border-transparent"

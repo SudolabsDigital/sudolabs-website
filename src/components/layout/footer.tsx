@@ -41,7 +41,7 @@ export function Footer() {
           
           {/* COL 1: IDENTIDAD (5 columnas) */}
           <div className="md:col-span-5 space-y-6">
-            <div className="dark:invert relative h-10 md:h-12 w-[140px] md:w-[180px] transition-all">
+            <div className="dark:invert relative h-10 md:h-12 w-[140px] md:w-[180px] transition">
                 <Image 
                     src="/assets/logo-full.webp" 
                     alt="Sudolabs Digital" 
@@ -58,7 +58,7 @@ export function Footer() {
                   href={siteConfig.social.facebook}
                   target="_blank"
                   rel="noopener noreferrer" 
-                  className="text-muted-foreground hover:text-primary transition-all hover:scale-110"
+                  className="text-muted-foreground hover:text-primary transition hover:scale-110"
                   aria-label="Facebook"
                 >
                   <Facebook className="w-6 h-6" />
@@ -67,7 +67,7 @@ export function Footer() {
                   href={siteConfig.social.instagram} 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-all hover:scale-110"
+                  className="text-muted-foreground hover:text-primary transition hover:scale-110"
                   aria-label="Instagram"
                 >
                   <Instagram className="w-6 h-6" />
@@ -76,7 +76,7 @@ export function Footer() {
                   href={siteConfig.social.tiktok} 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-all hover:scale-110"
+                  className="text-muted-foreground hover:text-primary transition hover:scale-110"
                   aria-label="TikTok"
                 >
                   <Tiktok className="w-6 h-6" />

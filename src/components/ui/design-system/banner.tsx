@@ -29,7 +29,7 @@ export function Banner({
       className={cn(
         "relative flex flex-col items-center justify-center w-full text-center overflow-hidden",
         "py-20 md:py-32 px-6 rounded-[2.5rem] bg-card border border-border shadow-xl",
-        "transition-all duration-500",
+        "transition duration-500",
         className
       )}
       style={backgroundImageUrl ? {
@@ -72,7 +72,7 @@ export function Banner({
                 key={index}
                 onClick={action.onClick}
                 className={cn(
-                  "group flex items-center justify-center h-14 px-8 text-base font-semibold rounded-full transition-all duration-300 w-full sm:w-auto",
+                  "group flex items-center justify-center h-14 px-8 text-base font-semibold rounded-full transition duration-300 w-full sm:w-auto",
                   action.primary
                     ? "bg-primary text-primary-foreground hover:scale-105 hover:shadow-[0_0_30px_rgba(var(--color-brand-core),0.3)] border-none"
                     : "bg-transparent text-foreground border border-border hover:bg-secondary hover:border-primary/30"

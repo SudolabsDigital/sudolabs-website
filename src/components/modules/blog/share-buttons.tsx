@@ -45,7 +45,7 @@ export function ShareButtons({ title, slug }: ShareButtonsProps) {
        <Button
          variant="outline"
          size="icon"
-         className="rounded-full w-8 h-8 hover:text-[#0077b5] hover:border-[#0077b5] transition-all bg-background/50 backdrop-blur-sm"
+         className="rounded-full w-8 h-8 hover:text-[#0077b5] hover:border-[#0077b5] transition bg-background/50 backdrop-blur-sm"
          onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`, '_blank')}
          title="Compartir en LinkedIn"
        >
@@ -56,7 +56,7 @@ export function ShareButtons({ title, slug }: ShareButtonsProps) {
        <Button
          variant="outline"
          size="icon"
-         className="rounded-full w-8 h-8 hover:text-foreground hover:border-foreground transition-all bg-background/50 backdrop-blur-sm"
+         className="rounded-full w-8 h-8 hover:text-foreground hover:border-foreground transition bg-background/50 backdrop-blur-sm"
          onClick={() => window.open(`https://x.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}&via=sudolabs_pe&hashtags=Desarrollo,Tecnología,Software`, '_blank')}
          title="Compartir en X"
        >
@@ -69,7 +69,7 @@ export function ShareButtons({ title, slug }: ShareButtonsProps) {
        <Button
          variant="outline"
          size="icon"
-         className="rounded-full w-8 h-8 hover:text-[#1877F2] hover:border-[#1877F2] transition-all bg-background/50 backdrop-blur-sm"
+         className="rounded-full w-8 h-8 hover:text-[#1877F2] hover:border-[#1877F2] transition bg-background/50 backdrop-blur-sm"
          onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`, '_blank')}
          title="Compartir en Facebook"
        >
@@ -80,7 +80,7 @@ export function ShareButtons({ title, slug }: ShareButtonsProps) {
        <Button
          variant="outline"
          size="icon"
-         className="rounded-full w-8 h-8 hover:text-primary hover:border-primary transition-all bg-background/50 backdrop-blur-sm"
+         className="rounded-full w-8 h-8 hover:text-primary hover:border-primary transition bg-background/50 backdrop-blur-sm"
          onClick={handleShare}
          title="Copiar Enlace"
        >

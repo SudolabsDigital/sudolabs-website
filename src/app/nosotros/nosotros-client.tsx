@@ -2,9 +2,10 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { ArrowRight, Target, Eye, Shield, Sparkles, Zap, Users } from "lucide-react"
+import { Target, Eye, Shield, Sparkles, Zap, Users } from "lucide-react"
 import dynamic from "next/dynamic"
-import { TechButton } from "@/components/ui/design-system/tech-button"
+import PageHero from "@/components/ui/page-hero"
+import { CtaCard } from "@/components/ui/design-system/cta-card"
 
 const ContactModal = dynamic(() => import("@/components/features/contact-modal").then(mod => mod.ContactModal), {
   ssr: false,
@@ -15,23 +16,16 @@ export default function NosotrosPage() {
 
   return (
     <>
-      <div className="flex-1 pt-32 pb-24 relative z-10">
+      <PageHero 
+        title="Ingeniería con Propósito."
+        subtitle="Manifiesto Sudolabs"
+        description="En Sudolabs, no solo escribimos código. Construimos la infraestructura digital que permite a las empresas ambiciosas escalar sin límites."
+        imageSrc="/assets/images/La Ingeniería Detrás de Sudolabs.webp"
+        size="compact"
+      />
+
+      <div className="flex-1 pt-24 pb-24 relative z-10">
         <section className="container mx-auto px-6 max-w-6xl">
-          
-          {/* HERO SECTION: MANIFIESTO */}
-          <div className="text-center mb-24 md:mb-32">
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter mb-8 text-foreground leading-[0.9]"
-            >
-              Ingeniería con <br />
-              <span className="text-primary">Propósito.</span>
-            </motion.h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-light">
-              En Sudolabs, no solo escribimos código. Construimos la infraestructura digital que permite a las empresas ambiciosas escalar sin límites.
-            </p>
-          </div>
 
           {/* MISIÓN & VISIÓN: GRID EDITORIAL */}
           <div className="grid md:grid-cols-2 gap-8 mb-32">
@@ -41,7 +35,7 @@ export default function NosotrosPage() {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="p-10 md:p-12 rounded-[2.5rem] bg-card/30 border border-border/50 hover:border-primary/30 transition-all group relative overflow-hidden"
+              className="p-10 md:p-12 rounded-[2.5rem] bg-card/30 border border-border/50 hover:border-primary/30 transition group relative overflow-hidden"
             >
                <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:opacity-10 transition-opacity">
                   <Target className="w-48 h-48 text-primary" />
@@ -71,7 +65,7 @@ export default function NosotrosPage() {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="p-10 md:p-12 rounded-[2.5rem] bg-primary/5 border border-primary/10 hover:border-primary/30 transition-all group relative overflow-hidden"
+              className="p-10 md:p-12 rounded-[2.5rem] bg-primary/5 border border-primary/10 hover:border-primary/30 transition group relative overflow-hidden"
             >
                <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:opacity-10 transition-opacity">
                   <Eye className="w-48 h-48 text-primary" />
@@ -115,7 +109,7 @@ export default function NosotrosPage() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.05 }}
-                    className="p-8 rounded-3xl border border-border/50 bg-card/30 hover:bg-card hover:border-primary/30 transition-all group"
+                    className="p-8 rounded-3xl border border-border/50 bg-card/30 hover:bg-card hover:border-primary/30 transition group"
                  >
                     <v.icon className="w-8 h-8 text-primary/80 mb-6 group-hover:scale-110 transition-transform" />
                     <h4 className="text-xl font-bold mb-3">{v.title}</h4>
@@ -125,37 +119,18 @@ export default function NosotrosPage() {
             </div>
           </section>
 
-          {/* FINAL CTA - DYNAMIC SEMANTIC STYLE */}
-          <section className="relative group overflow-hidden rounded-[3rem] bg-card border border-border transition-all duration-500 hover:border-primary/50 py-24 px-6 text-center shadow-2xl">
-
-             {/* Background Gradients (Auras) */}
-             <div className="absolute top-0 right-0 -mr-32 -mt-32 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none group-hover:bg-primary/10 transition-colors duration-700"></div>
-             <div className="absolute bottom-0 left-0 -ml-32 -mb-32 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] pointer-events-none group-hover:bg-accent/10 transition-colors duration-700"></div>
-
-             <div className="relative z-10 max-w-3xl mx-auto">
-               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border text-primary text-sm font-semibold mb-8 backdrop-blur-md">
-                  <Users className="w-4 h-4" />
-                  <span>Partnership a Largo Plazo</span>
-               </div>
-
-               <h2 className="text-4xl md:text-6xl font-bold text-foreground mb-8 tracking-tight leading-tight">
-                 ¿Listo para construir el futuro?
-               </h2>
-               <p className="text-muted-foreground text-xl md:text-2xl mb-12 font-light leading-relaxed">
-                 Buscas un equipo que entienda tu visión y tenga la capacidad técnica para ejecutarla. <span className="text-primary font-semibold">Ya nos encontraste.</span>
-               </p>
-
-               <TechButton 
-                 variant="laser"
-                 size="xl" 
-                 onClick={() => setIsContactOpen(true)}
-                 iconRight={<ArrowRight className="ml-2 w-5 h-5" />}
-                 className="w-full sm:w-auto"
-               >
-                 Iniciar Conversación
-               </TechButton>
-             </div>
-          </section>                  </section>
+          {/* FINAL CTA - STANDARDIZED */}
+          <div className="mt-16">
+            <CtaCard
+              tag="Partnership a Largo Plazo"
+              title="¿Listo para construir el futuro?"
+              description="Buscas un equipo que entienda tu visión y tenga la capacidad técnica para ejecutarla. Ya nos encontraste."
+              buttonText="Iniciar Conversación"
+              onClick={() => setIsContactOpen(true)}
+              imageSrc="/assets/images/Control de Stock.webp"
+            />
+          </div>
+        </section>
                 </div>
           
                 <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} defaultSubject="Hablemos de Nosotros" />

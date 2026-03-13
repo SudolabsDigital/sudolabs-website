@@ -20,6 +20,7 @@ export function CtaSection() {
         description="No vendemos software, vendemos ventaja competitiva. Agenda una sesión estratégica y descubramos cómo escalar tu operación con ingeniería de alto rendimiento."
         buttonText="Agendar Consultoría Gratis"
         onClick={handleWhatsappDirect}
+        imageSrc="/assets/images/Auditoría de Seguridad Web.webp"
       />
     </section>
   );

@@ -38,14 +38,14 @@ export function TechButton({
   type = 'button',
   isMonospace = false,
 }: TechButtonProps) {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const btnRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!btnRef.current || variant !== 'laser') return;
     const bounds = btnRef.current.getBoundingClientRect();
-    setPosition({ x: e.clientX - bounds.left, y: e.clientY - bounds.top });
+    btnRef.current.style.setProperty('--mouse-x', `${e.clientX - bounds.left}px`);
+    btnRef.current.style.setProperty('--mouse-y', `${e.clientY - bounds.top}px`);
   };
 
   const sizes = {
@@ -56,7 +56,7 @@ export function TechButton({
   };
 
   const baseStyles = cn(
-    "relative inline-flex items-center justify-center font-bold transition-all duration-300 select-none overflow-hidden",
+    "relative inline-flex items-center justify-center font-bold transition duration-300 select-none overflow-hidden",
     disabled || isLoading ? "opacity-60 cursor-not-allowed" : "cursor-pointer",
     isMonospace && "font-mono tracking-tighter uppercase",
     sizes[size],
@@ -127,13 +127,13 @@ export function TechButton({
           <div
             className="pointer-events-none absolute inset-0 z-0 opacity-100 rounded-xl"
             style={{
-              background: `radial-gradient(120px circle at ${position.x}px ${position.y}px, var(--color-brand-core, #3178c6) 0%, var(--color-ts-blue, #65318d) 50%, transparent 100%)`,
+              background: `radial-gradient(120px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), var(--color-brand-core, #3178c6) 0%, var(--color-ts-blue, #65318d) 50%, transparent 100%)`,
             }}
           />
           <div
             className="pointer-events-none absolute inset-0 z-[-1] opacity-50 blur-md rounded-xl"
             style={{
-              background: `radial-gradient(100px circle at ${position.x}px ${position.y}px, var(--color-brand-core, #3178c6) 0%, var(--color-ts-blue, #65318d) 50%, transparent 100%)`,
+              background: `radial-gradient(100px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), var(--color-brand-core, #3178c6) 0%, var(--color-ts-blue, #65318d) 50%, transparent 100%)`,
             }}
           />
         </>
