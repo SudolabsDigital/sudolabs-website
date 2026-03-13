@@ -4,7 +4,7 @@ import { HeroSection } from "@/components/modules/home/hero-section"
 // Componentes dinámicos "Below the Fold" para reducir TBT
 const TechTicker = dynamic(() => import("@/components/layout/tech-ticker").then(mod => mod.TechTicker))
 const SolutionsGrid = dynamic(() => import("@/components/layout/solutions-grid").then(mod => mod.SolutionsGrid))
-const AiChatSection = dynamic(() => import("@/components/modules/home/ai-chat-section").then(mod => mod.AiChatSection))
+import { AiChatSectionWrapper as AiChatSection } from "@/components/modules/home/ai-chat-section-wrapper"
 const FaqSection = dynamic(() => import("@/components/layout/faq-section").then(mod => mod.FaqSection))
 const CtaSection = dynamic(() => import("@/components/modules/home/cta-section").then(mod => mod.CtaSection))
 
