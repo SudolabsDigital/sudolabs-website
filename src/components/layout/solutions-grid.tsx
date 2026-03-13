@@ -219,7 +219,7 @@ export function SolutionsGrid() {
                 placeholder="Buscar módulos (ej. SEO, Seguridad)..." 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-background border border-border rounded-lg pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all placeholder:text-muted-foreground" 
+                className="w-full bg-background border border-border rounded-lg pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition placeholder:text-muted-foreground" 
               />
               {searchQuery && (
                  <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground bg-secondary px-1.5 py-0.5 rounded">
@@ -239,7 +239,7 @@ export function SolutionsGrid() {
                     key={cat.id}
                     onClick={() => handleTabChange(cat.id)}
                     className={`
-                      w-full text-left px-3 py-2.5 rounded-md text-sm font-medium transition-all duration-200 flex justify-between items-center
+                      w-full text-left px-3 py-2.5 rounded-md text-sm font-medium transition duration-200 flex justify-between items-center
                       ${activeTab === cat.id && !searchQuery
                         ? "bg-primary/10 text-primary border border-primary/20" 
                         : "text-muted-foreground hover:bg-secondary/80 hover:text-foreground border border-transparent"
@@ -263,7 +263,7 @@ export function SolutionsGrid() {
                       key={cat.id}
                       onClick={() => handleTabChange(cat.id)}
                       className={`
-                        whitespace-nowrap px-4 py-2.5 rounded-md text-sm font-medium transition-all border
+                        whitespace-nowrap px-4 py-2.5 rounded-md text-sm font-medium transition border
                         ${activeTab === cat.id && !searchQuery
                           ? "bg-primary/10 text-primary border-primary/20" 
                           : "bg-background text-muted-foreground border-border hover:bg-secondary"

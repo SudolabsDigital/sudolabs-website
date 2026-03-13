@@ -22,7 +22,7 @@ export function BlogHero({ post }: BlogHeroProps) {
       <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-purple-500/20 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-1000" />
       <Link 
         href={`/blog/${post.slug}`} 
-        className="relative block rounded-[2rem] overflow-hidden border border-border/50 bg-card/40 hover:bg-card/60 transition-all duration-500"
+        className="relative block rounded-[2rem] overflow-hidden border border-border/50 bg-card/40 hover:bg-card/60 transition duration-500"
       >
         <div className="grid lg:grid-cols-12 gap-0 lg:gap-8">
           <div className="lg:col-span-7 h-72 lg:h-auto min-h-[350px] relative overflow-hidden">

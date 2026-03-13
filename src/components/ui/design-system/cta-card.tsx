@@ -27,13 +27,13 @@ export function CtaCard({
   ...props
 }: CtaCardProps) {
   const [visible, setVisible] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
   const divRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (!divRef.current) return;
     const bounds = divRef.current.getBoundingClientRect();
-    setPosition({ x: e.clientX - bounds.left, y: e.clientY - bounds.top });
+    divRef.current.style.setProperty('--mouse-x', `${e.clientX - bounds.left}px`);
+    divRef.current.style.setProperty('--mouse-y', `${e.clientY - bounds.top}px`);
   };
 
   const Content = (
@@ -72,7 +72,7 @@ export function CtaCard({
   );
 
   const containerClasses = cn(
-    "relative rounded-[2rem] p-[2px] overflow-visible group/cta transition-all duration-500",
+    "relative rounded-[2rem] p-[2px] overflow-visible group/cta transition duration-500",
     className
   );
 
@@ -84,13 +84,13 @@ export function CtaCard({
           <div
             className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300 opacity-100 rounded-[2rem]"
             style={{
-              background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, #3178c6 0%, #65318d 30%, transparent 60%)`,
+              background: `radial-gradient(600px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), #3178c6 0%, #65318d 30%, transparent 60%)`,
             }}
           />
           <div
             className="pointer-events-none absolute inset-0 z-[-1] transition-opacity duration-300 opacity-70 blur-2xl rounded-[2rem]"
             style={{
-              background: `radial-gradient(500px circle at ${position.x}px ${position.y}px, #3178c6 0%, #65318d 40%, transparent 70%)`,
+              background: `radial-gradient(500px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), #3178c6 0%, #65318d 40%, transparent 70%)`,
             }}
           />
         </>

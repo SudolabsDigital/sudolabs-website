@@ -41,7 +41,7 @@ export default function NosotrosPage() {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="p-10 md:p-12 rounded-[2.5rem] bg-card/30 border border-border/50 hover:border-primary/30 transition-all group relative overflow-hidden"
+              className="p-10 md:p-12 rounded-[2.5rem] bg-card/30 border border-border/50 hover:border-primary/30 transition group relative overflow-hidden"
             >
                <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:opacity-10 transition-opacity">
                   <Target className="w-48 h-48 text-primary" />
@@ -71,7 +71,7 @@ export default function NosotrosPage() {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="p-10 md:p-12 rounded-[2.5rem] bg-primary/5 border border-primary/10 hover:border-primary/30 transition-all group relative overflow-hidden"
+              className="p-10 md:p-12 rounded-[2.5rem] bg-primary/5 border border-primary/10 hover:border-primary/30 transition group relative overflow-hidden"
             >
                <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:opacity-10 transition-opacity">
                   <Eye className="w-48 h-48 text-primary" />
@@ -115,7 +115,7 @@ export default function NosotrosPage() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.05 }}
-                    className="p-8 rounded-3xl border border-border/50 bg-card/30 hover:bg-card hover:border-primary/30 transition-all group"
+                    className="p-8 rounded-3xl border border-border/50 bg-card/30 hover:bg-card hover:border-primary/30 transition group"
                  >
                     <v.icon className="w-8 h-8 text-primary/80 mb-6 group-hover:scale-110 transition-transform" />
                     <h4 className="text-xl font-bold mb-3">{v.title}</h4>
@@ -126,7 +126,7 @@ export default function NosotrosPage() {
           </section>
 
           {/* FINAL CTA - DYNAMIC SEMANTIC STYLE */}
-          <section className="relative group overflow-hidden rounded-[3rem] bg-card border border-border transition-all duration-500 hover:border-primary/50 py-24 px-6 text-center shadow-2xl">
+          <section className="relative group overflow-hidden rounded-[3rem] bg-card border border-border transition duration-500 hover:border-primary/50 py-24 px-6 text-center shadow-2xl">
 
              {/* Background Gradients (Auras) */}
              <div className="absolute top-0 right-0 -mr-32 -mt-32 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none group-hover:bg-primary/10 transition-colors duration-700"></div>

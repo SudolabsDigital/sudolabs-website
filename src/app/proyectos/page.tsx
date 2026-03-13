@@ -42,7 +42,7 @@ export default async function ProyectosPage() {
              </div>
              
              <Link href={`/proyectos/${featuredProject.slug}`} className="group block">
-                <article className="relative rounded-[2rem] overflow-hidden border border-border/50 bg-card/30 hover:border-primary/50 transition-all duration-500 shadow-2xl">
+                <article className="relative rounded-[2rem] overflow-hidden border border-border/50 bg-card/30 hover:border-primary/50 transition duration-500 shadow-2xl">
                     <div className="grid lg:grid-cols-12 items-stretch">
                         {/* Content (5 cols) */}
                         <div className="lg:col-span-5 p-8 md:p-12 flex flex-col justify-center order-2 lg:order-1">
@@ -98,7 +98,7 @@ export default async function ProyectosPage() {
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {otherProjects.map((project) => (
                         <Link key={project.slug} href={`/proyectos/${project.slug}`} className="group block h-full">
-                            <article className="h-full flex flex-col rounded-2xl overflow-hidden border border-border/50 bg-card/20 hover:bg-card hover:border-primary/50 transition-all shadow-sm">
+                            <article className="h-full flex flex-col rounded-2xl overflow-hidden border border-border/50 bg-card/20 hover:bg-card hover:border-primary/50 transition shadow-sm">
                                 <div className="relative aspect-[16/10] bg-muted overflow-hidden border-b border-border/50">
                                     {project.image && (
                                         <Image 

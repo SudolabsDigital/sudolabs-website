@@ -147,7 +147,7 @@ export function AiChatSection() {
             {/* Chat Header */}
             <div className="h-14 border-b border-border flex items-center justify-between px-6 bg-background/80 backdrop-blur-sm z-20">
               <div className="flex items-center gap-3">
-                 <div className="relative w-5 h-5 group/logo dark:invert transition-all">
+                 <div className="relative w-5 h-5 group/logo dark:invert transition">
                     <Image 
                       src="/assets/logo-symbol.webp" 
                       alt="Sudolabs Symbol" 
@@ -281,7 +281,7 @@ export function AiChatSection() {
             {showScrollButton && (
                 <button 
                   onClick={() => scrollToBottom('smooth')}
-                  className="absolute bottom-24 left-1/2 -translate-x-1/2 bg-card hover:bg-secondary text-primary p-2 rounded-full shadow-lg border border-border transition-all z-30"
+                  className="absolute bottom-24 left-1/2 -translate-x-1/2 bg-card hover:bg-secondary text-primary p-2 rounded-full shadow-lg border border-border transition z-30"
                 >
                   <ChevronDown size={20} />
                 </button>
@@ -333,7 +333,7 @@ export function AiChatSection() {
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Cuéntame sobre tu proyecto..."
                   maxLength={500}
-                  className="bg-card border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-primary/50 pl-5 py-6 pr-24 text-base rounded-full shadow-inner transition-all group-focus-within:border-primary/50"
+                  className="bg-card border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-primary/50 pl-5 py-6 pr-24 text-base rounded-full shadow-inner transition group-focus-within:border-primary/50"
                 />
                 
                 <div className={`absolute right-16 top-1/2 -translate-y-1/2 text-[10px] font-mono transition-colors ${input.length > 450 ? 'text-warning' : 'text-muted-foreground'}`}>
@@ -343,7 +343,7 @@ export function AiChatSection() {
                 <Button 
                   type="submit" 
                   disabled={isLoading || !input.trim()}
-                  className="absolute right-1.5 top-1.5 h-[calc(100%-12px)] aspect-square rounded-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg transition-all disabled:opacity-50 disabled:bg-secondary disabled:text-muted-foreground border-none"
+                  className="absolute right-1.5 top-1.5 h-[calc(100%-12px)] aspect-square rounded-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg transition disabled:opacity-50 disabled:bg-secondary disabled:text-muted-foreground border-none"
                 >
                   <Send size={18} className={isLoading ? 'animate-pulse' : ''} />
                 </Button>

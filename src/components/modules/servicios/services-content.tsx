@@ -97,7 +97,7 @@ export function ServicesContent() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: index * 0.05 }}
-              className={`${service.colSpan} group relative p-8 md:p-10 rounded-[2.5rem] bg-card/30 border border-border/50 hover:border-primary/30 transition-all duration-500 overflow-hidden flex flex-col justify-between`}
+              className={`${service.colSpan} group relative p-8 md:p-10 rounded-[2.5rem] bg-card/30 border border-border/50 hover:border-primary/30 transition duration-500 overflow-hidden flex flex-col justify-between`}
             >
               {/* Hover Gradient Background */}
               <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
@@ -119,7 +119,7 @@ export function ServicesContent() {
         </div>
 
         {/* CTA SECTION - DYNAMIC SEMANTIC STYLE */}
-        <div className="relative group overflow-hidden rounded-[2.5rem] bg-card border border-border transition-all duration-500 hover:border-primary/50 px-6 py-20 md:py-28 text-center shadow-2xl">
+        <div className="relative group overflow-hidden rounded-[2.5rem] bg-card border border-border transition duration-500 hover:border-primary/50 px-6 py-20 md:py-28 text-center shadow-2xl">
 
           {/* Background Gradients (Auras) */}
           <div className="absolute top-0 right-0 -mr-32 -mt-32 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] pointer-events-none group-hover:bg-primary/10 transition-colors duration-700"></div>
@@ -142,7 +142,7 @@ export function ServicesContent() {
               <Button 
                   size="lg" 
                   onClick={() => setIsContactOpen(true)}
-                  className="h-16 px-10 text-lg rounded-full shadow-[0_0_30px_rgba(var(--color-brand-core),0.2)] bg-primary hover:brightness-110 text-primary-foreground hover:scale-105 transition-all font-bold group/btn border-none"
+                  className="h-16 px-10 text-lg rounded-full shadow-[0_0_30px_rgba(var(--color-brand-core),0.2)] bg-primary hover:brightness-110 text-primary-foreground hover:scale-105 transition font-bold group/btn border-none"
               >
                   Cuéntanos el Reto <ArrowRight className="ml-2 w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
               </Button>

@@ -21,7 +21,6 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
   const [whatsappUrl, setWhatsappUrl] = useState("");
   
   // Spotlight state
-  const [position, setPosition] = useState({ x: 0, y: 0 });
   const [visible, setVisible] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -58,7 +57,8 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (!modalRef.current) return;
     const bounds = modalRef.current.getBoundingClientRect();
-    setPosition({ x: e.clientX - bounds.left, y: e.clientY - bounds.top });
+    modalRef.current.style.setProperty('--mouse-x', `${e.clientX - bounds.left}px`);
+    modalRef.current.style.setProperty('--mouse-y', `${e.clientY - bounds.top}px`);
   };
 
   const generateWhatsappMessage = () => {
@@ -122,13 +122,13 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
                 <div
                   className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300 opacity-100 rounded-[2rem]"
                   style={{
-                    background: `radial-gradient(500px circle at ${position.x}px ${position.y}px, var(--color-brand-core, #3178c6) 0%, var(--color-ts-blue, #65318d) 40%, transparent 70%)`,
+                    background: `radial-gradient(500px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), var(--color-brand-core, #3178c6) 0%, var(--color-ts-blue, #65318d) 40%, transparent 70%)`,
                   }}
                 />
                 <div
                   className="pointer-events-none absolute inset-0 z-[-1] transition-opacity duration-300 opacity-50 blur-2xl rounded-[2rem]"
                   style={{
-                    background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, var(--color-brand-core, #3178c6) 0%, var(--color-ts-blue, #65318d) 50%, transparent 100%)`,
+                    background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), var(--color-brand-core, #3178c6) 0%, var(--color-ts-blue, #65318d) 50%, transparent 100%)`,
                   }}
                 />
               </>
@@ -150,7 +150,7 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
                 </div>
                 <button 
                   onClick={onClose}
-                  className="p-2.5 hover:bg-white/10 rounded-full transition-all hover:rotate-90 duration-300 text-gray-400 hover:text-white"
+                  className="p-2.5 hover:bg-white/10 rounded-full transition hover:rotate-90 duration-300 text-gray-400 hover:text-white"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -179,7 +179,7 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
                               key={opt}
                               type="button"
                               onClick={() => setGoal(opt)}
-                              className="text-left px-4 py-3 rounded-xl border text-[13px] font-bold transition-all duration-300 border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10 text-gray-400 hover:text-gray-200"
+                              className="text-left px-4 py-3 rounded-xl border text-[13px] font-bold transition duration-300 border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10 text-gray-400 hover:text-gray-200"
                               style={goal === opt ? { borderColor: 'rgb(59 130 246)', backgroundColor: 'rgba(59, 130, 246, 0.2)', color: 'rgb(219 234 254)', boxShadow: '0 0 15px rgba(59,130,246,0.2)' } : {}}
                             >
                               {opt}
@@ -200,7 +200,7 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="tu@correo.com"
-                            className="w-full h-14 rounded-xl border border-white/10 bg-black/40 pl-5 pr-4 text-sm font-medium focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all text-white placeholder:text-gray-600"
+                            className="w-full h-14 rounded-xl border border-white/10 bg-black/40 pl-5 pr-4 text-sm font-medium focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition text-white placeholder:text-gray-600"
                           />
                         </div>
                       </div>

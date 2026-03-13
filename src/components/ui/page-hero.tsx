@@ -134,7 +134,7 @@ export default function PageHero({
                     key={action.href}
                     href={action.href}
                     className={cn(
-                      "inline-flex items-center gap-2 rounded-xl font-bold uppercase tracking-wider transition-all duration-300 transform hover:-translate-y-1 shadow-lg",
+                      "inline-flex items-center gap-2 rounded-xl font-bold uppercase tracking-wider transition duration-300 transform hover:-translate-y-1 shadow-lg",
                       "px-6 py-3 text-[10px] md:text-xs",
                       action.variant === "primary" ? "bg-[--primary] text-white border border-primary/50" :
                       "bg-white/10 text-white backdrop-blur-sm border border-white/20 hover:bg-white/20"

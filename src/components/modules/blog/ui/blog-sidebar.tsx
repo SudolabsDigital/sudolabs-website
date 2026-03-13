@@ -75,7 +75,7 @@ export function BlogSidebar({ post, relatedProject }: BlogSidebarProps) {
         <div className="mt-4 space-y-4">
           <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest block">Caso de Estudio</span>
           <Link href={`/proyectos/${relatedProject.slug}`} className="block group">
-            <div className="relative rounded-2xl overflow-hidden border border-border/50 bg-card/50 hover:border-primary/50 transition-all p-3 flex gap-3 items-center">
+            <div className="relative rounded-2xl overflow-hidden border border-border/50 bg-card/50 hover:border-primary/50 transition p-3 flex gap-3 items-center">
               {relatedProject.image && (
                 <div className="relative h-12 w-12 shrink-0 rounded-lg overflow-hidden border border-border/50">
                   <Image 

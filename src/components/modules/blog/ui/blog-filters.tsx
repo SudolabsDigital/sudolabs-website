@@ -36,7 +36,7 @@ export function BlogFilters({
         <button
           onClick={() => setSelectedCategory(null)}
           className={cn(
-            "px-4 py-2 rounded-full text-sm font-bold transition-all border",
+            "px-4 py-2 rounded-full text-sm font-bold transition border",
             selectedCategory === null 
               ? "bg-foreground text-background border-foreground" 
               : "bg-background text-muted-foreground border-border hover:border-foreground/50 hover:bg-muted/50"
@@ -49,7 +49,7 @@ export function BlogFilters({
             key={cat.slug}
             onClick={() => setSelectedCategory(selectedCategory === cat.slug ? null : cat.slug)}
             className={cn(
-              "px-4 py-2 rounded-full text-sm font-bold transition-all border",
+              "px-4 py-2 rounded-full text-sm font-bold transition border",
               selectedCategory === cat.slug
                 ? "bg-foreground text-background border-foreground"
                 : "bg-background text-muted-foreground border-border hover:border-foreground/50 hover:bg-muted/50"
@@ -66,7 +66,7 @@ export function BlogFilters({
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
           <Input 
             placeholder="Buscar por título o contenido..." 
-            className="pl-11 bg-background/50 border-border/50 focus:border-primary/50 transition-all rounded-xl h-10"
+            className="pl-11 bg-background/50 border-border/50 focus:border-primary/50 transition rounded-xl h-10"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />

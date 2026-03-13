@@ -10,7 +10,7 @@ export function HeroSection() {
           <div className="max-w-2xl md:animate-in md:fade-in md:slide-in-from-bottom-4 md:duration-700">
             {/* LOGO MÓVIL */}
             <div className="lg:hidden mb-6 flex justify-start">
-               <div className="dark:invert transition-all relative w-[180px]">
+               <div className="dark:invert transition relative w-[180px]">
                  <Image
                     src="/assets/logo-full.webp"
                     alt="Sudolabs Digital Logo"
@@ -59,7 +59,7 @@ export function HeroSection() {
                   height={300}
                   loading="eager"
                   sizes="(min-width: 1024px) 600px, 100vw"
-                  className="w-full max-w-[600px] h-auto drop-shadow-2xl relative z-10 dark:invert transition-all"
+                  className="w-full max-w-[600px] h-auto drop-shadow-2xl relative z-10 dark:invert transition"
                   style={{ height: 'auto' }}
                />
              </div>

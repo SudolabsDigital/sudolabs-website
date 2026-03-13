@@ -33,7 +33,7 @@ export function TechTicker() {
                   <div key={loopIndex} className="flex items-center gap-12 pr-12">
                       {pillars.map((tech, i) => (
                           <div key={`${loopIndex}-${i}`} className="flex items-center gap-12 group/item">
-                              <div className="flex items-center gap-3 opacity-60 transition-all duration-500 group-hover/item:opacity-100 group-hover/item:text-primary text-foreground grayscale hover:grayscale-0">
+                              <div className="flex items-center gap-3 opacity-60 transition duration-500 group-hover/item:opacity-100 group-hover/item:text-primary text-foreground grayscale hover:grayscale-0">
                                   <tech.icon className="w-5 h-5" strokeWidth={2} />
                                   <span className="text-sm font-bold tracking-widest uppercase whitespace-nowrap">
                                       {tech.name}
@@ -51,7 +51,7 @@ export function TechTicker() {
                   <div key={loopIndex} className="flex items-center gap-12 pr-12">
                       {pillars.map((tech, i) => (
                           <div key={`${loopIndex}-${i}`} className="flex items-center gap-12 group/item">
-                               <div className="flex items-center gap-3 opacity-60 transition-all duration-500 group-hover/item:opacity-100 group-hover/item:text-primary text-foreground grayscale hover:grayscale-0">
+                               <div className="flex items-center gap-3 opacity-60 transition duration-500 group-hover/item:opacity-100 group-hover/item:text-primary text-foreground grayscale hover:grayscale-0">
                                   <tech.icon className="w-5 h-5" strokeWidth={2} />
                                   <span className="text-sm font-bold tracking-widest uppercase whitespace-nowrap">
                                       {tech.name}

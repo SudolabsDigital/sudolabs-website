@@ -66,7 +66,7 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
 
              return (
                <Link key={post.slug} href={`/blog/${post.slug}`} className="group block">
-                  <article className="h-full flex flex-col p-8 rounded-3xl border border-border bg-card/50 hover:bg-card hover:border-primary/50 transition-all shadow-sm hover:shadow-md">
+                  <article className="h-full flex flex-col p-8 rounded-3xl border border-border bg-card/50 hover:bg-card hover:border-primary/50 transition shadow-sm hover:shadow-md">
                      <div className="mb-4 flex items-center gap-3 text-sm text-muted-foreground">
                         <time dateTime={post.date}>
                           {formattedDate}

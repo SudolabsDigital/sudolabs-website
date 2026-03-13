@@ -6,13 +6,13 @@ import Image from "next/image"
 
 export function FaqSection() {
   const [visible, setVisible] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
   const divRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (!divRef.current) return;
     const bounds = divRef.current.getBoundingClientRect();
-    setPosition({ x: e.clientX - bounds.left, y: e.clientY - bounds.top });
+    divRef.current.style.setProperty('--mouse-x', `${e.clientX - bounds.left}px`);
+    divRef.current.style.setProperty('--mouse-y', `${e.clientY - bounds.top}px`);
   };
 
   const faqItems = [
@@ -62,7 +62,7 @@ export function FaqSection() {
               onMouseMove={handleMouseMove}
               onMouseEnter={() => setVisible(true)}
               onMouseLeave={() => setVisible(false)}
-              className="relative w-full aspect-[4/3] max-w-sm rounded-[1.5rem] p-[2px] overflow-visible group/image transition-all duration-300"
+              className="relative w-full aspect-[4/3] max-w-sm rounded-[1.5rem] p-[2px] overflow-visible group/image transition duration-300"
             >
               {/* Spotlight Effect (Laser and Shadow) */}
               {visible && (
@@ -70,13 +70,13 @@ export function FaqSection() {
                   <div
                     className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300 opacity-100 rounded-[1.5rem]"
                     style={{
-                      background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, #3178c6 0%, #65318d 20%, transparent 40%)`,
+                      background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), #3178c6 0%, #65318d 20%, transparent 40%)`,
                     }}
                   />
                   <div
                     className="pointer-events-none absolute inset-0 z-[-1] transition-opacity duration-300 opacity-60 blur-xl rounded-[1.5rem]"
                     style={{
-                      background: `radial-gradient(300px circle at ${position.x}px ${position.y}px, #3178c6 0%, #65318d 40%, transparent 70%)`,
+                      background: `radial-gradient(300px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), #3178c6 0%, #65318d 40%, transparent 70%)`,
                     }}
                   />
                 </>

@@ -27,18 +27,18 @@ export function FloatingCard({
   ...props
 }: CardProps) {
   const [visible, setVisible] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
   const divRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (!divRef.current) return;
     const bounds = divRef.current.getBoundingClientRect();
-    setPosition({ x: e.clientX - bounds.left, y: e.clientY - bounds.top });
+    divRef.current.style.setProperty('--mouse-x', `${e.clientX - bounds.left}px`);
+    divRef.current.style.setProperty('--mouse-y', `${e.clientY - bounds.top}px`);
   };
 
   const cardClasses = cn(
     "relative rounded-[16px] p-[2px] overflow-visible group/card block", // Increased padding from p-[1px] to p-[2px] for thicker borders
-    "bg-border transition-all duration-500 h-full w-full",
+    "bg-border transition duration-500 h-full w-full",
     interactive && "hover:-translate-y-1 cursor-pointer", // Removed shadow-sm hover:shadow-md to rely on custom glowing outer shadow
     className
   );
@@ -51,14 +51,14 @@ export function FloatingCard({
           <div
             className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300 opacity-100 rounded-[16px]"
             style={{
-              background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, #3178c6 0%, #65318d 20%, transparent 40%)`,
+              background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), #3178c6 0%, #65318d 20%, transparent 40%)`,
             }}
           />
           {/* Sombra Exterior Iluminada (Aura Difuminada) */}
           <div
             className="pointer-events-none absolute inset-0 z-[-1] transition-opacity duration-300 opacity-60 blur-xl rounded-[16px]"
             style={{
-              background: `radial-gradient(300px circle at ${position.x}px ${position.y}px, #3178c6 0%, #65318d 40%, transparent 70%)`,
+              background: `radial-gradient(300px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), #3178c6 0%, #65318d 40%, transparent 70%)`,
             }}
           />
         </>
@@ -78,7 +78,7 @@ export function FloatingCard({
             </div>
           )}
           {interactive && (
-            <ArrowUpRight className="w-4 h-4 text-muted-foreground opacity-0 -translate-x-2 translate-y-2 group-hover/card:opacity-100 group-hover/card:translate-x-0 group-hover/card:translate-y-0 transition-all duration-300" />
+            <ArrowUpRight className="w-4 h-4 text-muted-foreground opacity-0 -translate-x-2 translate-y-2 group-hover/card:opacity-100 group-hover/card:translate-x-0 group-hover/card:translate-y-0 transition duration-300" />
           )}
         </div>
 
