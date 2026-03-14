@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "../../public/sdl-footer/sdl-footer.css";
 
 @custom-variant dark (&:is(.dark *));
 @plugin "@tailwindcss/typography";

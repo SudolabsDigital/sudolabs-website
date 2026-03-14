@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SDL Footer — Demo & Integration Guide</title>
+
+  <!-- SDL Footer Styles -->
+  <link rel="stylesheet" href="sdl-footer.css" />
+
+  <!-- Demo page styles (NOT part of the component) -->
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: #0d1117;
+      color: #c8d6e8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .demo-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+      padding: 48px 24px;
+    }
+
+    .demo-title {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(120deg, #c8d6e8 0%, #3178c6 55%, #65318d 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+    }
+
+    .demo-subtitle {
+      color: #6b82a4;
+      font-size: 0.85rem;
+      text-align: center;
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    /* ── Preview boxes ── */
+    .demo-previews {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      width: 100%;
+      max-width: 860px;
+    }
+
+    .demo-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #6b82a4;
+      margin-bottom: 8px;
+    }
+
+    .demo-box {
+      border: 1px solid rgba(49, 120, 198, 0.15);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .demo-box--light {
+      background: #f4f7fa;
+    }
+
+    /* ── Code block ── */
+    .demo-code {
+      background: #151b23;
+      border: 1px solid rgba(49, 120, 198, 0.15);
+      border-radius: 8px;
+      padding: 20px 24px;
+      width: 100%;
+      max-width: 860px;
+    }
+
+    .demo-code pre {
+      font-family: monospace;
+      font-size: 12px;
+      line-height: 1.7;
+      color: #c8d6e8;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .demo-code .c-tag {
+      color: #6bbbff;
+    }
+
+    .demo-code .c-attr {
+      color: #97cadb;
+    }
+
+    .demo-code .c-val {
+      color: #d77555;
+    }
+
+    .demo-code .c-com {
+      color: #4b5971;
+      font-style: italic;
+    }
+
+    .demo-code .c-kw {
+      color: #65318d;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ░░ DEMO CONTENT (simulates real page) ░░ -->
+  <main class="demo-content">
+    <div>
+      <h1 class="demo-title">SDL Footer Component</h1>
+      <p class="demo-subtitle">
+        Componente standalone de Sudolabs. Zero dependencies.<br />
+        CSS puro + JS vanilla opcional. Funciona en cualquier proyecto web.
+      </p>
+    </div>
+
+    <div class="demo-previews">
+      <!-- Dark variant (default) -->
+      <div>
+        <p class="demo-label">Variante dark (default)</p>
+        <div class="demo-box">
+          <!-- ════════════════════════════════════
+               SDL FOOTER — DARK (DEFAULT)
+               ════════════════════════════════════ -->
+          <footer class="sdl-footer" data-dark="true">
+            <div class="sdl-footer__inner">
+
+              <!-- Brand / Logo -->
+              <a href="https://sudolabs.space" class="sdl-footer__brand" target="_blank" rel="noopener">
+                <div class="sdl-footer__logo-wrapper">
+                  <img src="/assets/logo-symbol.webp" alt="Sudolabs" class="sdl-footer__logo" width="32" height="32" />
+                  <div class="sdl-footer__logo-aura" aria-hidden="true"></div>
+                </div>
+                <span class="sdl-footer__name">sudolabs</span>
+              </a>
+
+              <!-- Center tagline -->
+              <p class="sdl-footer__tagline">
+                Desarrollado por Sudolabs
+                <span class="sdl-footer__dot">&middot;</span>
+                Ingenier&iacute;a de software, Huancayo, Per&uacute;
+              </p>
+
+              <!-- Right: links + copyright -->
+              <div class="sdl-footer__right">
+                <ul class="sdl-footer__links">
+                  <li><a href="https://sudolabs.space" target="_blank" rel="noopener">Sitio Web</a></li>
+                  <li><a href="https://sudolabs.space/servicios">Servicios</a></li>
+                  <li><a href="https://sudolabs.space/contacto">Contacto</a></li>
+                </ul>
+                <div class="sdl-footer__separator" aria-hidden="true"></div>
+                <span class="sdl-footer__copy">
+                  &copy; <span data-sdlf-year></span> Sudolabs Per&uacute;
+                </span>
+              </div>
+
+            </div>
+          </footer>
+        </div>
+      </div>
+
+      <!-- Light variant -->
+      <div>
+        <p class="demo-label">Variante light (sobre fondo claro)</p>
+        <div class="demo-box demo-box--light">
+          <footer class="sdl-footer sdl-light" data-dark="false">
+            <div class="sdl-footer__inner">
+              <a href="https://sudolabs.space" class="sdl-footer__brand" target="_blank" rel="noopener">
+                <div class="sdl-footer__logo-wrapper">
+                  <img src="/assets/logo-symbol.webp" alt="Sudolabs" class="sdl-footer__logo" width="32" height="32" />
+                  <div class="sdl-footer__logo-aura" aria-hidden="true"></div>
+                </div>
+                <span class="sdl-footer__name">sudolabs</span>
+              </a>
+              <p class="sdl-footer__tagline">
+                Desarrollado por Sudolabs
+                <span class="sdl-footer__dot">&middot;</span>
+                Ingenier&iacute;a de software, Huancayo, Per&uacute;
+              </p>
+              <div class="sdl-footer__right">
+                <ul class="sdl-footer__links">
+                  <li><a href="https://sudolabs.space" target="_blank" rel="noopener">Sitio Web</a></li>
+                  <li><a href="#">Privacidad</a></li>
+                </ul>
+                <div class="sdl-footer__separator" aria-hidden="true"></div>
+                <span class="sdl-footer__copy">&copy; <span data-sdlf-year></span> Sudolabs Per&uacute;</span>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <!-- Integration code snippet -->
+    <div class="demo-code">
+      <pre><span class="c-com">&lt;!-- 1. Copiar estos archivos en tu proyecto --&gt;
+&lt;!--    sdl-footer.css  (requerido)           --&gt;
+&lt;!--    sdl-footer.js   (opcional, glow JS)   --&gt;
+&lt;!--    logo-symbol.webp o logo-full.webp      --&gt;</span>
+
+<span class="c-tag">&lt;link</span> <span class="c-attr">rel=</span><span class="c-val">"stylesheet"</span> <span class="c-attr">href=</span><span class="c-val">"sdl-footer.css"</span><span class="c-tag">&gt;</span>
+
+<span class="c-tag">&lt;footer</span> <span class="c-attr">class=</span><span class="c-val">"sdl-footer"</span> <span class="c-attr">data-dark=</span><span class="c-val">"true"</span><span class="c-tag">&gt;</span>
+  <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"sdl-footer__inner"</span><span class="c-tag">&gt;</span>
+
+    <span class="c-tag">&lt;a</span> <span class="c-attr">href=</span><span class="c-val">"https://sudolabs.space"</span> <span class="c-attr">class=</span><span class="c-val">"sdl-footer__brand"</span><span class="c-tag">&gt;</span>
+      <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"sdl-footer__logo-wrapper"</span><span class="c-tag">&gt;</span>
+        <span class="c-tag">&lt;img</span> <span class="c-attr">src=</span><span class="c-val">"logo-symbol.webp"</span> <span class="c-attr">class=</span><span class="c-val">"sdl-footer__logo"</span> <span class="c-attr">alt=</span><span class="c-val">"Sudolabs"</span><span class="c-tag">&gt;</span>
+        <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"sdl-footer__logo-aura"</span><span class="c-tag">&gt;&lt;/div&gt;</span>
+      <span class="c-tag">&lt;/div&gt;</span>
+      <span class="c-tag">&lt;span</span> <span class="c-attr">class=</span><span class="c-val">"sdl-footer__name"</span><span class="c-tag">&gt;</span>sudolabs<span class="c-tag">&lt;/span&gt;</span>
+    <span class="c-tag">&lt;/a&gt;</span>
+
+    <span class="c-tag">&lt;p</span> <span class="c-attr">class=</span><span class="c-val">"sdl-footer__tagline"</span><span class="c-tag">&gt;</span>
+      Desarrollado con <span class="c-tag">&lt;span</span> <span class="c-attr">class=</span><span class="c-val">"sdl-footer__heart"</span><span class="c-tag">&gt;</span>♥<span class="c-tag">&lt;/span&gt;</span> por
+      <span class="c-tag">&lt;em&gt;</span>Sudolabs<span class="c-tag">&lt;/em&gt;</span>
+    <span class="c-tag">&lt;/p&gt;</span>
+
+    <span class="c-tag">&lt;div</span> <span class="c-attr">class=</span><span class="c-val">"sdl-footer__right"</span><span class="c-tag">&gt;</span>
+      <span class="c-tag">&lt;span</span> <span class="c-attr">class=</span><span class="c-val">"sdl-footer__copy"</span><span class="c-tag">&gt;</span>
+        © <span class="c-tag">&lt;span</span> <span class="c-attr">data-sdlf-year</span><span class="c-tag">&gt;&lt;/span&gt;</span> Sudolabs
+      <span class="c-tag">&lt;/span&gt;</span>
+    <span class="c-tag">&lt;/div&gt;</span>
+
+  <span class="c-tag">&lt;/div&gt;</span>
+<span class="c-tag">&lt;/footer&gt;</span>
+
+<span class="c-tag">&lt;script</span> <span class="c-attr">src=</span><span class="c-val">"sdl-footer.js"</span> <span class="c-attr">defer</span><span class="c-tag">&gt;&lt;/script&gt;</span>
+<span class="c-com">&lt;!-- El JS inyecta el a&ntilde;o autom&aacute;ticamente --&gt;</span></pre>
+    </div>
+  </main>
+
+  <!-- SDL Footer JS (mouse glow enhancement) -->
+  <script src="sdl-footer.js" defer></script>
+</body>
+
+</html>

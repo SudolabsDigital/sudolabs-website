@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { SdlFooter } from "@/components/layout/sdl-footer";
 import { GlobalSpotlight } from "@/components/ui/global-spotlight";
 import { GoogleTagManager } from '@next/third-parties/google';
 import { siteConfig } from "@/core/config";
@@ -122,6 +123,7 @@ export default function RootLayout({
         </main>
         
         <Footer />
+        <SdlFooter />
         <Analytics />
         <SpeedInsights />
       </body>
