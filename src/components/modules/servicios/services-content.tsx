@@ -67,14 +67,14 @@ export function ServicesContent() {
 
   return (
     <>
-      <PageHero 
+      <PageHero
         title="Capacidades Técnicas."
         subtitle="Catálogo de Servicios"
         description="Un stack completo de servicios diseñados para resolver problemas complejos. Sin relleno, solo ingeniería."
         imageSrc="/assets/images/Dashboards Ejecutivos.webp"
         size="compact"
-      />
-      
+        breadcrumbs={[{ label: "Servicios" }]}
+      />      
       <div className="pt-24 pb-24 relative z-10">
         <section className="container mx-auto px-6 max-w-7xl">
 

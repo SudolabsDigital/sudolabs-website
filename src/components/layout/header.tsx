@@ -66,7 +66,7 @@ export function Header() {
             {/* Logo Section - Inverted for Dark Mode */}
             <Link href="/" aria-label="Ir al inicio" className="flex items-center gap-2 group mr-4">
               <div 
-                className="flex items-center justify-center relative h-10 md:h-12 w-[140px] md:w-[180px] brightness-0 dark:invert filter transition-transform duration-300 group-hover:scale-105"
+                className="flex items-center justify-center relative h-10 md:h-12 w-[140px] md:w-[180px] dark:brightness-0 dark:invert filter transition-transform duration-300 group-hover:scale-105"
               >
                 <Image 
                   src="/assets/logo-full.webp" 
@@ -107,7 +107,7 @@ export function Header() {
                 </SheetTrigger>
                 <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-background border-l border-border">
                   <SheetHeader className="mb-8 text-left">
-                    <div className="flex items-center gap-2 mb-2 relative h-10 w-[140px] brightness-0 dark:invert filter">
+                    <div className="flex items-center gap-2 mb-2 relative h-10 w-[140px] dark:brightness-0 dark:invert filter">
                         <Image 
                           src="/assets/logo-full.webp" 
                           alt="Sudolabs Digital" 

@@ -30,13 +30,13 @@ export default async function ProyectosPage() {
           { name: "Proyectos", item: "/proyectos" }
         ]} 
       />
-...
       <PageHero 
         title="Portafolio & Casos de Éxito"
         subtitle="Nuestro Trabajo"
         description="Software de alto impacto diseñado para escalar operaciones y dominar mercados."
         imageSrc="/assets/images/Digitalización que Funciona.webp"
         size="compact"
+        breadcrumbs={[{ label: "Proyectos" }]}
       />
 
       <div className="flex-1 pt-16 pb-24 relative z-10">

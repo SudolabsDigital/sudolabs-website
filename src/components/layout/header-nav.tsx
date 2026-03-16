@@ -37,7 +37,7 @@ export function HeaderNav() {
                 href={item.href}
                 className={cn(
                   "relative z-10 block px-5 py-2.5 text-sm font-bold transition-colors duration-300",
-                  isActive ? "text-primary" : "text-foreground/60 hover:text-foreground"
+                  isActive ? "text-primary" : "text-foreground/80 hover:text-foreground"
                 )}
               >
                 {item.name}

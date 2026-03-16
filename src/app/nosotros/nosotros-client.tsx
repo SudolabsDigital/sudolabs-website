@@ -22,6 +22,7 @@ export default function NosotrosPage() {
         description="En Sudolabs, no solo escribimos código. Construimos la infraestructura digital que permite a las empresas ambiciosas escalar sin límites."
         imageSrc="/assets/images/La Ingeniería Detrás de Sudolabs.webp"
         size="compact"
+        breadcrumbs={[{ label: "Nosotros" }]}
       />
 
       <div className="flex-1 pt-24 pb-24 relative z-10">
