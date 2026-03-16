@@ -27,7 +27,7 @@ export function FloatingCard({
   ...props
 }: CardProps) {
   const [visible, setVisible] = useState(false);
-  const divRef = useRef<HTMLDivElement>(null);
+  const divRef = useRef<HTMLAnchorElement | HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (!divRef.current) return;
@@ -110,7 +110,7 @@ export function FloatingCard({
       <Link
         href={href}
         onClick={onCardClick as React.MouseEventHandler<HTMLAnchorElement>}
-        ref={divRef as any}
+        ref={divRef as React.RefObject<HTMLAnchorElement>}
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setVisible(true)}
         onMouseLeave={() => setVisible(false)}
@@ -124,7 +124,7 @@ export function FloatingCard({
   return (
     <div
       onClick={onCardClick as React.MouseEventHandler<HTMLDivElement>}
-      ref={divRef}
+      ref={divRef as React.RefObject<HTMLDivElement>}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setVisible(true)}
       onMouseLeave={() => setVisible(false)}
