@@ -14,11 +14,11 @@ export function HeroSection() {
                  <Image
                     src="/assets/logo-full.webp"
                     alt="Sudolabs Digital Logo"
-                    width={250}
-                    height={80}
+                    width={180}
+                    height={58}
                     priority
                     fetchPriority="high"
-                    sizes="(max-width: 768px) 180px, 0px"
+                    sizes="180px"
                     className="w-[180px] h-auto drop-shadow-lg"
                     style={{ height: 'auto' }}
                  />
@@ -57,7 +57,8 @@ export function HeroSection() {
                   alt="Sudolabs Digital Logo"
                   width={800}
                   height={300}
-                  loading="eager"
+                  priority
+                  fetchPriority="high"
                   sizes="(min-width: 1024px) 600px, 100vw"
                   className="w-full max-w-[600px] h-auto drop-shadow-2xl relative z-10 dark:invert transition"
                   style={{ height: 'auto' }}

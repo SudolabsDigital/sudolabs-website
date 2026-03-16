@@ -120,6 +120,11 @@ export function TechButton({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={cn(baseStyles, variants[variant])}
+      role="button"
+      aria-label={typeof children === 'string' ? children : undefined}
+      aria-busy={isLoading}
+      aria-disabled={disabled || isLoading}
+      tabIndex={disabled || isLoading ? -1 : 0}
     >
       {/* LASER SPECIFIC EFFECTS */}
       {variant === 'laser' && isHovered && (
