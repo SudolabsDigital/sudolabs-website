@@ -106,7 +106,7 @@ export function CtaCard({
         {imageSrc ? (
           <div className="absolute inset-0 z-0 pointer-events-none bg-black">
             <Image 
-              src={imageSrc}
+              src={encodeURI(imageSrc)}
               alt="Call to action background"
               fill
               className="object-cover grayscale opacity-50 contrast-125 brightness-[0.60] transition-transform duration-[20s] group-hover/cta:scale-105"

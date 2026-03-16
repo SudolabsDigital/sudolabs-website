@@ -6,26 +6,37 @@ import { CtaCard } from "@/components/ui/design-system/cta-card";
 import { LivePreviewBadge } from "@/components/ui/live-preview-badge";
 import PageHero from "@/components/ui/page-hero";
 
+import BreadcrumbSchema from "@/components/seo/breadcrumb-schema";
+
 export const metadata = {
-  title: "Portafolio y Casos de Éxito | Sudolabs",
+  title: "Portafolio y Casos de Éxito | Sudolabs Perú",
   description: "Descubre cómo transformamos negocios con software. Casos reales de automatización, gestión documental y plataformas digitales.",
+  alternates: {
+    canonical: "https://sudolabs.space/proyectos",
+  },
 };
 
 export default async function ProyectosPage() {
   const allProjects = await getAllContent<ProjectMeta>("projects");
-  
+
   const featuredProject = allProjects.find(p => p.isFeatured) || allProjects[0];
   const otherProjects = allProjects.filter(p => p.slug !== featuredProject?.slug);
 
   return (
     <div className="min-h-screen flex flex-col font-sans bg-background selection:bg-primary/20 relative overflow-hidden">
-      
+      <BreadcrumbSchema 
+        items={[
+          { name: "Inicio", item: "/" },
+          { name: "Proyectos", item: "/proyectos" }
+        ]} 
+      />
       <PageHero 
         title="Portafolio & Casos de Éxito"
         subtitle="Nuestro Trabajo"
         description="Software de alto impacto diseñado para escalar operaciones y dominar mercados."
         imageSrc="/assets/images/Digitalización que Funciona.webp"
         size="compact"
+        breadcrumbs={[{ label: "Proyectos" }]}
       />
 
       <div className="flex-1 pt-16 pb-24 relative z-10">

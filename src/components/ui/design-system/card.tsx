@@ -27,7 +27,7 @@ export function FloatingCard({
   ...props
 }: CardProps) {
   const [visible, setVisible] = useState(false);
-  const divRef = useRef<HTMLDivElement>(null);
+  const divRef = useRef<HTMLAnchorElement | HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (!divRef.current) return;
@@ -37,9 +37,9 @@ export function FloatingCard({
   };
 
   const cardClasses = cn(
-    "relative rounded-[16px] p-[2px] overflow-visible group/card block", // Increased padding from p-[1px] to p-[2px] for thicker borders
-    "bg-border transition duration-500 h-full w-full",
-    interactive && "hover:-translate-y-1 cursor-pointer", // Removed shadow-sm hover:shadow-md to rely on custom glowing outer shadow
+    "relative rounded-[16px] p-[2px] overflow-visible group/card block", 
+    "bg-border transition duration-500 h-full w-full focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2",
+    interactive && "hover:-translate-y-1 cursor-pointer", 
     className
   );
 
@@ -64,21 +64,26 @@ export function FloatingCard({
         </>
       )}
 
-      {/* Main Card Surface - Fondo Sólido Utilitario (Sin sombras internas) */}
-      <div className={cn(
-        "relative z-10 h-full w-full rounded-[14px] p-5 lg:p-6 flex flex-col", // Ajuste del radio interno por el borde más grueso
+      <article className={cn(
+        "relative z-10 h-full w-full rounded-[14px] p-5 lg:p-6 flex flex-col", 
         "bg-card transition-colors duration-300", 
         interactive && "group-hover/card:bg-card/95"
       )}>
         {/* Header: Icon & Arrow */}
         <div className="flex justify-between items-start mb-4">
           {icon && (
-            <div className="w-10 h-10 rounded-lg bg-secondary/50 flex items-center justify-center text-primary border border-border/50 group-hover/card:border-primary/30 transition-colors duration-300">
+            <div 
+              className="w-10 h-10 rounded-lg bg-secondary/50 flex items-center justify-center text-primary border border-border/50 group-hover/card:border-primary/30 transition-colors duration-300"
+              aria-hidden="true"
+            >
               {icon}
             </div>
           )}
           {interactive && (
-            <ArrowUpRight className="w-4 h-4 text-muted-foreground opacity-0 -translate-x-2 translate-y-2 group-hover/card:opacity-100 group-hover/card:translate-x-0 group-hover/card:translate-y-0 transition duration-300" />
+            <ArrowUpRight 
+              className="w-4 h-4 text-muted-foreground opacity-0 -translate-x-2 translate-y-2 group-hover/card:opacity-100 group-hover/card:translate-x-0 group-hover/card:translate-y-0 transition duration-300" 
+              aria-hidden="true"
+            />
           )}
         </div>
 
@@ -96,7 +101,7 @@ export function FloatingCard({
             {description}
           </p>
         </div>
-      </div>
+      </article>
     </>
   );
 
@@ -105,8 +110,7 @@ export function FloatingCard({
       <Link
         href={href}
         onClick={onCardClick as React.MouseEventHandler<HTMLAnchorElement>}
-        // @ts-expect-error type discrepancy with Link ref
-        ref={divRef}
+        ref={divRef as React.RefObject<HTMLAnchorElement>}
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setVisible(true)}
         onMouseLeave={() => setVisible(false)}
@@ -120,7 +124,7 @@ export function FloatingCard({
   return (
     <div
       onClick={onCardClick as React.MouseEventHandler<HTMLDivElement>}
-      ref={divRef}
+      ref={divRef as React.RefObject<HTMLDivElement>}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setVisible(true)}
       onMouseLeave={() => setVisible(false)}

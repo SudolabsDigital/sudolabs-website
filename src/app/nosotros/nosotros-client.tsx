@@ -22,12 +22,13 @@ export default function NosotrosPage() {
         description="En Sudolabs, no solo escribimos código. Construimos la infraestructura digital que permite a las empresas ambiciosas escalar sin límites."
         imageSrc="/assets/images/La Ingeniería Detrás de Sudolabs.webp"
         size="compact"
+        breadcrumbs={[{ label: "Nosotros" }]}
       />
 
       <div className="flex-1 pt-24 pb-24 relative z-10">
         <section className="container mx-auto px-6 max-w-6xl">
 
-          {/* MISIÓN & VISIÓN: GRID EDITORIAL */}
+          {/* MISIÓN & VISIÓN: GRID EDITORIAL ORIGINAL */}
           <div className="grid md:grid-cols-2 gap-8 mb-32">
             
             {/* MISIÓN */}
@@ -131,9 +132,9 @@ export default function NosotrosPage() {
             />
           </div>
         </section>
-                </div>
+      </div>
           
-                <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} defaultSubject="Hablemos de Nosotros" />
+      <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} defaultSubject="Hablemos de Nosotros" />
     </>
   )
 }

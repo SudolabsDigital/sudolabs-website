@@ -55,7 +55,7 @@ export function SdlFooter({
           <div className="sdl-footer__logo-wrapper">
             <Image
               src="/assets/logo-symbol.webp"
-              alt="Sudolabs"
+              alt=""
               width={32}
               height={32}
               className="sdl-footer__logo"

@@ -50,10 +50,14 @@ export default function PageHero({
       {/* 1. Inmersive Background - Absolute inset-0 will always follow the container's height */}
       <div className="absolute inset-0 z-0">
         <div
-          className="absolute inset-0 bg-cover bg-center grayscale opacity-60 contrast-110 brightness-[0.45] z-0 transition-transform duration-[20s] hover:scale-105"
+          className="absolute inset-0 bg-cover bg-center opacity-60 contrast-110 brightness-[0.45] z-0 transition-transform duration-[20s] hover:scale-105"
           style={{ backgroundImage: `url('${imageSrc}')` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#001b48] via-[#001b48]/60 to-transparent z-10" />
+        <div className={cn(
+          "absolute inset-0 z-10",
+          "bg-gradient-to-b from-white/40 via-transparent to-[#001b48]/80 via-[45%]",
+          "dark:bg-gradient-to-t dark:from-[#001b48] dark:via-[#001b48]/60 dark:to-transparent"
+        )} />
       </div>
 
       {/* 2. Content Area */}
@@ -63,7 +67,7 @@ export default function PageHero({
         "pt-28 md:pt-32 pb-20"
       )}>
         
-        {/* Breadcrumbs - Inicio Inmediato */}
+        {/* Breadcrumbs - Siempre blancos/claros ya que reposan sobre el azul */}
         {breadcrumbs.length > 0 && (
           <motion.nav
             initial={{ opacity: 0, x: -20 }}
@@ -71,16 +75,16 @@ export default function PageHero({
             transition={{ delay: 0.2 }}
             className="flex items-center gap-2 py-1.5 px-3.5 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-[10px] font-bold uppercase tracking-widest shadow-sm mb-8 w-fit"
           >
-            <Link href="/" className="text-white/90 hover:text-[--accent] transition-colors">
+            <Link href="/" className="text-white/90 hover:text-white transition-colors">
               <Home className="w-3.5 h-3.5 mb-0.5" />
             </Link>
             {breadcrumbs.map((item, index) => (
               <div key={index} className="flex items-center gap-2">
                 <ChevronRight className="w-3 h-3 text-white/40" />
                 {item.href ? (
-                  <Link href={item.href} className="text-white/90 hover:text-[--accent] transition-colors">{item.label}</Link>
+                  <Link href={item.href} className="text-white/90 hover:text-white transition-colors">{item.label}</Link>
                 ) : (
-                  <span className="text-[--accent]">{item.label}</span>
+                  <span className="text-white font-bold">{item.label}</span>
                 )}
               </div>
             ))}
@@ -90,30 +94,28 @@ export default function PageHero({
         {/* 3. Asymmetric Layout Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           
-          {/* Lado Izquierdo: 50% (Título) */}
+          {/* Lado Izquierdo: Título siempre blanco */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="col-span-12 lg:col-span-6"
           >
             {subtitle && (
-              <span className="text-[--accent] font-bold uppercase tracking-[0.3em] block mb-4 text-[10px] md:text-xs">
+              <span className="text-white font-bold uppercase tracking-[0.3em] block mb-4 text-[10px] md:text-xs">
                 {subtitle}
               </span>
             )}
             <h1 className={cn(
               "font-black text-white leading-[1.05] tracking-tighter drop-shadow-xl break-words",
-              // Títulos imponentes pero seguros (max 7xl en desktop)
               isCompact ? "text-4xl md:text-5xl lg:text-6xl" : "text-5xl md:text-6xl lg:text-7xl"
             )}>
               {title}
             </h1>
           </motion.div>
 
-          {/* Espacio Vacío: 25% (Respiro Visual) */}
           <div className="hidden lg:block lg:col-span-3" />
 
-          {/* Lado Derecho: 25% (Descripción y Acciones) */}
+          {/* Lado Derecho: Descripción y botones siempre blancos */}
           <motion.div 
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -121,7 +123,7 @@ export default function PageHero({
             className="col-span-12 lg:col-span-3 space-y-8"
           >
             {description && (
-              <p className="text-white/80 leading-relaxed font-medium text-sm md:text-base border-l-2 border-[--accent]/30 pl-6">
+              <p className="text-white/80 leading-relaxed font-medium text-sm md:text-base border-l-2 border-white/30 pl-6">
                 {description}
               </p>
             )}
