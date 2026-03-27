@@ -53,7 +53,7 @@ export default async function LegalPage(props: { params: Promise<{ slug: string 
         title={doc.meta.title}
         subtitle="DOCUMENTACIÓN LEGAL"
         description={doc.meta.description}
-        imageSrc="/assets/images/blogs/la-ingenieria-detras-de-sudolabs.webp"
+        imageSrc={doc.meta.image || "/assets/images/blogs/bienvenidos-a-sudolabs.webp"}
         size="compact"
         align="left"
         breadcrumbs={[
