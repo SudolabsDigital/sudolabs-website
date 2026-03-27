@@ -1,0 +1,53 @@
+---
+title: "Menudeable - Digitalización Inteligente"
+description: "SaaS Headless de alto rendimiento para la industria gastronómica. Vitrinas virtuales modernas que muestran tus productos al mundo con velocidad extrema."
+date: "2026-03-01"
+client: "Menudeable"
+role: "Consultoría Técnica y Desarrollo Headless"
+tags: ["Next.js 16", "Laravel 12", "SaaS", "Tailwind CSS v4", "ISR"]
+image: "/assets/projects/menudeable/portada.webp"
+websiteUrl: "https://menudeable.shop"
+stats:
+  - label: "Arquitectura"
+    value: "Headless"
+  - label: "Performance"
+    value: "100/100"
+  - label: "Actualización"
+    value: "Tiempo Real"
+relatedPosts: ["modo-offline-pwa", "trazabilidad-logs-auditoria", "seo-tecnico-avanzado", "buscadores-inteligentes"]
+---
+
+Menudeable es un ecosistema SaaS **Headless** de alto rendimiento diseñado para la modernización de la industria gastronómica. A diferencia de los menús digitales estáticos, Menudeable combina la velocidad de la regeneración estática con la flexibilidad de una actualización en tiempo real, permitiendo a los negocios mostrar sus productos al mundo mediante una vitrina digital de alto impacto.
+
+---
+
+## El Desafío
+
+La industria gastronómica tradicional se enfrenta a menudo a herramientas digitales lentas, difíciles de actualizar y con poco impacto visual. El reto era crear una plataforma que permitiera a los dueños de negocios gestionar catálogos complejos con la misma facilidad con la que se navega en una red social, garantizando al mismo tiempo que el cliente final tuviera una experiencia de carga instantánea, incluso con conexiones limitadas.
+
+## La Solución
+
+Desarrollamos una arquitectura desacoplada (Headless) que separa la gestión de datos de la capa de presentación.
+
+### Núcleo Tecnológico (Backend)
+
+El sistema organiza la información de manera jerárquica para soportar la complejidad de cualquier negocio:
+- **Modelo de Datos:** Estructura relacional avanzada que incluye `Business`, `Collections`, `Items` y `Variants`.
+- **Sincronización en Tiempo Real:** Implementación de **Laravel Observers** vinculados a un **RevalidationService**. Cada cambio en el catálogo dispara una señal automática que regenera el frontend estático inmediatamente.
+
+### Experiencia de Usuario (Frontend)
+
+La interfaz se construyó priorizando la inmediatez y la estética premium:
+- **Gestión Optimista (MenuContext):** El panel administrativo utiliza **Optimistic UI Updates**, permitiendo que cambios como la disponibilidad de un plato o el reordenamiento de categorías se reflejen instantáneamente antes de que la API confirme la operación.
+- **Vitrinas Inmersivas:** Integración con **Framer Motion** para transiciones fluidas y un diseño responsive impecable bajo Tailwind CSS v4.
+
+## Características Clave
+
+* **Menu Builder:** Interfaz visual intuitiva para la construcción y personalización del catálogo digital.
+* **QR Generation:** Generación dinámica de códigos QR vinculados al slug único de cada negocio.
+* **Optimized SEO:** Uso de **Incremental Static Regeneration (ISR)** para asegurar que cada vitrina sea indexada por buscadores con tiempos de carga milimétricos.
+* **Tags Dinámicos:** Sistema de etiquetas con iconos (Vegano, Picante, Recomendado) para mejorar la decisión de compra del cliente.
+
+## Impacto
+
+El resultado es una plataforma escalable que transforma la operación diaria de los restaurantes. Menudeable no solo digitaliza un menú; crea una identidad digital robusta donde la tecnología trabaja en segundo plano para que el producto sea el verdadero protagonista.
