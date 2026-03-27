@@ -8,8 +8,13 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { useManualChat } from '@/hooks/use-manual-chat';
 import { TechButton } from '@/components/ui/design-system/tech-button';
+import { cn } from '@/lib/utils';
 
-export function AiChatInterface() {
+interface AiChatInterfaceProps {
+  className?: string;
+}
+
+export function AiChatInterface({ className }: AiChatInterfaceProps) {
   const { 
     messages, 
     input, 
@@ -77,7 +82,7 @@ export function AiChatInterface() {
   };
 
   return (
-    <div className="h-[75%] lg:h-full lg:w-[70%] flex flex-col bg-background/50 relative">
+    <div className={cn("h-[75%] lg:h-full lg:w-[70%] flex flex-col bg-background/50 relative", className)}>
       
       {/* Chat Header */}
       <div className="h-14 border-b border-border flex items-center justify-between px-6 bg-background/80 backdrop-blur-sm z-20">

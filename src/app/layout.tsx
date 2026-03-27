@@ -8,6 +8,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { SdlFooter } from "@/components/layout/sdl-footer";
 import { WhatsAppCTA } from "@/components/features/whatsapp-cta";
+import { DebianChatCTA } from "@/components/features/debian-chat-cta";
 import { GlobalSpotlight } from "@/components/ui/global-spotlight";
 import { GoogleTagManager } from '@next/third-parties/google';
 import { siteConfig } from "@/core/config";
@@ -118,6 +119,7 @@ export default function RootLayout({
         <Footer />
         <SdlFooter />
         <WhatsAppCTA />
+        <DebianChatCTA />
         <Analytics />
         <SpeedInsights />
       </body>
