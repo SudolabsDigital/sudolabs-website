@@ -9,7 +9,7 @@ export * from "./mdx-utils";
 const contentDirectory = path.join(process.cwd(), "src/content");
 
 export const getAllContent = async <T extends BlogMeta>(
-  type: "blog" | "projects"
+  type: "blog" | "projects" | "legal"
 ): Promise<T[]> => {
   const dirPath = path.join(contentDirectory, type);
   
@@ -38,7 +38,7 @@ export const getAllContent = async <T extends BlogMeta>(
 };
 
 export const getContentBySlug = async <T extends BlogMeta>(
-  type: "blog" | "projects",
+  type: "blog" | "projects" | "legal",
   slug: string
 ): Promise<{ meta: T; content: string } | null> => {
   const filePath = path.join(contentDirectory, type, `${slug}.mdx`);

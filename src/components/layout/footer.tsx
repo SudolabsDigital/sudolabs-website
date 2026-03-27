@@ -4,12 +4,6 @@ import Link from "next/link"
 import Image from "next/image"
 import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react"
 import { siteConfig } from "@/core/config"
-import dynamic from "next/dynamic"
-import { useState } from "react"
-
-const ContactModal = dynamic(() => import('@/components/features/contact-modal').then(mod => mod.ContactModal), {
-  ssr: false
-});
 
 const Tiktok = ({ className }: { className?: string }) => (
   <svg
@@ -25,15 +19,6 @@ const Tiktok = ({ className }: { className?: string }) => (
 )
 
 export function Footer() {
-  const [isContactOpen, setIsContactOpen] = useState(false);
-  const [hasOpenedOnce, setHasOpenedOnce] = useState(false);
-
-  const handleLegal = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setHasOpenedOnce(true);
-    setIsContactOpen(true);
-  };
-
   return (
     <footer className="border-t border-border bg-card/80 backdrop-blur-md py-10 relative overflow-hidden text-sm">
       <div className="container mx-auto px-6">
@@ -131,20 +116,13 @@ export function Footer() {
             </ul>
             
             <div className="pt-2 flex gap-4 text-[10px] opacity-60 text-muted-foreground">
-                <Link href="#" onClick={handleLegal} className="hover:text-foreground hover:underline">Privacidad</Link>
-                <Link href="#" onClick={handleLegal} className="hover:text-foreground hover:underline">Términos y Condiciones</Link>
+                <Link href="/legal/privacidad" className="hover:text-foreground hover:underline">Privacidad</Link>
+                <Link href="/legal/terminos" className="hover:text-foreground hover:underline">Términos y Condiciones</Link>
             </div>
           </div>
 
         </div>
       </div>
-      
-      {hasOpenedOnce && (
-        <ContactModal 
-          isOpen={isContactOpen} 
-          onClose={() => setIsContactOpen(false)} 
-        />
-      )}
     </footer>
   )
 }
