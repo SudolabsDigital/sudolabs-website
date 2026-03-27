@@ -7,11 +7,11 @@ export default function JsonLd() {
       {
         "@type": "ProfessionalService",
         "@id": `${siteConfig.siteUrl}/#organization`,
-        "name": "Sudolabs Perú",
+        "name": siteConfig.name,
         "alternateName": "Sudolabs Digital",
         "image": `${siteConfig.siteUrl}/assets/logo-full.webp`,
         "logo": `${siteConfig.siteUrl}/assets/logo-symbol.webp`,
-        "description": "Consultora de Ingeniería de Software y Transformación Digital en Huancayo.",
+        "description": siteConfig.shortDescription,
         "url": siteConfig.siteUrl,
         "telephone": siteConfig.contact.phone,
         "email": siteConfig.contact.email,
@@ -19,29 +19,29 @@ export default function JsonLd() {
         "areaServed": [
           {
             "@type": "City",
-            "name": "Huancayo"
+            "name": siteConfig.contact.city
           },
           {
             "@type": "State",
-            "name": "Junín"
+            "name": siteConfig.contact.region
           },
           {
             "@type": "Country",
-            "name": "Perú"
+            "name": siteConfig.contact.country
           }
         ],
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "Prolongacion Jose Carlos Mariategui 205",
-          "addressLocality": "Huancayo",
-          "addressRegion": "Junín",
-          "postalCode": "12001",
+          "streetAddress": siteConfig.contact.address.split(",")[0],
+          "addressLocality": siteConfig.contact.city,
+          "addressRegion": siteConfig.contact.region,
+          "postalCode": siteConfig.contact.postalCode,
           "addressCountry": "PE"
         },
         "geo": {
           "@type": "GeoCoordinates",
-          "latitude": -12.06513,
-          "longitude": -75.20486
+          "latitude": siteConfig.contact.geo.latitude,
+          "longitude": siteConfig.contact.geo.longitude
         },
         "openingHoursSpecification": [
           {
@@ -52,7 +52,7 @@ export default function JsonLd() {
           }
         ],
         "sameAs": [
-          "https://github.com/sudolabs-digital",
+          siteConfig.social.github,
           siteConfig.social.facebook,
           siteConfig.social.instagram,
           siteConfig.social.tiktok
@@ -62,8 +62,8 @@ export default function JsonLd() {
         "@type": "WebSite",
         "@id": `${siteConfig.siteUrl}/#website`,
         "url": siteConfig.siteUrl,
-        "name": "Sudolabs Perú",
-        "description": "Consultora de Software y Tecnología en Huancayo",
+        "name": siteConfig.name,
+        "description": siteConfig.shortDescription,
         "publisher": {
           "@id": `${siteConfig.siteUrl}/#organization`
         },

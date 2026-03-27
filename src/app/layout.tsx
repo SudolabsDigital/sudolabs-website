@@ -7,6 +7,8 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { SdlFooter } from "@/components/layout/sdl-footer";
+import { WhatsAppCTA } from "@/components/features/whatsapp-cta";
+import { DebianChatCTA } from "@/components/features/debian-chat-cta";
 import { GlobalSpotlight } from "@/components/ui/global-spotlight";
 import { GoogleTagManager } from '@next/third-parties/google';
 import { siteConfig } from "@/core/config";
@@ -33,10 +35,10 @@ export const metadata: Metadata = {
     canonical: siteConfig.siteUrl,
   },
   title: {
-    default: "Sudolabs Perú | Consultora de Software y Tecnología en Huancayo",
-    template: "%s | Sudolabs Perú",
+    default: siteConfig.title,
+    template: `%s | ${siteConfig.name}`,
   },
-  description: "Impulsa tu empresa con software a medida y tecnología de alto rendimiento. Expertos en desarrollo web, aplicaciones móviles y transformación digital desde Huancayo para el mundo.",
+  description: siteConfig.description,
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',
@@ -46,46 +48,38 @@ export const metadata: Metadata = {
       url: '/apple-icon.png',
     },
   },
-  keywords: [
-    "Desarrollo de Software Huancayo", 
-    "Consultora Tecnológica Perú", 
-    "Sistemas a medida", 
-    "Aplicaciones Web", 
-    "Transformación Digital", 
-    "Sudolabs Perú",
-    "Ingeniería de Software"
-  ],
-  authors: [{ name: "Sudolabs Perú" }],
-  creator: "Sudolabs Perú",
+  keywords: siteConfig.keywords,
+  authors: [{ name: siteConfig.author }],
+  creator: siteConfig.author,
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Sudolabs Perú",
+    title: siteConfig.name,
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION,
   },
   openGraph: {
-    title: "Sudolabs Perú | Consultora de Software y Tecnología",
-    description: "Desarrollamos software a medida y soluciones de tecnología para empresas ambiciosas.",
+    title: siteConfig.title,
+    description: siteConfig.description,
     url: siteConfig.siteUrl,
-    siteName: "Sudolabs Perú",
+    siteName: siteConfig.name,
     locale: "es_PE",
     type: "website",
     images: [
       {
-        url: '/opengraph-image.webp',
+        url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: 'Sudolabs Perú - Ingeniería de Software y Tecnología',
+        alt: `${siteConfig.name} - Ingeniería de Software y Tecnología`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sudolabs Perú | Innovación y Tecnología desde Huancayo",
-    description: "Expertos en desarrollo de software y tecnología para negocios modernos.",
-    images: ['/opengraph-image.webp'],
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
   },
   robots: {
     index: true,
@@ -124,6 +118,8 @@ export default function RootLayout({
         
         <Footer />
         <SdlFooter />
+        <WhatsAppCTA />
+        <DebianChatCTA />
         <Analytics />
         <SpeedInsights />
       </body>
