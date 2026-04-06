@@ -1,0 +1,53 @@
+---
+title: "Portal Académico UP Educación — UNCP"
+description: "Digitalización integral del ecosistema informativo y académico de la Unidad de Posgrado de la Facultad de Educación de la UNCP."
+date: "2026-03-31"
+client: "Unidad de Posgrado — Facultad de Educación, UNCP"
+role: "Desarrollo Full-Stack · Diseño de Interfaces · Arquitectura de Software · Despliegue & SEO"
+tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Laravel", "MySQL", "Vercel", "cPanel"]
+image: "/assets/projects/up-educacion/portada.webp"
+websiteUrl: "https://info.upeducacion-uncp.edu.pe"
+isFeatured: true
+stats:
+  - label: "Usuarios Activos"
+    value: "+1,000"
+  - label: "Programas de Posgrado"
+    value: "5"
+  - label: "Uptime"
+    value: "99.9%"
+relatedPosts: []
+---
+
+La Unidad de Posgrado de la Facultad de Educación de la UNCP carecía de presencia digital propia: sin portal informativo, sin gestión centralizada de contenidos y con procesos administrativos mayormente en papel. Sudolabs diseñó y desarrolló **SIFED**, un ecosistema web institucional diseñado para cerrar la brecha digital en el sector público académico.
+
+## El Desafío
+
+El reto principal era consolidar una arquitectura que fuera lo suficientemente robusta para manejar la carga institucional pero flexible para ser gestionada por personal administrativo sin conocimientos técnicos profundos. Se requería una plataforma con tiempos de respuesta inmediatos y un SEO optimizado para que los futuros estudiantes de posgrado pudieran encontrar la oferta académica fácilmente.
+
+## La Solución
+
+Construimos una arquitectura de **Ecosistema Desacoplado (Headless)** que permite una separación clara entre la gestión de datos y la experiencia del usuario final.
+
+### Arquitectura de Datos (Backend)
+
+Implementamos una API REST robusta utilizando **Laravel 12**, que actúa como la única fuente de verdad:
+- **Gestión Centralizada:** Un panel administrativo intuitivo para la gestión de maestrías, doctorados, diplomados y noticias.
+- **Seguridad y Auditoría:** Capas de validación estrictas para proteger la integridad de la información institucional.
+- **Biblioteca Virtual:** Módulo específico para la organización y acceso a recursos académicos digitales.
+
+### Experiencia Institucional (Frontend)
+
+El portal público se desarrolló con **Next.js**, priorizando la velocidad y el posicionamiento:
+- **Máximo Rendimiento (ISR):** Uso de *Incremental Static Regeneration* para asegurar que el portal sea estático y rápido, pero se actualice automáticamente cuando se publica una nueva noticia o programa.
+- **Diseño Editorial Moderno:** Una interfaz limpia y profesional construida con **Tailwind CSS**, con micro-interacciones fluidas mediante **Framer Motion** que elevan la percepción de marca de la facultad.
+- **Optimización SEO:** Implementación de metadatos dinámicos y estructuras de datos (Schema.org) que resultaron en un posicionamiento activo y verificable en **Google Search Console**.
+
+## Despliegue Híbrido
+
+Para optimizar costos y rendimiento, diseñamos una estrategia de despliegue híbrida:
+* **Frontend:** Alojado en **Vercel** para aprovechar su red de distribución global (Edge Network).
+* **Backend y Base de Datos:** Desplegados en servidores con almacenamiento **SSD** mediante **cPanel**, garantizando la soberanía de los datos institucionales y una latencia mínima en la región.
+
+## Impacto
+
+**SIFED** no es solo un sitio web; es el nuevo estándar de comunicación para la Unidad de Posgrado. Ha centralizado la oferta académica y simplificado el acceso a la información para más de 1,000 usuarios, transformando procesos manuales en flujos digitales eficientes y transparentes.
