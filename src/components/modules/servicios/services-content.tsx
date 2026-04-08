@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 import { 
   Rocket, ShoppingCart, Building2, Wrench, 
   CheckCircle2, ArrowRight, BarChart3, Users, 
-  Smartphone, Target, ShieldCheck, Clock
+  Smartphone, ShieldCheck, Clock
 } from "lucide-react"
 import dynamic from "next/dynamic"
 import PageHero from "@/components/ui/page-hero"
