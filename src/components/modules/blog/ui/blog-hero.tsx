@@ -5,6 +5,7 @@ import { BlogMeta } from "@/lib/mdx-utils";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { getDifficultyColor, getDifficultyLabel } from "@/lib/blog-ui-utils";
+import { Aurora } from "@/components/ui/design-system/aurora";
 
 interface BlogHeroProps {
   post: BlogMeta;
@@ -18,12 +19,13 @@ export function BlogHero({ post }: BlogHeroProps) {
   }).format(new Date(post.date));
 
   return (
-    <section className="relative group mb-12 animate-in fade-in zoom-in duration-500">
+    <section className="relative group mb-12 animate-in fade-in zoom-in duration-500 isolate">
+      <Aurora variant="glow" className="-inset-3 md:-inset-4 opacity-75" />
       <Link 
         href={`/blog/${post.slug}`} 
-        className="relative block rounded-[2rem] overflow-hidden border-2 border-slate-200/90 bg-white shadow-xl transition duration-500 cursor-pointer"
+        className="relative block rounded-[2rem] overflow-hidden border border-slate-200/90 bg-white/95 backdrop-blur-md shadow-xl transition duration-500 cursor-pointer"
       >
-        <div className="grid lg:grid-cols-12 gap-0 lg:gap-8">
+        <div className="grid lg:grid-cols-12 gap-0">
           <div className="lg:col-span-7 h-72 lg:h-auto min-h-[350px] relative overflow-hidden bg-slate-100 border-b lg:border-b-0 lg:border-r border-slate-200/90">
             {post.image ? (
               <Image

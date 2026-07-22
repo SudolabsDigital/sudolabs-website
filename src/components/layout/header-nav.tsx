@@ -13,7 +13,7 @@ export const navItems = [
   { name: "Blog", href: "/blog" },
 ];
 
-export function HeaderNav() {
+export const HeaderNav = React.memo(function HeaderNav() {
   const pathname = usePathname();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -75,4 +75,4 @@ export function HeaderNav() {
       </ul>
     </nav>
   );
-}
+});

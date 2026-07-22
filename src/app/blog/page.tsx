@@ -15,7 +15,7 @@ export default async function BlogIndex() {
   const categories = await getAllCategories();
 
   return (
-    <div className="min-h-screen bg-background selection:bg-primary/20 font-sans pb-24">
+    <div className="min-h-screen bg-transparent selection:bg-primary/20 font-sans pb-24">
        {/* Page Hero Section */}
        <PageHero 
          title="Blog de Ingeniería"

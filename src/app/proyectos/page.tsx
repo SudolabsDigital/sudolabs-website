@@ -25,7 +25,7 @@ export default async function ProyectosPage() {
   const otherProjects = allProjects.filter(p => p.slug !== featuredProject?.slug);
 
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-background selection:bg-primary/20 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col font-sans bg-transparent selection:bg-primary/20 relative overflow-hidden">
       <BreadcrumbSchema 
         items={[
           { name: "Inicio", item: "/" },
@@ -119,14 +119,17 @@ export default async function ProyectosPage() {
         )}
 
         <section className="container mx-auto px-6 mb-24">
-            <CtaCard
-              tag="Siguiente Paso"
-              title="¿Listo para tu propio caso de éxito?"
-              description="Diseñamos sistemas que reducen costos y multiplican la productividad. Convierte tu cuello de botella en tu ventaja competitiva."
-              buttonText="Quiero un proyecto similar"
-              href="/contacto?subject=Interés desde el Portafolio"
-              imageSrc="/assets/images/Mapeo de Procesos.webp"
-            />
+            <div className="relative rounded-[2rem] isolate">
+              <Aurora variant="glow" className="-inset-2 md:-inset-3 opacity-70" />
+              <CtaCard
+                tag="Siguiente Paso"
+                title="¿Listo para tu propio caso de éxito?"
+                description="Diseñamos sistemas que reducen costos y multiplican la productividad. Convierte tu cuello de botella en tu ventaja competitiva."
+                buttonText="Quiero un proyecto similar"
+                href="/contacto?subject=Interés desde el Portafolio"
+                imageSrc="/assets/images/Mapeo de Procesos.webp"
+              />
+            </div>
         </section>
 
       </div>

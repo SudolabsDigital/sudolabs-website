@@ -12,25 +12,46 @@ import { cn } from "@/lib/utils";
 import { TechButton } from "@/components/ui/design-system/tech-button";
 import { HeaderNav, navItems } from "./header-nav";
 
+import { usePathname } from "next/navigation";
+
 const ContactModal = dynamic(() => import("@/components/features/contact-modal").then(mod => mod.ContactModal), {
   ssr: false,
 })
 
 export function Header() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [hidden, setHidden] = useState(false)
-  const [isContactOpen, setIsContactOpen] = useState(false)
-  const [hasOpenedOnce, setHasOpenedOnce] = useState(false)
-  const { scrollY } = useScroll()
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(!isHome);
+  const [hidden, setHidden] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
+  const [hasOpenedOnce, setHasOpenedOnce] = useState(false);
+  const { scrollY } = useScroll();
+
+  React.useEffect(() => {
+    setIsScrolled(!isHome || (typeof window !== 'undefined' && window.scrollY > 50));
+  }, [pathname, isHome]);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    setIsScrolled(latest > 50);
+    if (!isHome) {
+      if (!isScrolled) setIsScrolled(true);
+    } else {
+      // Histéresis para isScrolled en la página de inicio
+      if (latest > 50 && !isScrolled) {
+        setIsScrolled(true);
+      } else if (latest < 15 && isScrolled) {
+        setIsScrolled(false);
+      }
+    }
 
     const previous = scrollY.getPrevious() ?? 0;
-    if (latest > previous && latest > 300) {
+    const diff = latest - previous;
+
+    // Umbral de movimiento mínimo (12px hacia abajo / 8px hacia arriba) para alternar visibilidad
+    if (diff > 12 && latest > 280 && !hidden) {
       setHidden(true);
-    } else {
+    } else if (diff < -8 && hidden) {
       setHidden(false);
     }
   });
