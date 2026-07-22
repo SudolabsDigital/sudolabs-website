@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Tag, ArrowLeft } from "lucide-react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
-import rehypePrettyCode from "rehype-pretty-code";
 
 import { getContentBySlug, getAllContent, getHeadings } from "@/lib/mdx";
 import { BlogMeta, ProjectMeta, slugify } from "@/lib/mdx-utils";
@@ -12,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { CustomComponents } from "@/components/modules/blog/mdx-components";
 import { TableOfContents } from "@/components/modules/blog/table-of-contents";
 import BlogJsonLd from "@/components/seo/blog-json-ld";
-import PageHero from "@/components/ui/page-hero";
+import { PageHero } from "@/components/ui/page-hero";
 import { BlogSidebar } from "@/components/modules/blog/ui/blog-sidebar";
 
 export async function generateStaticParams() {
@@ -114,23 +113,13 @@ export default async function BlogPost(props: { params: Promise<{ slug: string }
                         </div>
                     )}
 
-                    <div className="max-w-none text-foreground text-lg leading-relaxed article-content">
+                    <div className="max-w-none text-slate-700 text-lg leading-relaxed article-content">
                         <MDXRemote 
                             source={post.content} 
                             components={CustomComponents} 
                             options={{
                                 mdxOptions: {
-                                    remarkPlugins: [remarkGfm],
-                                    rehypePlugins: [
-                                        [
-                                            rehypePrettyCode,
-                                            {
-                                                theme: "github-dark",
-                                                keepBackground: false,
-                                                defaultLang: "plaintext",
-                                            }
-                                        ]
-                                    ]
+                                    remarkPlugins: [remarkGfm]
                                 }
                             }}
                         />

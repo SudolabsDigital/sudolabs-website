@@ -68,16 +68,16 @@ export function ServicesContent() {
         breadcrumbs={[{ label: "Servicios" }]}
       />      
 
-      <div className="relative z-10 bg-background">
+      <div className="relative z-10 bg-transparent">
         
         {/* IMPACT ROW */}
-        <section className="border-b border-border/50 bg-card/30">
+        <section className="bg-white/80 backdrop-blur-md shadow-sm">
           <div className="container mx-auto px-6 max-w-7xl">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-border/50">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-200">
               {featuresImpact.map((item, i) => (
                 <div key={i} className="py-10 px-4 text-center md:text-left flex flex-col justify-center">
-                  <div className="text-4xl md:text-5xl font-black tracking-tighter text-foreground mb-4">{item.metric}</div>
-                  <div className="text-sm text-muted-foreground leading-relaxed">{item.label}</div>
+                  <div className="text-4xl md:text-5xl font-extrabold tracking-tighter text-[#004481] mb-4">{item.metric}</div>
+                  <div className="text-sm text-slate-600 leading-relaxed font-medium">{item.label}</div>
                 </div>
               ))}
             </div>
@@ -85,10 +85,10 @@ export function ServicesContent() {
         </section>
 
         {/* DIAGNOSTICO */}
-        <section className="py-24 container mx-auto px-6 max-w-7xl">
+        <section className="py-16 md:py-20 container mx-auto px-6 max-w-7xl">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">¿En qué etapa está tu empresa?</h2>
-            <p className="text-muted-foreground text-lg">Identifica tu situación actual y te mostramos exactamente qué necesitas.</p>
+            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 mb-4">¿En qué etapa está tu empresa?</h2>
+            <p className="text-slate-600 text-lg font-normal">Identifica tu situación actual y te mostramos exactamente qué necesitas.</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -99,11 +99,11 @@ export function ServicesContent() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-card border border-border/50 shadow-sm rounded-3xl p-8 hover:border-primary/30 transition-all hover:-translate-y-1 flex flex-col"
+                className="bg-white/90 border border-slate-200/90 shadow-sm rounded-3xl p-8 flex flex-col"
               >
-                <div className="mb-6 p-4 rounded-2xl bg-secondary/50 w-fit">{item.icon}</div>
-                <h4 className="text-lg font-bold mb-3">{item.title}</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-8 flex-grow">{item.desc}</p>
+                <div className="mb-6 p-4 rounded-2xl bg-slate-100 w-fit">{item.icon}</div>
+                <h4 className="text-lg font-bold text-slate-900 mb-3">{item.title}</h4>
+                <p className="text-sm text-slate-600 leading-relaxed mb-8 flex-grow font-normal">{item.desc}</p>
                 <div className={cn("inline-flex items-center px-4 py-1.5 rounded-full border text-xs font-bold w-fit", item.tagColor)}>
                   {item.level}
                 </div>
@@ -113,12 +113,12 @@ export function ServicesContent() {
         </section>
 
         {/* MODELO: LOS 4 PILARES */}
-        <section className="py-24 bg-card/30 border-y border-border/50">
+        <section className="py-16 md:py-20 bg-transparent">
           <div className="container mx-auto px-6 max-w-7xl">
             <div className="mb-16 md:text-center max-w-3xl mx-auto">
-              <span className="text-primary font-bold uppercase tracking-widest text-xs mb-4 block">Modelo de servicios</span>
-              <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-6">Cuatro niveles de madurez digital</h2>
-              <p className="text-muted-foreground text-lg leading-relaxed">No vendemos proyectos cerrados. Construimos con una arquitectura que crece junto a tu empresa. Empiezas donde estás.</p>
+              <span className="text-[#004481] font-mono font-bold uppercase tracking-widest text-xs mb-4 block">Modelo de servicios</span>
+              <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-6">Cuatro niveles de madurez digital</h2>
+              <p className="text-slate-600 text-lg leading-relaxed font-normal">No vendemos proyectos cerrados. Construimos con una arquitectura que crece junto a tu empresa. Empiezas donde estás.</p>
             </div>
 
             <div className="space-y-12">
@@ -467,7 +467,7 @@ export function ServicesContent() {
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-6 lg:gap-8 items-center">
                 <div className="bg-red-500/5 border border-red-500/20 p-8 rounded-3xl h-full flex flex-col justify-center">
                   <div className="text-red-500 text-xs font-bold uppercase tracking-widest mb-4">Situación anterior</div>
-                  <p className="font-medium text-foreground/80 leading-relaxed">"Controlamos el inventario en 4 Excel compartidos por WhatsApp. Siempre había versiones distintas y nadie sabía cuál era el real."</p>
+                  <p className="font-medium text-foreground/80 leading-relaxed">&quot;Controlamos el inventario en 4 Excel compartidos por WhatsApp. Siempre había versiones distintas y nadie sabía cuál era el real.&quot;</p>
                 </div>
                 <div className="hidden lg:flex w-12 h-12 rounded-full bg-background border border-border items-center justify-center shrink-0 shadow-sm">
                   <ArrowRight className="w-5 h-5 text-muted-foreground" />
@@ -486,7 +486,7 @@ export function ServicesContent() {
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-6 lg:gap-8 items-center">
                 <div className="bg-red-500/5 border border-red-500/20 p-8 rounded-3xl h-full flex flex-col justify-center">
                   <div className="text-red-500 text-xs font-bold uppercase tracking-widest mb-4">Situación anterior</div>
-                  <p className="font-medium text-foreground/80 leading-relaxed">"Teníamos un sistema que otra empresa nos hizo hace 3 años. Nadie lo mantiene, ya no funciona con el navegador actual y perdemos datos."</p>
+                  <p className="font-medium text-foreground/80 leading-relaxed">&quot;Teníamos un sistema que otra empresa nos hizo hace 3 años. Nadie lo mantiene, ya no funciona con el navegador actual y perdemos datos.&quot;</p>
                 </div>
                 <div className="hidden lg:flex w-12 h-12 rounded-full bg-background border border-border items-center justify-center shrink-0 shadow-sm">
                   <ArrowRight className="w-5 h-5 text-muted-foreground" />

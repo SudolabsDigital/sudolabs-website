@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
@@ -26,7 +26,6 @@ export function FloatingCard({
   className,
   ...props
 }: CardProps) {
-  const [visible, setVisible] = useState(false);
   const divRef = useRef<HTMLAnchorElement | HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
@@ -37,72 +36,48 @@ export function FloatingCard({
   };
 
   const cardClasses = cn(
-    "relative rounded-[16px] p-[2px] overflow-visible group/card block", 
-    "bg-border transition duration-500 h-full w-full focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2",
-    interactive && "hover:-translate-y-1 cursor-pointer", 
+    "relative rounded-[16px] overflow-hidden block h-full w-full focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2",
     className
   );
 
   const innerContent = (
-    <>
-      {visible && interactive && (
-        <>
-          {/* Borde Iluminado Interior (Láser de 2px) */}
-          <div
-            className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300 opacity-100 rounded-[16px]"
-            style={{
-              background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), #3178c6 0%, #65318d 20%, transparent 40%)`,
-            }}
+    <article className={cn(
+      "relative z-10 h-full w-full rounded-[16px] p-5 lg:p-6 flex flex-col", 
+      "bg-white border border-slate-200/90 shadow-sm transition-shadow duration-300"
+    )}>
+      {/* Header: Icon & Arrow */}
+      <div className="flex justify-between items-start mb-4">
+        {icon && (
+          <div 
+            className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-[#004481] border border-slate-200"
+            aria-hidden="true"
+          >
+            {icon}
+          </div>
+        )}
+        {interactive && (
+          <ArrowUpRight 
+            className="w-5 h-5 text-[#004481] opacity-90" 
+            aria-hidden="true"
           />
-          {/* Sombra Exterior Iluminada (Aura Difuminada) */}
-          <div
-            className="pointer-events-none absolute inset-0 z-[-1] transition-opacity duration-300 opacity-60 blur-xl rounded-[16px]"
-            style={{
-              background: `radial-gradient(300px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), #3178c6 0%, #65318d 40%, transparent 70%)`,
-            }}
-          />
-        </>
-      )}
+        )}
+      </div>
 
-      <article className={cn(
-        "relative z-10 h-full w-full rounded-[14px] p-5 lg:p-6 flex flex-col", 
-        "bg-card transition-colors duration-300", 
-        interactive && "group-hover/card:bg-card/95"
-      )}>
-        {/* Header: Icon & Arrow */}
-        <div className="flex justify-between items-start mb-4">
-          {icon && (
-            <div 
-              className="w-10 h-10 rounded-lg bg-secondary/50 flex items-center justify-center text-primary border border-border/50 group-hover/card:border-primary/30 transition-colors duration-300"
-              aria-hidden="true"
-            >
-              {icon}
-            </div>
-          )}
-          {interactive && (
-            <ArrowUpRight 
-              className="w-4 h-4 text-muted-foreground opacity-0 -translate-x-2 translate-y-2 group-hover/card:opacity-100 group-hover/card:translate-x-0 group-hover/card:translate-y-0 transition duration-300" 
-              aria-hidden="true"
-            />
-          )}
-        </div>
-
-        {/* Content & Metadata */}
-        <div className="flex flex-col flex-grow">
-          {tag && (
-            <span className="mb-3 w-fit px-2 py-0.5 text-[10px] sm:text-[11px] font-mono font-medium text-accent border border-accent/20 rounded bg-accent/5 uppercase tracking-wider">
-              {tag}
-            </span>
-          )}
-          <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2 leading-tight group-hover/card:text-primary transition-colors">
-            {title}
-          </h3>
-          <p className="text-sm text-muted-foreground leading-relaxed flex-grow">
-            {description}
-          </p>
-        </div>
-      </article>
-    </>
+      {/* Content & Metadata */}
+      <div className="flex flex-col flex-grow">
+        {tag && (
+          <span className="mb-3 w-fit px-2 py-0.5 text-[10px] sm:text-[11px] font-mono font-medium text-[#004481] border border-[#004481]/20 rounded bg-[#004481]/5 uppercase tracking-wider">
+            {tag}
+          </span>
+        )}
+        <h3 className="text-base sm:text-lg font-semibold text-slate-900 mb-2 leading-tight">
+          {title}
+        </h3>
+        <p className="text-sm text-slate-600 leading-relaxed flex-grow">
+          {description}
+        </p>
+      </div>
+    </article>
   );
 
   if (href) {
@@ -112,8 +87,6 @@ export function FloatingCard({
         onClick={onCardClick as React.MouseEventHandler<HTMLAnchorElement>}
         ref={divRef as React.RefObject<HTMLAnchorElement>}
         onMouseMove={handleMouseMove}
-        onMouseEnter={() => setVisible(true)}
-        onMouseLeave={() => setVisible(false)}
         className={cardClasses}
       >
         {innerContent}
@@ -126,8 +99,6 @@ export function FloatingCard({
       onClick={onCardClick as React.MouseEventHandler<HTMLDivElement>}
       ref={divRef as React.RefObject<HTMLDivElement>}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setVisible(true)}
-      onMouseLeave={() => setVisible(false)}
       className={cardClasses}
       {...props}
     >

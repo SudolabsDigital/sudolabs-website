@@ -7,6 +7,7 @@
 @theme {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-space-grotesk);
 
   /* =========================================
      SUDOLABS: 15-COLOR STRATEGIC MATRIX 
@@ -35,6 +36,41 @@
   --color-ai-purple: #65318d;
   --color-ethereal-glow: #f0fdfa;
   --color-transparent: transparent;
+
+  /* =========================================================
+     SOLAR RAYS & AURORA BOREAL ENGINE (AWS/Vercel High-End)
+     ========================================================= */
+  --animate-solar-beam: solar-beam-pulse 12s ease-in-out infinite;
+  --animate-aurora-breathe: aurora-breathe 20s ease-in-out infinite;
+
+  @keyframes solar-beam-pulse {
+    0%, 100% {
+      opacity: 0.25;
+      transform: rotate(-18deg) scaleY(1);
+      filter: hue-rotate(0deg);
+    }
+    50% {
+      opacity: 0.45;
+      transform: rotate(-16deg) scaleY(1.08);
+      filter: hue-rotate(15deg);
+    }
+  }
+
+  @keyframes aurora-breathe {
+    0%, 100% {
+      opacity: 0.35;
+      filter: hue-rotate(0deg);
+    }
+    50% {
+      opacity: 0.55;
+      filter: hue-rotate(20deg);
+    }
+  }
+
+  @keyframes aurora-swirl {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 }
 
 /* 
@@ -86,33 +122,36 @@
 /* 
   Dark Theme (GitHub/Anthropic Style: Deep, Focused)
 */
+/* 
+  Unificado Modo Claro Único (AWS/Anthropic Style: Clean, Professional, Pristine)
+*/
 .dark {
   /* Surfaces & Backgrounds */
-  --background: var(--color-github-ink);
-  --foreground: var(--color-soft-aura);
+  --background: var(--color-white-absolute);
+  --foreground: var(--color-github-ink);
   
-  --card: var(--color-anthropic-slate);
-  --card-foreground: var(--color-soft-aura);
+  --card: var(--color-white-absolute);
+  --card-foreground: var(--color-github-ink);
   
-  --popover: var(--color-anthropic-slate);
-  --popover-foreground: var(--color-soft-aura);
+  --popover: var(--color-white-absolute);
+  --popover-foreground: var(--color-github-ink);
 
-  /* Brand & Accents (Vibrant on dark) */
-  --primary: var(--color-ts-blue);
+  /* Brand & Accents */
+  --primary: var(--color-brand-core);
   --primary-foreground: var(--color-white-absolute);
   
-  --secondary: var(--color-anthropic-slate);
-  --secondary-foreground: var(--color-white-absolute);
+  --secondary: var(--color-soft-aura);
+  --secondary-foreground: var(--color-deep-navy);
 
-  --accent: var(--color-sky-highlight);
-  --accent-foreground: var(--color-github-ink);
-  
+  --accent: var(--color-ts-blue);
+  --accent-foreground: var(--color-white-absolute);
+
   /* Muted & Borders */
-  --muted: var(--color-anthropic-slate);
-  --muted-foreground: var(--color-subtle-border);
+  --muted: var(--color-soft-aura);
+  --muted-foreground: var(--color-anthropic-slate);
 
-  --border: #30363d; /* Custom dark border matching GitHub aesthetics */
-  --input: #30363d;
+  --border: var(--color-subtle-border);
+  --input: var(--color-subtle-border);
   --ring: var(--color-ts-blue);
 
   /* Semantic States */
@@ -123,7 +162,7 @@
   --destructive-foreground: var(--color-white-absolute);
 
   --warning: var(--color-warning-rust);
-  --warning-foreground: var(--color-github-ink);
+  --warning-foreground: var(--color-pure-black);
 }
 
 /* Exposing semantic variables to Tailwind v4 utilities */
@@ -165,6 +204,16 @@
   }
   body {
     @apply bg-background text-foreground transition-colors duration-300;
+  }
+
+  /* =========================================
+     IDENTIDAD DE MARCA: TIPOGRAFÍA DE TÍTULOS
+     Space Grotesk para todos los encabezados,
+     Geist Sans se mantiene para el cuerpo del texto.
+     ========================================= */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading), var(--font-sans);
+    letter-spacing: -0.02em;
   }
 }
 
@@ -208,6 +257,83 @@
 
   .animate-color-breathe {
     animation: color-breathe 20s ease-in-out infinite;
+  }
+
+  /* Aurora ambiental estilo AWS/Anthropic: Blob Morphing, Traslación Multi-Eje y Hue Rotation */
+  @keyframes aurora-blob-1 {
+    0%, 100% {
+      border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+      transform: translate(0vw, 0vh) rotate(0deg) scale(1);
+      filter: hue-rotate(0deg);
+    }
+    33% {
+      border-radius: 70% 30% 46% 54% / 30% 60% 40% 70%;
+      transform: translate(12vw, 8vh) rotate(120deg) scale(1.15);
+      filter: hue-rotate(35deg);
+    }
+    66% {
+      border-radius: 30% 70% 30% 70% / 60% 40% 60% 40%;
+      transform: translate(-6vw, 14vh) rotate(240deg) scale(0.92);
+      filter: hue-rotate(-25deg);
+    }
+  }
+
+  @keyframes aurora-blob-2 {
+    0%, 100% {
+      border-radius: 65% 35% 50% 50% / 40% 60% 40% 60%;
+      transform: translate(0vw, 0vh) rotate(0deg) scale(1);
+      filter: hue-rotate(0deg);
+    }
+    50% {
+      border-radius: 35% 65% 30% 70% / 70% 30% 70% 30%;
+      transform: translate(-14vw, -10vh) rotate(-180deg) scale(1.22);
+      filter: hue-rotate(50deg);
+    }
+  }
+
+  @keyframes aurora-blob-3 {
+    0%, 100% {
+      border-radius: 50% 50% 40% 60% / 60% 40% 50% 50%;
+      transform: translate(0vw, 0vh) scale(1);
+      opacity: 0.35;
+    }
+    50% {
+      border-radius: 38% 62% 60% 40% / 42% 58% 40% 60%;
+      transform: translate(8vw, -12vh) scale(1.35);
+      opacity: 0.65;
+      filter: hue-rotate(40deg);
+    }
+  }
+
+  .animate-aurora-blob-1 {
+    animation: aurora-blob-1 16s ease-in-out infinite;
+  }
+  .animate-aurora-blob-2 {
+    animation: aurora-blob-2 21s ease-in-out infinite;
+    animation-delay: -5s;
+  }
+  .animate-aurora-blob-3 {
+    animation: aurora-blob-3 27s ease-in-out infinite;
+    animation-delay: -11s;
+  }
+
+  /* Aurora glow (botones/tarjetas destacadas): UN solo elemento con los 4
+     colores de marca en el mismo gradiente cónico, rotando rápido y parejo. */
+  @keyframes aurora-swirl {
+    to { transform: rotate(360deg); }
+  }
+  .animate-aurora-swirl {
+    animation: aurora-swirl 8s linear infinite;
+  }
+
+  /* Accesibilidad: las animaciones de Aurora son puramente decorativas */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-aurora-blob-1,
+    .animate-aurora-blob-2,
+    .animate-aurora-blob-3,
+    .animate-aurora-swirl {
+      animation: none;
+    }
   }
 
   .scrollbar-hide {

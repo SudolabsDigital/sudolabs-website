@@ -1,0 +1,53 @@
+---
+title: "EnRuta — Mobility & Civic Tech"
+description: "Producto propio de Sudolabs que digitaliza el transporte urbano informal en Latinoamérica: rutas, paraderos y tarifas en tiempo real mediante crowdsourcing colaborativo."
+date: "2026-05-10"
+client: "EnRuta (Producto Propio de Sudolabs)"
+type: "producto-propio"
+role: "Producto: Arquitectura, Backend y Frontend"
+tags: ["Laravel", "React", "TypeScript", "Vite", "Sanctum", "Multi-tenant"]
+image: "/assets/projects/enruta/portada.svg"
+websiteUrl: "https://enruta.space"
+stats:
+  - label: "Modelo"
+    value: "Multi-tenant"
+  - label: "Datos"
+    value: "Crowdsourcing"
+  - label: "Cobertura"
+    value: "Transporte Urbano"
+relatedPosts: ["roles-permisos-acl"]
+---
+
+El transporte urbano informal en Latinoamérica —combis, custers y líneas sin GPS oficial— opera sin información estructurada. No existe una fuente confiable de rutas, paraderos ni tarifas: el pasajero depende del boca a boca, y las empresas de transporte no tienen forma digital de administrar su propia flota.
+
+---
+
+## El Desafío
+
+Digitalizar un sistema históricamente informal sin imponerle una estructura rígida que no refleje cómo opera realmente el transporte en campo. El reto técnico era doble: dar al pasajero una respuesta inmediata ("¿qué bus tomo, por dónde pasa y cuánto cuesta?") y dar a cada empresa de transporte una consola propia para gestionar su operación, sin que los datos de una se mezclen con los de otra.
+
+## La Solución
+
+Sudolabs desarrolló **EnRuta** como producto propio: una plataforma de "Civic Tech" que traduce el caos del transporte informal en datos estructurados, combinando un consumo público simple con una consola B2B para que cada operador administre sus propias rutas.
+
+### Núcleo Tecnológico (Backend)
+
+- **Arquitectura Multi-tenant en Laravel:** cada empresa de transporte (`Business`) administra sus propias `Routes` de forma aislada, sin fugas de datos entre operadores.
+- **Roles Explícitos:** autenticación con Sanctum y middleware de roles (`super_admin`, `console_user`) que protege cada endpoint administrativo — el mismo estándar de seguridad que Sudolabs aplica en todos sus proyectos.
+- **Expansión por Ciudad:** modelo de `Cities` activas que permite escalar la cobertura geográfica de forma controlada, ciudad por ciudad.
+
+### Experiencia de Usuario (Frontend)
+
+- Consola de administración en React + TypeScript + Vite, donde cada operador carga y edita sus rutas, paraderos y tarifas sin depender de Sudolabs para cada cambio.
+- Consumo público diseñado para resolver la duda más común del pasajero en segundos, sin fricción ni registro previo.
+
+## Características Clave
+
+* **Onboarding B2B** de empresas de transporte con consolas independientes.
+* **Gestión de Rutas** con estados y control de publicación.
+* **Catálogo de Ciudades** activas para escalar cobertura de forma progresiva.
+* Base arquitectónica lista para futuras capas de crowdsourcing ciudadano en tiempo real.
+
+## Impacto
+
+EnRuta es la apuesta de Sudolabs por llevar "Civic Tech" a un problema real y desatendido en Latinoamérica: la falta de información estructurada sobre el transporte urbano informal. Es también la prueba de que el equipo no solo ejecuta proyectos por encargo — también diseña, construye y sostiene su propia infraestructura de producto de principio a fin.

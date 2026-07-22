@@ -42,7 +42,7 @@ export default function ContactoClient() {
   };
 
   return (
-    <main className="min-h-screen pt-32 pb-20 px-6 bg-background text-foreground selection:bg-primary/20">
+    <main className="min-h-screen pt-32 pb-20 px-6 bg-transparent text-slate-900 selection:bg-[#004481]/20">
       <div className="max-w-4xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
           
@@ -53,31 +53,31 @@ export default function ContactoClient() {
               animate={{ opacity: 1, x: 0 }}
               className="space-y-4"
             >
-              <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
-                Hablemos de tu <span className="text-primary block mt-2">Proyecto</span>
+              <h1 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 leading-[1.1]">
+                Hablemos de tu <span className="text-[#004481] block mt-2">Proyecto</span>
               </h1>
-              <p className="text-muted-foreground text-lg leading-relaxed">
+              <p className="text-slate-600 text-lg leading-relaxed font-normal">
                 No somos solo programadores; somos socios estratégicos. Cuéntanos tu desafío y diseñemos juntos la solución técnica que tu empresa necesita.
               </p>
             </motion.div>
 
             <div className="space-y-6 pt-4">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-secondary border border-border flex items-center justify-center shrink-0">
-                  <Mail className="w-5 h-5 text-primary" />
+                <div className="w-10 h-10 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-center shrink-0">
+                  <Mail className="w-5 h-5 text-[#004481]" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-foreground">Correo Electrónico</h3>
-                  <p className="text-muted-foreground text-sm">contacto@sudolabs.space</p>
+                  <h3 className="font-bold text-slate-900">Correo Electrónico</h3>
+                  <p className="text-slate-600 text-sm font-medium">contacto@sudolabs.space</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-secondary border border-border flex items-center justify-center shrink-0">
-                  <Phone className="w-5 h-5 text-primary" />
+                <div className="w-10 h-10 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-center shrink-0">
+                  <Phone className="w-5 h-5 text-[#004481]" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-foreground">WhatsApp Directo</h3>
-                  <p className="text-muted-foreground text-sm">+51 923 384 303</p>
+                  <h3 className="font-bold text-slate-900">WhatsApp Directo</h3>
+                  <p className="text-slate-600 text-sm font-medium">+51 923 384 303</p>
                 </div>
               </div>
             </div>
@@ -87,16 +87,13 @@ export default function ContactoClient() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-card border border-border rounded-3xl p-8 shadow-2xl relative overflow-hidden"
+            className="bg-white border border-slate-200/90 rounded-3xl p-8 shadow-2xl relative overflow-hidden"
           >
-            {/* Decorative gradient blob */}
-            <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
-
             {step === "form" ? (
-              <form onSubmit={handleSubmit} className="space-y-6 relative z-10 text-foreground">
+              <form onSubmit={handleSubmit} className="space-y-6 relative z-10 text-slate-900">
                 <div className="space-y-3">
-                  <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
-                    <Sparkles className="w-3 h-3 text-foreground" />
+                  <label className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
+                    <Sparkles className="w-3.5 h-3.5 text-[#004481]" />
                     ¿Cuál es tu objetivo?
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -105,10 +102,10 @@ export default function ContactoClient() {
                         key={opt}
                         type="button"
                         onClick={() => setGoal(opt)}
-                        className={`text-left px-4 py-3 rounded-xl border text-sm font-medium transition duration-200 ${ 
+                        className={`text-left px-4 py-3 rounded-xl border text-xs font-bold transition duration-200 cursor-pointer ${ 
                           goal === opt 
-                            ? "border-primary bg-primary text-primary-foreground shadow-md" 
-                            : "border-border bg-secondary hover:bg-secondary/80 hover:border-primary/30 text-muted-foreground"
+                            ? "border-[#004481] bg-[#004481] text-white shadow-md" 
+                            : "border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800"
                         }`}
                       >
                         {opt}
@@ -118,69 +115,69 @@ export default function ContactoClient() {
                 </div>
 
                 <div className="space-y-3">
-                  <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                  <label className="text-xs font-bold uppercase tracking-wider text-slate-700">
                     Tu Correo (Opcional)
                   </label>
                   <div className="relative">
-                    <Mail className="absolute left-4 top-3.5 w-4 h-4 text-muted-foreground" />
+                    <Mail className="absolute left-4 top-3.5 w-4 h-4 text-slate-400" />
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="ejemplo@empresa.com"
-                      className="w-full rounded-xl border border-border bg-background pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition text-foreground placeholder:text-muted-foreground"
+                      className="w-full rounded-xl border border-slate-300 bg-slate-50 pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#004481]/50 focus:border-[#004481] transition text-slate-900 placeholder:text-slate-400"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-3">
-                  <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                  <label className="text-xs font-bold uppercase tracking-wider text-slate-700">
                     ¿Cómo prefieres conectar?
                   </label>
                   <div className="grid grid-cols-2 gap-4">
                     <button
                       type="button"
                       onClick={() => setPreference("chat")}
-                      className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl border transition duration-200 ${ 
+                      className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl border text-xs font-bold transition duration-200 cursor-pointer ${ 
                         preference === "chat"
-                          ? "border-primary bg-primary text-primary-foreground shadow-md"
-                          : "border-border bg-secondary hover:bg-secondary/80 hover:border-primary/30 text-muted-foreground"
+                          ? "border-[#004481] bg-[#004481] text-white shadow-md"
+                          : "border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800"
                       }`}
                     >
-                      <MessageSquare className={`w-6 h-6 ${preference === 'chat' ? 'text-primary-foreground' : 'text-muted-foreground'}`} />
+                      <MessageSquare className={`w-5 h-5 ${preference === 'chat' ? 'text-white' : 'text-[#004481]'}`} />
                       <span className="text-sm font-medium">WhatsApp</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => setPreference("call")}
-                      className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl border transition duration-200 ${ 
+                      className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl border text-xs font-bold transition duration-200 cursor-pointer ${ 
                         preference === "call"
-                          ? "border-primary bg-primary text-primary-foreground shadow-md"
-                          : "border-border bg-secondary hover:bg-secondary/80 hover:border-primary/30 text-muted-foreground"
+                          ? "border-[#004481] bg-[#004481] text-white shadow-md"
+                          : "border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800"
                       }`}
                     >
-                      <Phone className={`w-6 h-6 ${preference === 'call' ? 'text-primary-foreground' : 'text-muted-foreground'}`} />
+                      <Phone className={`w-5 h-5 ${preference === 'call' ? 'text-white' : 'text-[#004481]'}`} />
                       <span className="text-sm font-medium">Llamada</span>
                     </button>
                   </div>
                 </div>
 
                 <div className="space-y-3">
-                  <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                  <label className="text-xs font-bold uppercase tracking-wider text-slate-700">
                     Detalles adicionales
                   </label>
                   <textarea
                     value={details}
                     onChange={(e) => setDetails(e.target.value)}
                     placeholder="Breve descripción de tu idea..."
-                    className="w-full min-h-[100px] rounded-xl border border-border bg-background p-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none transition"
+                    className="w-full min-h-[100px] rounded-xl border border-slate-300 bg-slate-50 p-4 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#004481]/50 focus:border-[#004481] resize-none transition"
                   />
                 </div>
 
                 <Button 
                   type="submit" 
                   size="lg" 
-                  className="w-full rounded-full text-base font-bold h-12 bg-primary text-primary-foreground hover:brightness-110 shadow-xl transition hover:scale-[1.02] active:scale-[0.98] border-none"
+                  className="w-full rounded-xl text-sm font-bold uppercase tracking-wider h-12 bg-[#004481] text-white hover:bg-[#003366] shadow-lg transition border-none cursor-pointer"
                 >
                   Enviar Mensaje <Send className="ml-2 w-4 h-4" />
                 </Button>              

@@ -1,8 +1,8 @@
 import dynamic from "next/dynamic"
 import { HeroSection } from "@/components/modules/home/hero-section"
+import { TrustBarSection } from "@/components/modules/home/trust-bar-section"
 
 // Componentes dinámicos "Below the Fold" para reducir TBT
-const TechTicker = dynamic(() => import("@/components/layout/tech-ticker").then(mod => mod.TechTicker))
 const SolutionsGrid = dynamic(() => import("@/components/layout/solutions-grid").then(mod => mod.SolutionsGrid))
 import { AiChatSectionWrapper as AiChatSection } from "@/components/modules/home/ai-chat-section-wrapper"
 const FaqSection = dynamic(() => import("@/components/layout/faq-section").then(mod => mod.FaqSection))
@@ -17,14 +17,9 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <div className="bg-background text-foreground min-h-screen transition-colors duration-300 relative selection:bg-primary/20">
-      
-      {/* FONDO SUTIL (Blanco Limpio en Light Mode) */}
-      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        {/* Orbes Suaves que respiran en las esquinas, manteniendo el centro limpio */}
-        <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-primary/10 rounded-full blur-[120px] mix-blend-multiply dark:mix-blend-screen animate-pulse" style={{ animationDuration: '8s' }} />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-accent/10 rounded-full blur-[120px] mix-blend-multiply dark:mix-blend-screen animate-pulse" style={{ animationDuration: '12s', animationDelay: '2s' }} />
-      </div>
+    <div className="bg-transparent text-foreground min-h-screen transition-colors duration-300 relative selection:bg-primary/20">
+
+      {/* El fondo ambiental (aurora) ahora es global — ver <GlobalSpotlight /> en layout.tsx */}
 
       <div className="relative z-10 min-h-screen overflow-x-hidden">
         <div className="relative z-10">
@@ -36,9 +31,9 @@ export default function Home() {
               <HeroSection />
             </div>
 
-            {/* ISLA INTERACTIVA 2: TICKER (Footer de la primera impresión) */}
+            {/* PASARELA DE CONFIANZA: logos de clientes y productos propios (Footer de la primera impresión) */}
             <div className="mt-auto">
-              <TechTicker />
+              <TrustBarSection />
             </div>
           </div>
 

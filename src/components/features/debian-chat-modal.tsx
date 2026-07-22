@@ -81,42 +81,41 @@ export function DebianChatModal({ isOpen, onClose }: DebianChatModalProps) {
             )}
 
             {/* Content Core */}
-            <div className="relative z-10 w-full h-full bg-[#0b0f1a] dark:bg-[#0b0f1a] rounded-none md:rounded-[2.4rem] overflow-hidden flex flex-col border border-white/10">
+            <div className="relative z-10 w-full h-full bg-white rounded-none md:rounded-[2.4rem] overflow-hidden flex flex-col border border-slate-200/90 shadow-2xl">
               
               {/* Header: Tech Lead Context */}
-              <div className="p-4 md:p-6 border-b border-white/10 bg-[#0f172a]/80 backdrop-blur-md flex justify-between items-center shrink-0">
+              <div className="p-4 md:p-6 border-b border-slate-200 bg-slate-50 flex justify-between items-center shrink-0">
                 <div className="flex items-center gap-4">
-                  <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border border-white/20 shadow-lg">
+                  <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border border-slate-200 shadow-sm">
                     <Image 
                       src="/assets/debian.webp" 
                       alt="Debian Tech Lead" 
                       fill 
                       className="object-cover object-[center_5%]" 
                     />
-                    <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-full" />
                   </div>
                   <div className="space-y-0.5">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                      <span className="text-[10px] font-mono font-bold tracking-[0.2em] text-emerald-500 uppercase">Consultoría_IA: Online</span>
+                      <span className="text-[10px] font-mono font-bold tracking-[0.2em] text-[#004481] uppercase">Consultoría_IA: Online</span>
                     </div>
-                    <h2 className="text-lg md:text-xl font-bold tracking-tight text-white flex items-center gap-2">
-                      Chat con Debian <Sparkles className="w-4 h-4 text-primary" />
+                    <h2 className="text-lg md:text-xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
+                      Chat con Debian <Sparkles className="w-4 h-4 text-[#004481]" />
                     </h2>
                   </div>
                 </div>
                 
                 <button 
                   onClick={onClose}
-                  className="p-3 hover:bg-white/10 rounded-full transition hover:rotate-90 duration-300 text-gray-400 hover:text-white"
+                  className="p-3 hover:bg-slate-200/60 rounded-full transition duration-300 text-slate-500 hover:text-slate-900 cursor-pointer"
                 >
                   <X className="w-6 h-6" />
                 </button>
               </div>
 
               {/* Chat Interface Integration */}
-              <div className="flex-1 min-h-0 bg-transparent flex flex-col overflow-hidden">
-                <AiChatInterface className="!w-full !h-full bg-transparent" />
+              <div className="flex-1 min-h-0 bg-white flex flex-col overflow-hidden">
+                <AiChatInterface className="!w-full !h-full bg-white" />
               </div>
 
             </div>

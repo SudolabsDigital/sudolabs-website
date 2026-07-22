@@ -13,7 +13,7 @@ export const navItems = [
   { name: "Blog", href: "/blog" },
 ];
 
-export function HeaderNav() {
+export const HeaderNav = React.memo(function HeaderNav() {
   const pathname = usePathname();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -36,8 +36,8 @@ export function HeaderNav() {
               <Link
                 href={item.href}
                 className={cn(
-                  "relative z-10 block px-5 py-2.5 text-sm font-bold transition-colors duration-300",
-                  isActive ? "text-primary" : "text-foreground/80 hover:text-foreground"
+                  "relative z-10 block px-5 py-2.5 text-sm font-bold transition-colors duration-200 cursor-pointer",
+                  isActive ? "text-[#004481] font-extrabold" : "text-slate-900 hover:text-[#004481]"
                 )}
               >
                 {item.name}
@@ -46,7 +46,7 @@ export function HeaderNav() {
                 {isActive && (
                   <motion.div 
                     layoutId="activeIndicator"
-                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1 bg-primary rounded-full blur-[1px]"
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1 bg-[#004481] rounded-full"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
@@ -57,7 +57,7 @@ export function HeaderNav() {
                 {hoveredIndex === index && (
                   <motion.div
                     layoutId="headerHoverPill"
-                    className="absolute inset-0 z-0 bg-primary/5 dark:bg-primary/10 rounded-full border border-primary/10"
+                    className="absolute inset-0 z-0 bg-[#004481]/5 rounded-full border border-[#004481]/15"
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
@@ -75,4 +75,4 @@ export function HeaderNav() {
       </ul>
     </nav>
   );
-}
+});

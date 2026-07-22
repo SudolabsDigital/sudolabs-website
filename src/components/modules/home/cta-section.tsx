@@ -8,7 +8,7 @@ export function CtaSection() {
   };
 
   return (
-    <section className="container mx-auto px-6 py-24 lg:py-40" id="contacto">
+    <section className="container mx-auto px-6 py-12 lg:py-16" id="contacto">
       <CtaCard
         tag="CONSULTORÍA DISPONIBLE"
         title={

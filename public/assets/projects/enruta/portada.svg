@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="EnRuta — Mobility &amp; Civic Tech">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#001b48"/>
+      <stop offset="55%" stop-color="#004481"/>
+      <stop offset="100%" stop-color="#3d1f66"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#97cadb" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#97cadb" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="60"/>
+    </filter>
+    <pattern id="dots" width="42" height="42" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.6" fill="#ffffff" fill-opacity="0.06"/>
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <rect width="1600" height="1000" fill="url(#dots)"/>
+
+  <circle cx="1250" cy="220" r="320" fill="url(#glow)" filter="url(#blur1)"/>
+  <circle cx="220" cy="820" r="260" fill="#65318d" fill-opacity="0.25" filter="url(#blur1)"/>
+
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.9">
+    <path d="M -50 760 C 260 640, 420 900, 700 760 S 1180 520, 1650 640" stroke="#c93c37" stroke-width="6" stroke-dasharray="2 22" opacity="0.65"/>
+    <path d="M -50 800 C 260 680, 420 940, 700 800 S 1180 560, 1650 680" stroke="#d77555" stroke-width="6" stroke-dasharray="2 22" opacity="0.65"/>
+    <path d="M -50 700 C 280 560, 440 840, 720 700 S 1200 460, 1650 580" stroke="#97cadb" stroke-width="6" stroke-dasharray="2 22" opacity="0.8"/>
+  </g>
+
+  <g fill="#f4f7fa">
+    <circle cx="260" cy="655" r="9"/>
+    <circle cx="700" cy="720" r="9"/>
+    <circle cx="1180" cy="500" r="9"/>
+    <circle cx="1470" cy="595" r="9"/>
+  </g>
+  <g fill="none" stroke="#f4f7fa" stroke-opacity="0.5">
+    <circle cx="260" cy="655" r="18"/>
+    <circle cx="700" cy="720" r="18"/>
+    <circle cx="1180" cy="500" r="18"/>
+    <circle cx="1470" cy="595" r="18"/>
+  </g>
+
+  <g transform="translate(120,120)" opacity="0.95">
+    <text x="0" y="0" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" letter-spacing="6" fill="#97cadb">MOBILITY &amp; CIVIC TECH</text>
+  </g>
+</svg>

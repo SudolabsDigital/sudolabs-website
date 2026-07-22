@@ -1,0 +1,55 @@
+---
+title: "SofTana App — Sistema Operativo Offline-First para Farmacias"
+description: "Producto propio de Sudolabs: el punto de venta y control de inventario para boticas peruanas que nunca deja de vender aunque falle el internet."
+date: "2026-06-01"
+client: "SofTana (Producto Propio de Sudolabs)"
+type: "producto-propio"
+role: "Producto: Arquitectura Full-Stack & PWA Offline-First"
+tags: ["React 19", "Vite", "Laravel 13", "Dexie.js / IndexedDB", "PWA Offline-First"]
+image: "/assets/projects/softana-app/portada.webp"
+websiteUrl: "https://softana.app"
+stats:
+  - label: "SKUs Precargados"
+    value: "+30,000"
+  - label: "Arquitectura"
+    value: "Offline-First"
+  - label: "Sincronización"
+    value: "Automática"
+relatedPosts: ["modo-offline-pwa", "control-stock-insumos"]
+---
+
+Las boticas y farmacias peruanas dependen de sistemas de punto de venta que colapsan apenas falla la conexión a internet, deteniendo la venta, el descuento de inventario y la atención al cliente en el peor momento posible.
+
+---
+
+## El Desafío
+
+Construir un punto de venta que jamás dependa de la conexión para seguir despachando, sin sacrificar la trazabilidad ni la sincronización cuando la red vuelve. El reto no era solo técnico: en una botica, cada segundo de sistema caído es una venta perdida y un cliente frustrado.
+
+## La Solución
+
+**SofTana App** es el sistema operativo propio de Sudolabs para el rubro farmacéutico: una arquitectura **Offline-First** donde el punto de venta nunca depende de la conexión para seguir operando.
+
+### Núcleo Tecnológico (Backend)
+
+- **API REST en Laravel 13** que actúa como fuente de verdad global y orquesta la sincronización de datos entre todas las boticas conectadas a la red.
+- **Configuración Estricta:** un servicio dedicado (`EnvironmentConfigService`) que sigue el estándar Sudolabs de nunca leer `env()` fuera de `/config/`, garantizando compatibilidad total con el caché de producción.
+- **Infraestructura Reproducible:** contenedores Docker para desarrollo local y despliegue en Cloud Run.
+
+### Experiencia de Usuario (PWA)
+
+- Aplicación cliente **PWA** construida con React y Vite sobre **Dexie.js (IndexedDB)**: cada botica mantiene su propia base de datos local, operativa incluso sin señal.
+- Cuando la conexión cae, las transacciones se guardan localmente y se sincronizan en silencio apenas vuelve la red, sin perder una sola venta.
+- **Catálogo Maestro** con más de 30,000 SKUs médicos precargados, eliminando la carga manual producto por producto.
+- Interfaz táctil de ultra-alta velocidad diseñada para despachar medicamentos en segundos.
+
+## Características Clave
+
+* **Soberanía Offline:** ventas e inventario nunca se detienen por falta de internet.
+* **Fricción Cero:** interfaz táctil de alta velocidad diseñada para despachar en segundos.
+* **Catálogo Maestro** con +30,000 SKUs médicos estandarizados desde el primer día.
+* **Sincronización silenciosa y automática** al recuperar la conexión.
+
+## Impacto
+
+SofTana App confirma la misma filosofía detrás de MenuDeable y EnRuta: Sudolabs no solo entrega software a medida, también construye productos verticales propios, con la infraestructura, disciplina y estándares de seguridad de un socio técnico senior — esta vez para resolver un problema crítico del retail farmacéutico peruano.

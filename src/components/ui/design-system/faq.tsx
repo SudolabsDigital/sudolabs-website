@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { ChevronDown } from 'lucide-react';
 
@@ -22,62 +22,28 @@ function FaqItemComponent({
   isOpen: boolean; 
   onClick: () => void;
 }) {
-  const [visible, setVisible] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const divRef = useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    if (!divRef.current) return;
-    const bounds = divRef.current.getBoundingClientRect();
-    setPosition({ x: e.clientX - bounds.left, y: e.clientY - bounds.top });
-  };
-
   return (
     <div
-      ref={divRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setVisible(true)}
-      onMouseLeave={() => setVisible(false)}
       className={cn(
-        "relative rounded-[16px] p-[2px] overflow-visible group/faq transition duration-300",
+        "relative rounded-[16px] overflow-hidden transition duration-300",
         isOpen ? "mb-4" : "mb-2"
       )}
     >
-      {/* 
-        Efecto Spotlight (Láser y Sombra) - Igual que en FloatingCard
-      */}
-      {visible && (
-        <>
-          <div
-            className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300 opacity-100 rounded-[16px]"
-            style={{
-              background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, #3178c6 0%, #65318d 20%, transparent 40%)`,
-            }}
-          />
-          <div
-            className="pointer-events-none absolute inset-0 z-[-1] transition-opacity duration-300 opacity-60 blur-xl rounded-[16px]"
-            style={{
-              background: `radial-gradient(300px circle at ${position.x}px ${position.y}px, #3178c6 0%, #65318d 40%, transparent 70%)`,
-            }}
-          />
-        </>
-      )}
-
-      {/* Contenedor Principal (Fondo Sólido) */}
+      {/* Contenedor Principal (Fondo Blanco Sólido en Modo Claro) */}
       <div 
         className={cn(
-          "relative z-10 w-full rounded-[14px] flex flex-col overflow-hidden transition-colors duration-300",
-          isOpen ? "bg-card border-transparent" : "bg-background border border-border group-hover/faq:bg-card/80 group-hover/faq:border-transparent"
+          "relative z-10 w-full rounded-[14px] flex flex-col overflow-hidden bg-white border transition-colors duration-300",
+          isOpen ? "border-[#004481]/40 shadow-md" : "border-slate-200/90 shadow-sm"
         )}
       >
         <button
           onClick={onClick}
-          className="flex w-full items-center justify-between px-6 py-5 text-left focus:outline-none"
+          className="flex w-full items-center justify-between px-6 py-5 text-left focus:outline-none cursor-pointer"
           aria-expanded={isOpen}
         >
           <h3 className={cn(
             "text-base md:text-lg font-semibold transition-colors duration-300",
-            isOpen ? "text-primary" : "text-foreground group-hover/faq:text-primary"
+            isOpen ? "text-[#004481]" : "text-slate-900"
           )}>
             {faq.question}
           </h3>
@@ -85,8 +51,8 @@ function FaqItemComponent({
           <div className={cn(
             "ml-4 flex-shrink-0 flex h-8 w-8 items-center justify-center rounded-full transition duration-300 border",
             isOpen 
-              ? "bg-primary text-primary-foreground border-primary rotate-180 shadow-md" 
-              : "bg-secondary text-muted-foreground border-border group-hover/faq:bg-primary/10 group-hover/faq:text-primary group-hover/faq:border-primary/20"
+              ? "bg-[#004481] text-white border-[#004481] rotate-180 shadow-sm" 
+              : "bg-slate-100 text-slate-600 border-slate-200"
           )}>
             <ChevronDown className="h-4 w-4 md:h-5 md:w-5" />
           </div>
@@ -98,7 +64,7 @@ function FaqItemComponent({
             isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
           )}
         >
-          <div className="px-6 pb-6 pt-0 text-sm md:text-base text-muted-foreground leading-relaxed border-t border-border/50 mx-6 mt-2">
+          <div className="px-6 pb-6 pt-0 text-sm md:text-base text-slate-600 leading-relaxed border-t border-slate-100 mx-6 mt-2">
             <p className="pt-4">{faq.answer}</p>
           </div>
         </div>
