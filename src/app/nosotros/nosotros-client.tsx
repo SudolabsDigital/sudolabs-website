@@ -36,24 +36,24 @@ export default function NosotrosPage() {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="p-10 md:p-12 rounded-[2.5rem] bg-card/30 border border-border/50 hover:border-primary/30 transition group relative overflow-hidden"
+              className="p-10 md:p-12 rounded-[2.5rem] bg-white/90 border border-slate-200/90 shadow-sm transition group relative overflow-hidden"
             >
-               <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:opacity-10 transition-opacity">
-                  <Target className="w-48 h-48 text-primary" />
+               <div className="absolute top-0 right-0 p-12 opacity-5">
+                  <Target className="w-48 h-48 text-[#004481]" />
                </div>
                
                <div className="relative z-10">
-                  <span className="text-xs font-bold uppercase tracking-[0.3em] text-primary mb-6 block">Nuestra Misión</span>
-                  <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
+                  <span className="text-xs font-mono font-bold uppercase tracking-[0.3em] text-[#004481] mb-6 block">Nuestra Misión</span>
+                  <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-6 leading-tight">
                     Democratizar la <br/> Alta Ingeniería
                   </h2>
-                  <p className="text-muted-foreground text-lg leading-relaxed mb-8">
+                  <p className="text-slate-600 text-lg leading-relaxed mb-8 font-normal">
                     Queremos que empresas de cualquier tamaño accedan a tecnología de nivel enterprise. Código limpio, arquitecturas escalables y seguridad bancaria no deberían ser exclusivos de las grandes corporaciones.
                   </p>
                   <ul className="space-y-3">
                     {["Calidad sin compromisos", "Transparencia radical", "Resultados medibles"].map((item) => (
-                      <li key={item} className="flex items-center gap-3 text-sm font-medium text-foreground/80">
-                        <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                      <li key={item} className="flex items-center gap-3 text-sm font-semibold text-slate-800">
+                        <div className="h-2 w-2 rounded-full bg-[#004481]" />
                         {item}
                       </li>
                     ))}
@@ -66,22 +66,22 @@ export default function NosotrosPage() {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="p-10 md:p-12 rounded-[2.5rem] bg-primary/5 border border-primary/10 hover:border-primary/30 transition group relative overflow-hidden"
+              className="p-10 md:p-12 rounded-[2.5rem] bg-white/90 border border-slate-200/90 shadow-sm transition group relative overflow-hidden"
             >
-               <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:opacity-10 transition-opacity">
-                  <Eye className="w-48 h-48 text-primary" />
+               <div className="absolute top-0 right-0 p-12 opacity-5">
+                  <Eye className="w-48 h-48 text-[#004481]" />
                </div>
 
                <div className="relative z-10">
-                  <span className="text-xs font-bold uppercase tracking-[0.3em] text-primary mb-6 block">Nuestra Visión</span>
-                  <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
+                  <span className="text-xs font-mono font-bold uppercase tracking-[0.3em] text-[#004481] mb-6 block">Nuestra Visión</span>
+                  <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-6 leading-tight">
                     El Estándar de <br/> Confianza Técnica
                   </h2>
-                  <p className="text-muted-foreground text-lg leading-relaxed mb-8">
+                  <p className="text-slate-600 text-lg leading-relaxed mb-8 font-normal">
                     Nos visualizamos como el socio técnico definitivo para la región. Cuando una empresa piensa en &quot;escalar&quot;, queremos que piense en Sudolabs como sinónimo de solidez y futuro.
                   </p>
-                  <div className="pl-6 border-l-2 border-primary/30 py-2">
-                     <p className="text-lg italic font-medium text-foreground/90">
+                  <div className="pl-6 border-l-2 border-[#004481]/40 py-2">
+                     <p className="text-lg italic font-medium text-slate-800">
                        &quot;No adivinamos el futuro. Lo programamos.&quot;
                      </p>
                   </div>
@@ -93,8 +93,8 @@ export default function NosotrosPage() {
           {/* VALORES CORE */}
           <section className="mb-32">
             <div className="text-center mb-16">
-               <h3 className="text-3xl font-bold mb-4">El Código de Conducta</h3>
-               <p className="text-muted-foreground">Los principios innegociables que guían cada commit.</p>
+               <h3 className="text-3xl font-extrabold text-slate-900 mb-4">El Código de Conducta</h3>
+               <p className="text-slate-600 text-lg">Los principios innegociables que guían cada commit.</p>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                {[
@@ -110,11 +110,11 @@ export default function NosotrosPage() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.05 }}
-                    className="p-8 rounded-3xl border border-border/50 bg-card/30 hover:bg-card hover:border-primary/30 transition group"
+                    className="p-8 rounded-3xl border border-slate-200/90 bg-white/90 shadow-sm transition group"
                  >
-                    <v.icon className="w-8 h-8 text-primary/80 mb-6 group-hover:scale-110 transition-transform" />
-                    <h4 className="text-xl font-bold mb-3">{v.title}</h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{v.desc}</p>
+                    <v.icon className="w-8 h-8 text-[#004481] mb-6" />
+                    <h4 className="text-xl font-bold text-slate-900 mb-3">{v.title}</h4>
+                    <p className="text-sm text-slate-600 leading-relaxed font-normal">{v.desc}</p>
                  </motion.div>
                ))}
             </div>

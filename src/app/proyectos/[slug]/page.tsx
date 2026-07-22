@@ -1,11 +1,12 @@
 import { getContentBySlug, getAllContent, getPostsBySlugs, ProjectMeta, BlogMeta } from "@/lib/mdx";
 import { MDXContent } from "@/components/modules/blog/mdx-content";
 import { notFound } from "next/navigation";
-import { ArrowLeft, BookOpen, Briefcase, ArrowRight, ExternalLink } from "lucide-react";
+import { BookOpen, Briefcase, ArrowRight, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { CtaCard } from "@/components/ui/design-system/cta-card";
 import { LivePreviewBadge } from "@/components/ui/live-preview-badge";
+import { PageHero } from "@/components/ui/page-hero";
 
 export async function generateStaticParams() {
   const projects = await getAllContent<ProjectMeta>("projects");
@@ -50,41 +51,28 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
     <div className="flex flex-col bg-background font-sans selection:bg-primary/20">
       <div className="flex-1">
         
-        {/* 1. IMMERSIVE HERO */}
-        <div className="relative h-[60vh] md:h-[70vh] w-full bg-muted overflow-hidden flex items-end">
-           {/* Background Image */}
-           {project.meta.image && (
-              <Image 
-                src={project.meta.image} 
-                alt={project.meta.title} 
-                fill 
-                className="object-cover brightness-[0.3]"
-                priority
-              />
-           )}
-           
-           <div className="container mx-auto px-6 relative z-10 pb-16 md:pb-24">
-              <Link href="/proyectos" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors backdrop-blur-md bg-secondary/80 px-3 py-1 rounded-full border border-border">
-                 <ArrowLeft className="w-4 h-4 mr-2" /> Volver al Portafolio
-              </Link>
-              <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight text-foreground mb-4 leading-tight max-w-5xl">
-                {project.meta.title}
-              </h1>
-              <p className="text-lg md:text-2xl text-muted-foreground max-w-2xl leading-relaxed">
-                {project.meta.description}
-              </p>
-           </div>
-        </div>
+        {/* 1. HERO CON PAGEHERO ESTANDARIZADO */}
+        <PageHero
+          title={project.meta.title}
+          subtitle="Caso de Éxito"
+          description={project.meta.description}
+          imageSrc={project.meta.image || "/assets/images/Digitalización que Funciona.webp"}
+          size="compact"
+          breadcrumbs={[
+            { label: "Proyectos", href: "/proyectos" },
+            { label: project.meta.title }
+          ]}
+        />
 
-        <div className="container mx-auto px-6 py-16 max-w-6xl">
+        <div className="container mx-auto px-6 py-16 max-w-6xl relative z-10">
            
-           {/* 2. KEY STATS (KPIs) */}
+           {/* 2. KEY STATS (KPIs en Alto Contraste) */}
            {project.meta.stats && (
-             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 -mt-24 relative z-20">
+             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 relative z-20">
                 {project.meta.stats.map((stat, i) => (
-                  <div key={i} className="bg-card border border-border/50 p-8 rounded-3xl shadow-xl shadow-black/5 flex flex-col items-center text-center backdrop-blur-sm">
-                      <span className="text-4xl md:text-5xl font-extrabold text-primary mb-2 block">{stat.value}</span>
-                      <span className="text-sm font-bold uppercase tracking-widest text-muted-foreground">{stat.label}</span>
+                  <div key={i} className="bg-white border border-slate-200/90 p-8 rounded-3xl shadow-xl flex flex-col items-center text-center">
+                      <span className="text-4xl md:text-5xl font-black text-[#004481] mb-2 block">{stat.value}</span>
+                      <span className="text-xs font-bold uppercase tracking-widest text-slate-600">{stat.label}</span>
                   </div>
                 ))}
              </div>
@@ -94,7 +82,38 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
            <div className="grid lg:grid-cols-12 gap-12 mb-24">
               {/* Sidebar: Metadata */}
               <aside className="lg:col-span-4 space-y-8 order-2 lg:order-1">
-                 <div className="p-8 rounded-3xl bg-muted/30 border border-border/50 sticky top-32">
+                 <div className="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-md sticky top-32">
+                    {(project.meta.logo || project.meta.partnerLogo) && (
+                       <div className="flex items-center gap-3 mb-6">
+                          {project.meta.logo && (
+                             <div className="relative h-16 flex-1 rounded-xl bg-white border border-border/50 shadow-sm p-3">
+                                <Image
+                                   src={project.meta.logo}
+                                   alt={project.meta.title}
+                                   fill
+                                   sizes="180px"
+                                   className="object-contain"
+                                />
+                             </div>
+                          )}
+                          {project.meta.partnerLogo && (
+                             <div className="relative h-16 w-16 shrink-0 rounded-xl bg-white border border-border/50 shadow-sm p-2">
+                                <Image
+                                   src={project.meta.partnerLogo}
+                                   alt={`Institución asociada a ${project.meta.title}`}
+                                   fill
+                                   sizes="64px"
+                                   className="object-contain"
+                                />
+                             </div>
+                          )}
+                       </div>
+                    )}
+                    {project.meta.type === "producto-propio" && (
+                       <span className="mb-4 inline-block w-fit px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-primary bg-primary/5 border border-primary/20 rounded-full">
+                          Producto Propio de Sudolabs
+                       </span>
+                    )}
                     <h3 className="font-bold text-lg mb-6 flex items-center gap-2">
                        <Briefcase className="w-5 h-5 text-primary" /> Ficha Técnica
                     </h3>

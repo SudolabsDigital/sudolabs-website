@@ -1,22 +1,22 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
+import React from 'react';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { Loader2 } from 'lucide-react';
 
-type ButtonVariant = 'laser' | 'shimmer' | 'neo' | 'outline' | 'ghost-tech' | 'primary';
-type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
+export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'accent' | 'laser' | 'shimmer' | 'neo' | 'aurora' | 'ghost-tech';
+export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
 
-interface TechButtonProps {
+export interface TechButtonProps {
   children: React.ReactNode;
   variant?: ButtonVariant;
   size?: ButtonSize;
   href?: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   isLoading?: boolean;
   disabled?: boolean;
+  fullWidth?: boolean;
   iconLeft?: React.ReactNode;
   iconRight?: React.ReactNode;
   className?: string;
@@ -32,126 +32,66 @@ export function TechButton({
   onClick,
   isLoading = false,
   disabled = false,
+  fullWidth = false,
   iconLeft,
   iconRight,
   className,
   type = 'button',
   isMonospace = false,
 }: TechButtonProps) {
-  const [isHovered, setIsHovered] = useState(false);
-  const btnRef = useRef<HTMLDivElement>(null);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!btnRef.current || variant !== 'laser') return;
-    const bounds = btnRef.current.getBoundingClientRect();
-    btnRef.current.style.setProperty('--mouse-x', `${e.clientX - bounds.left}px`);
-    btnRef.current.style.setProperty('--mouse-y', `${e.clientY - bounds.top}px`);
+  // Tamaños y padding estandarizados
+  const sizes: Record<ButtonSize, string> = {
+    sm: "h-9 px-4 text-xs font-semibold gap-1.5",
+    md: "h-11 px-5 text-sm font-bold gap-2",
+    lg: "h-13 px-7 text-base font-bold gap-2.5",
+    xl: "h-16 px-9 text-lg font-extrabold gap-3",
   };
 
-  const sizes = {
-    sm: "h-9 px-4 text-xs",
-    md: "h-11 px-6 text-sm",
-    lg: "h-13 px-8 text-base",
-    xl: "h-16 px-10 text-lg",
+  // Variantes de diseño en Modo Claro Único
+  const variants: Record<string, string> = {
+    primary: "bg-[#004481] text-white hover:bg-[#003666] border border-[#004481] shadow-sm rounded-xl",
+    secondary: "bg-slate-100 text-slate-900 hover:bg-slate-200/80 border border-slate-200 shadow-sm rounded-xl",
+    outline: "bg-white text-slate-900 hover:bg-slate-50 border border-slate-300 shadow-sm rounded-xl",
+    ghost: "bg-transparent text-slate-700 hover:bg-slate-100/80 rounded-xl",
+    accent: "bg-[#65318d] text-white hover:bg-[#522575] border border-[#65318d] shadow-sm rounded-xl",
+    
+    // Alias retrocompatibles
+    'ghost-tech': "bg-transparent text-slate-700 hover:bg-slate-100/80 rounded-xl",
+    neo: "bg-white border-2 border-slate-900 text-slate-900 rounded-xl shadow-[3px_3px_0px_0px_#004481]",
+    shimmer: "bg-[#004481] text-white hover:bg-[#003666] border border-[#004481] shadow-sm rounded-xl",
+    laser: "bg-white text-slate-900 hover:bg-slate-50 border border-slate-300 shadow-sm rounded-xl",
+    aurora: "bg-[#004481] text-white hover:bg-[#003666] border border-[#004481] shadow-sm rounded-xl"
   };
 
   const baseStyles = cn(
-    "relative inline-flex items-center justify-center font-bold transition duration-300 select-none overflow-hidden",
-    disabled || isLoading ? "opacity-60 cursor-not-allowed" : "cursor-pointer",
-    isMonospace && "font-mono tracking-tighter uppercase",
+    "relative inline-flex items-center justify-center font-bold transition duration-200 select-none overflow-hidden cursor-pointer",
+    fullWidth ? "w-full" : "w-auto",
+    (disabled || isLoading) && "opacity-60 pointer-events-none cursor-not-allowed",
+    isMonospace && "font-mono tracking-wider uppercase",
     sizes[size],
+    variants[variant] || variants.primary,
     className
   );
 
-  const variants = {
-    primary: "bg-primary text-primary-foreground rounded-lg hover:shadow-lg hover:shadow-primary/20 active:scale-95",
-    
-    outline: "bg-transparent border border-border text-foreground rounded-lg hover:border-primary/50 hover:bg-primary/5 active:scale-95",
-    
-    'ghost-tech': "bg-transparent text-muted-foreground hover:text-foreground rounded-lg hover:bg-secondary active:scale-95",
-    
-    neo: cn(
-      "bg-background border-2 border-foreground text-foreground rounded-none shadow-[4px_4px_0px_0px_theme(colors.primary.DEFAULT)]",
-      "hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_theme(colors.primary.DEFAULT)]",
-      "active:translate-x-[4px] active:translate-y-[4px] active:shadow-none"
-    ),
-
-    shimmer: cn(
-      "bg-slate-950 text-white rounded-xl border border-white/10",
-      "before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent",
-      "hover:bg-slate-900 active:scale-95"
-    ),
-
-    laser: cn(
-      "bg-card text-foreground rounded-xl p-[1px] overflow-visible group/laser",
-      "hover:-translate-y-0.5 transition-transform"
-    )
-  };
-
   const innerContent = (
-    <div className={cn(
-      "relative z-10 flex items-center justify-center gap-2 w-full h-full",
-      variant === 'laser' && "bg-card px-6 rounded-[11px]"
-    )}>
+    <span className="relative z-10 flex items-center justify-center gap-2">
       {isLoading ? (
-        <Loader2 className="w-4 h-4 animate-spin" />
+        <Loader2 className="w-4 h-4 animate-spin shrink-0 text-current" />
       ) : (
         <>
           {iconLeft && <span className="shrink-0">{iconLeft}</span>}
-          {children}
-          {iconRight && (
-            <motion.span 
-              className="shrink-0"
-              initial={false}
-              animate={isHovered ? { x: 3 } : { x: 0 }}
-            >
-              {iconRight}
-            </motion.span>
-          )}
+          <span>{children}</span>
+          {iconRight && <span className="shrink-0">{iconRight}</span>}
         </>
       )}
-    </div>
+    </span>
   );
 
-  const mainElement = (
-    <div
-      ref={btnRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className={cn(baseStyles, variants[variant])}
-      role="button"
-      aria-label={typeof children === 'string' ? children : undefined}
-      aria-busy={isLoading}
-      aria-disabled={disabled || isLoading}
-      tabIndex={disabled || isLoading ? -1 : 0}
-    >
-      {/* LASER SPECIFIC EFFECTS */}
-      {variant === 'laser' && isHovered && (
-        <>
-          <div
-            className="pointer-events-none absolute inset-0 z-0 opacity-100 rounded-xl"
-            style={{
-              background: `radial-gradient(120px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), var(--color-brand-core, #3178c6) 0%, var(--color-ts-blue, #65318d) 50%, transparent 100%)`,
-            }}
-          />
-          <div
-            className="pointer-events-none absolute inset-0 z-[-1] opacity-50 blur-md rounded-xl"
-            style={{
-              background: `radial-gradient(100px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), var(--color-brand-core, #3178c6) 0%, var(--color-ts-blue, #65318d) 50%, transparent 100%)`,
-            }}
-          />
-        </>
-      )}
-
-      {innerContent}
-    </div>
-  );
-
-  if (href && !disabled) {
+  if (href && !disabled && !isLoading) {
     return (
-      <Link href={href} className="contents">
-        {mainElement}
+      <Link href={href} className={baseStyles} onClick={onClick}>
+        {innerContent}
       </Link>
     );
   }
@@ -160,9 +100,11 @@ export function TechButton({
     <button 
       type={type} 
       onClick={disabled || isLoading ? undefined : onClick}
-      className="contents"
+      className={baseStyles}
+      disabled={disabled || isLoading}
+      aria-busy={isLoading}
     >
-      {mainElement}
+      {innerContent}
     </button>
   );
 }

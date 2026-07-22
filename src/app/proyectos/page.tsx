@@ -3,6 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { CtaCard } from "@/components/ui/design-system/cta-card";
+import { ProjectCard } from "@/components/ui/design-system/project-card";
+import { Aurora } from "@/components/ui/design-system/aurora";
 import { LivePreviewBadge } from "@/components/ui/live-preview-badge";
 import PageHero from "@/components/ui/page-hero";
 
@@ -48,29 +50,36 @@ export default async function ProyectosPage() {
                 <Sparkles className="w-4 h-4" /> Proyecto Destacado
              </div>
              
-             <Link href={`/proyectos/${featuredProject.slug}`} className="group block">
-                <article className="relative rounded-[2rem] overflow-hidden border border-border/50 bg-card/30 hover:border-primary/50 transition duration-500 shadow-2xl">
+             <div className="relative rounded-[2rem] isolate">
+               <Aurora variant="glow" className="-inset-3 md:-inset-4" />
+               <Link href={`/proyectos/${featuredProject.slug}`} className="group block relative">
+                <article className="relative rounded-[2rem] overflow-hidden border border-slate-200/90 bg-white/90 shadow-xl">
                     <div className="grid lg:grid-cols-12 items-stretch">
                         {/* Content (5 cols) */}
                         <div className="lg:col-span-5 p-8 md:p-12 flex flex-col justify-center order-2 lg:order-1">
-                            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground group-hover:text-primary transition-colors tracking-tight">
+                            {featuredProject.type === "producto-propio" && (
+                              <span className="mb-4 w-fit px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-[#004481] bg-[#004481]/10 border border-[#004481]/20 rounded-full">
+                                Producto Propio
+                              </span>
+                            )}
+                            <h2 className="text-3xl md:text-4xl font-black mb-4 text-slate-900 tracking-tight">
                                 {featuredProject.title}
                             </h2>
-                            <p className="text-muted-foreground mb-8 line-clamp-3 text-lg leading-relaxed">
+                            <p className="text-slate-600 mb-8 line-clamp-3 text-lg leading-relaxed font-normal">
                                 {featuredProject.description}
                             </p>
                             
                             <div className="flex flex-wrap gap-2 mb-8">
                                 {featuredProject.tags?.slice(0, 3).map((tech) => (
-                                    <span key={tech} className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest bg-primary/5 border border-primary/10 text-primary/80">
+                                    <span key={tech} className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest bg-[#004481]/10 border border-[#004481]/20 text-[#004481]">
                                         {tech}
                                     </span>
                                 ))}
                             </div>
 
                             <div className="flex items-center gap-6">
-                                <div className="flex items-center gap-2 font-bold text-xs text-primary uppercase tracking-widest">
-                                    Ver Caso de Estudio <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                                <div className="flex items-center gap-2 font-bold text-xs text-[#004481] uppercase tracking-widest">
+                                    Ver Caso de Estudio <ArrowRight className="w-4 h-4" />
                                 </div>
                                 {featuredProject.websiteUrl && (
                                     <LivePreviewBadge url={featuredProject.websiteUrl} />
@@ -79,65 +88,31 @@ export default async function ProyectosPage() {
                         </div>
 
                         {/* Image (7 cols) - Proporción balanceada */}
-                        <div className="lg:col-span-7 relative h-[250px] md:h-[400px] lg:h-auto bg-muted overflow-hidden order-1 lg:order-2 border-l border-border/50">
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent z-10 opacity-60" />
+                        <div className="lg:col-span-7 relative h-[250px] md:h-[400px] lg:h-auto bg-slate-100 overflow-hidden order-1 lg:order-2 border-l border-slate-200/90">
                             {featuredProject.image && (
                                 <Image 
                                     src={featuredProject.image} 
                                     alt={featuredProject.title}
                                     fill
                                     sizes="(max-width: 1024px) 100vw, 60vw"
-                                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                                    className="object-cover"
                                 />
                             )}
                         </div>
                     </div>
                 </article>
-             </Link>
+               </Link>
+             </div>
           </section>
         )}
 
         {/* OTHER PROJECTS GRID (Compact 3-Column) */}
         {otherProjects.length > 0 && (
             <section className="container mx-auto px-6 mb-24">
-                <div className="h-px w-full bg-border/40 mb-16" />
-                <h3 className="text-lg font-bold text-foreground mb-8 uppercase tracking-[0.2em] opacity-50">Más Proyectos</h3>
+                <h3 className="text-lg font-black text-slate-900 mb-8 uppercase tracking-[0.2em]">Más Proyectos</h3>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {otherProjects.map((project) => (
-                        <Link key={project.slug} href={`/proyectos/${project.slug}`} className="group block h-full">
-                            <article className="h-full flex flex-col rounded-2xl overflow-hidden border border-border/50 bg-card/20 hover:bg-card hover:border-primary/50 transition shadow-sm">
-                                <div className="relative aspect-[16/10] bg-muted overflow-hidden border-b border-border/50">
-                                    {project.image && (
-                                        <Image 
-                                            src={project.image} 
-                                            alt={project.title}
-                                            fill
-                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                            className="object-cover group-hover:scale-105 transition-transform duration-500"
-                                        />
-                                    )}
-                                    {project.websiteUrl && (
-                                        <div className="absolute top-4 right-4 z-20">
-                                            <LivePreviewBadge 
-                                                url={project.websiteUrl} 
-                                                className="bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10"
-                                            />
-                                        </div>
-                                    )}
-                                </div>
-                                <div className="p-6 flex flex-col flex-1">
-                                    <h4 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors tracking-tight">
-                                        {project.title}
-                                    </h4>
-                                    <p className="text-sm text-muted-foreground mb-6 line-clamp-2 flex-1 leading-relaxed">
-                                        {project.description}
-                                    </p>
-                                    <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-widest">
-                                        Detalles <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                                    </div>
-                                </div>
-                            </article>
-                        </Link>
+                        <ProjectCard key={project.slug} project={project} />
                     ))}
                 </div>
             </section>

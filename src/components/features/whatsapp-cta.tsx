@@ -3,16 +3,19 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { siteConfig } from "@/core/config";
 import { useState, useEffect } from "react";
-import { cn } from "@/lib/utils";
 
 export function WhatsAppCTA() {
   const [isVisible, setIsVisible] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
+  const [showLabel, setShowLabel] = useState(true);
 
   // Aparece después de un pequeño scroll o tiempo
   useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 2000);
-    return () => clearTimeout(timer);
+    const timer = setTimeout(() => setIsVisible(true), 1500);
+    const labelTimer = setTimeout(() => setShowLabel(false), 5500);
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(labelTimer);
+    };
   }, []);
 
   const whatsappUrl = `https://wa.me/${siteConfig.contact.whatsapp}`;
@@ -25,27 +28,28 @@ export function WhatsAppCTA() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.5, y: 50 }}
           className="fixed bottom-8 right-8 z-[100] flex items-center gap-3"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
         >
-          {/* Label que aparece al hacer hover */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : 20 }}
-            className={cn(
-              "hidden md:block bg-background/80 backdrop-blur-md border border-border px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-xl pointer-events-none",
-              !isHovered && "invisible"
+          {/* Label temporal que colapsa suavemente a solo icono */}
+          <AnimatePresence>
+            {showLabel && (
+              <motion.div
+                initial={{ opacity: 0, x: 20, scale: 0.9 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: 20, scale: 0.9 }}
+                transition={{ duration: 0.4 }}
+                className="hidden md:block bg-white border border-slate-200/90 px-3.5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-md text-slate-900 whitespace-nowrap"
+              >
+                Hablemos por WhatsApp
+              </motion.div>
             )}
-          >
-            Hablemos por WhatsApp
-          </motion.div>
+          </AnimatePresence>
 
           {/* Botón Flotante */}
           <a
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="relative group"
+            className="relative cursor-pointer"
             aria-label="Contactar por WhatsApp"
           >
             <div className="relative w-14 h-14 md:w-16 md:h-16 bg-[#25D366] rounded-full flex items-center justify-center shadow-[0_10px_40px_rgba(37,211,102,0.4)] transition-transform duration-300 group-hover:scale-110 active:scale-95">

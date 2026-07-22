@@ -19,27 +19,26 @@ export function BlogCard({ post }: BlogCardProps) {
   return (
     <Link 
       href={`/blog/${post.slug}`} 
-      className="group flex flex-col h-full rounded-3xl border border-border/50 bg-card/20 hover:bg-card/40 hover:border-primary/30 transition duration-300 overflow-hidden hover:shadow-xl hover:shadow-primary/5"
+      className="group flex flex-col h-full rounded-3xl border-2 border-slate-200/90 bg-white shadow-lg transition duration-300 overflow-hidden cursor-pointer"
     >
-      <div className="h-52 bg-muted/50 relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors z-10" />
+      <div className="h-52 bg-slate-100 relative overflow-hidden">
         {post.image ? (
           <Image
             src={post.image}
             alt={post.title}
             fill
-            className="object-cover transition-transform duration-700 group-hover:scale-110"
+            className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-muted-foreground/10 bg-gradient-to-br from-muted/50 to-background">
+          <div className="w-full h-full flex items-center justify-center text-slate-300 bg-slate-100">
             <Hash className="w-16 h-16" />
           </div>
         )}
         
         <div className="absolute top-4 left-4 z-20">
           {post.category && (
-            <Badge variant="secondary" className="bg-background/90 backdrop-blur text-foreground border border-border/50 shadow-sm uppercase tracking-widest text-[10px]">
+            <Badge variant="secondary" className="bg-white/90 text-slate-800 border border-slate-200 shadow-sm uppercase tracking-widest text-[10px] font-bold">
               {post.category}
             </Badge>
           )}
@@ -50,7 +49,7 @@ export function BlogCard({ post }: BlogCardProps) {
             <Badge 
               variant="outline" 
               className={cn(
-                "uppercase tracking-wider text-[10px] py-0.5 bg-background/90 backdrop-blur border-border/50 shadow-sm", 
+                "uppercase tracking-wider text-[10px] py-0.5 bg-white/90 border-slate-200 shadow-sm font-bold", 
                 getDifficultyColor(post.difficulty)
               )}
             >
@@ -61,20 +60,20 @@ export function BlogCard({ post }: BlogCardProps) {
       </div>
       
       <div className="p-8 flex flex-col flex-1">
-        <h3 className="text-xl font-bold mb-3 leading-snug group-hover:text-primary transition-colors line-clamp-2">
+        <h3 className="text-xl font-bold mb-3 leading-snug text-slate-900 line-clamp-2">
           {post.title}
         </h3>
-        <p className="text-muted-foreground text-sm line-clamp-3 mb-6 flex-1 leading-relaxed">
+        <p className="text-slate-600 text-sm line-clamp-3 mb-6 flex-1 leading-relaxed font-normal">
           {post.description}
         </p>
         
-        <div className="flex items-center justify-between text-xs font-medium text-muted-foreground mt-auto pt-6 border-t border-border/30">
+        <div className="flex items-center justify-between text-xs font-medium text-slate-500 mt-auto pt-6 border-t border-slate-200/60">
           <span className="flex items-center gap-1.5">
-            <Calendar className="w-3 h-3" /> 
+            <Calendar className="w-3.5 h-3.5 text-[#004481]" /> 
             {formattedDate}
           </span>
           <span className="flex items-center gap-1.5">
-            <Clock className="w-3 h-3" /> 
+            <Clock className="w-3.5 h-3.5 text-[#004481]" /> 
             {post.readTime || '5 min'}
           </span>
         </div>

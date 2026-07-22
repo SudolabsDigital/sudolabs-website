@@ -135,29 +135,29 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
             )}
 
             {/* Content Core */}
-            <div className="relative z-10 w-full bg-[#0b0f1a] dark:bg-[#0b0f1a] rounded-[1.9rem] overflow-hidden flex flex-col max-h-[90vh] border border-white/5">
+            <div className="relative z-10 w-full bg-white rounded-[1.9rem] overflow-hidden flex flex-col max-h-[90vh] border border-slate-200/90 shadow-2xl">
               
               {/* Header: Tech Console Style */}
-              <div className="p-6 md:p-8 border-b border-white/10 bg-[#0f172a]/50 flex justify-between items-center">
+              <div className="p-6 md:p-8 border-b border-slate-200/90 bg-slate-50/80 flex justify-between items-center">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-                    <span className="text-[10px] font-mono font-bold tracking-widest text-emerald-500/80 uppercase">System_Link: Active</span>
+                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-sm" />
+                    <span className="text-[10px] font-mono font-bold tracking-widest text-[#004481] uppercase">System_Link: Active</span>
                   </div>
-                  <h2 className="text-xl md:text-2xl font-extrabold tracking-tight text-white">
+                  <h2 className="text-xl md:text-2xl font-extrabold tracking-tight text-slate-900">
                     {step === 'form' ? 'Nueva Solicitud' : 'Despliegue Exitoso'}
                   </h2>
                 </div>
                 <button 
                   onClick={onClose}
-                  className="p-2.5 hover:bg-white/10 rounded-full transition hover:rotate-90 duration-300 text-gray-400 hover:text-white"
+                  className="p-2.5 hover:bg-slate-200/60 rounded-full transition duration-300 text-slate-500 hover:text-slate-900 cursor-pointer"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
               {/* Scrollable Body */}
-              <div className="flex-1 overflow-y-auto p-6 md:p-8 scrollbar-hide bg-transparent">
+              <div className="flex-1 overflow-y-auto p-6 md:p-8 scrollbar-hide bg-white">
                 <AnimatePresence mode="wait">
                   {step === "form" ? (
                     <motion.form 
@@ -170,7 +170,7 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
                     >
                       {/* Selection: Objective */}
                       <div className="space-y-4">
-                        <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-blue-400">
+                        <div className="flex items-center gap-2 text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-[#004481]">
                           <Sparkles className="w-3.5 h-3.5" /> 01 // SELECCIONAR_OBJETIVO
                         </div>
                         <div className="grid grid-cols-2 gap-3">
@@ -179,8 +179,8 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
                               key={opt}
                               type="button"
                               onClick={() => setGoal(opt)}
-                              className="text-left px-4 py-3 rounded-xl border text-[13px] font-bold transition duration-300 border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10 text-gray-400 hover:text-gray-200"
-                              style={goal === opt ? { borderColor: 'rgb(59 130 246)', backgroundColor: 'rgba(59, 130, 246, 0.2)', color: 'rgb(219 234 254)', boxShadow: '0 0 15px rgba(59,130,246,0.2)' } : {}}
+                              className="text-left px-4 py-3 rounded-xl border text-[13px] font-bold transition duration-300 border-slate-200 bg-slate-50 text-slate-700 cursor-pointer"
+                              style={goal === opt ? { borderColor: '#004481', backgroundColor: 'rgba(0, 68, 129, 0.08)', color: '#004481' } : {}}
                             >
                               {opt}
                             </button>
@@ -190,7 +190,7 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
 
                       {/* Input: Email */}
                       <div className="space-y-4">
-                        <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-blue-400">
+                        <div className="flex items-center gap-2 text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-[#004481]">
                           <Mail className="w-3.5 h-3.5" /> 02 // IDENTIFICACIÓN_USER
                         </div>
                         <div className="relative group">
@@ -200,24 +200,24 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="tu@correo.com"
-                            className="w-full h-14 rounded-xl border border-white/10 bg-black/40 pl-5 pr-4 text-sm font-medium focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition text-white placeholder:text-gray-600"
+                            className="w-full h-14 rounded-xl border border-slate-300 bg-slate-50 pl-5 pr-4 text-sm font-medium focus:outline-none focus:border-[#004481] focus:ring-1 focus:ring-[#004481]/30 transition text-slate-900 placeholder:text-slate-400"
                           />
                         </div>
                       </div>
 
-                      {/* Input: Details (The "Terminal" Input) */}
+                      {/* Input: Details */}
                       <div className="space-y-4">
-                        <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-blue-400">
+                        <div className="flex items-center gap-2 text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-[#004481]">
                           <TerminalIcon className="w-3.5 h-3.5" /> 03 // BUFFER_REQUERIMIENTOS
                         </div>
-                        <div className="relative rounded-xl border border-white/10 bg-[#05070a] p-1 shadow-inner">
+                        <div className="relative rounded-xl border border-slate-300 bg-slate-50 p-1">
                            <textarea
                             value={details}
                             onChange={(e) => setDetails(e.target.value)}
                             placeholder="Describe brevemente el alcance, presupuesto o plazos..."
-                            className="w-full min-h-[120px] bg-transparent p-4 text-sm font-mono text-emerald-400/90 placeholder:text-emerald-900/50 focus:outline-none resize-none scrollbar-hide"
+                            className="w-full min-h-[120px] bg-transparent p-4 text-sm font-mono text-slate-800 placeholder:text-slate-400 focus:outline-none resize-none scrollbar-hide"
                           />
-                          <div className="absolute bottom-3 right-4 text-[9px] font-mono text-emerald-500/30 tracking-tighter">
+                          <div className="absolute bottom-3 right-4 text-[9px] font-mono text-slate-400 tracking-tighter">
                             STDOUT {">>"}_READY
                           </div>
                         </div>
@@ -227,14 +227,14 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
                       <div className="pt-4">
                         <TechButton 
                           type="submit"
-                          variant="laser"
+                          variant="primary"
                           size="xl"
                           className="w-full h-16"
                           iconRight={<Send className="w-5 h-5" />}
                         >
                           GENERAR_CONEXIÓN
                         </TechButton>
-                        <p className="text-center mt-4 text-[9px] font-mono text-gray-500 uppercase tracking-[0.2em]">
+                        <p className="text-center mt-4 text-[9px] font-mono text-slate-500 uppercase tracking-[0.2em]">
                           LATENCY_ESTIMATED: &lt; 120_MIN
                         </p>
                       </div>
@@ -247,15 +247,14 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
                       className="flex flex-col items-center justify-center py-10 text-center space-y-8"
                     >
                       <div className="relative">
-                         <div className="absolute inset-0 bg-emerald-500/20 blur-3xl rounded-full animate-pulse" />
-                         <div className="w-24 h-24 rounded-full bg-[#0b0f1a] border border-emerald-500/30 flex items-center justify-center relative z-10 shadow-2xl">
-                            <CheckCircle2 className="w-12 h-12 text-emerald-500" />
+                         <div className="w-24 h-24 rounded-full bg-emerald-50 border border-emerald-300 flex items-center justify-center relative z-10 shadow-md">
+                            <CheckCircle2 className="w-12 h-12 text-emerald-600" />
                          </div>
                       </div>
                       
                       <div className="space-y-3">
-                        <h3 className="text-2xl font-bold text-white tracking-tight">¡PAQUETE_ENVIADO!</h3>
-                        <p className="text-gray-400 max-w-xs mx-auto text-sm leading-relaxed">
+                        <h3 className="text-2xl font-bold text-slate-900 tracking-tight">¡PAQUETE_ENVIADO!</h3>
+                        <p className="text-slate-600 max-w-xs mx-auto text-sm leading-relaxed">
                           La conexión ha sido establecida con éxito. Si la terminal de WhatsApp no se activó, usa el reintento manual.
                         </p>
                       </div>
@@ -272,7 +271,7 @@ export function ContactModal({ isOpen, onClose, defaultSubject = "" }: ContactMo
                          </TechButton>
                          
                          <button 
-                           className="w-full py-3 text-[11px] font-bold text-gray-500 hover:text-white transition-colors uppercase tracking-[0.3em]"
+                           className="w-full py-3 text-[11px] font-bold text-slate-500 hover:text-slate-900 transition-colors uppercase tracking-[0.3em] cursor-pointer"
                            onClick={onClose}
                          >
                             [ TERMINAR_SESIÓN ]

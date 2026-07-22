@@ -3,178 +3,151 @@
 import { useState, useEffect, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Search, Filter } from "lucide-react"
-import { FloatingCard } from "@/components/ui/design-system/card"
+import Link from "next/link"
+import { cn } from "@/lib/utils"
 import { SolutionCategory } from "@/core/solutions-data"
 
 interface SolutionsGridRevealProps {
   solutions: SolutionCategory[];
 }
 
+const STORAGE_KEY = "solutions_grid_state_v2";
+
 export function SolutionsGridReveal({ solutions }: SolutionsGridRevealProps) {
-  const [activeTab, setActiveTab] = useState(solutions[0].id)
+  const [activeCategory, setActiveCategory] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState("")
 
-  // PERSISTENCE LOGIC
-  const STORAGE_KEY = "solutions_grid_state";
+  const allCards = useMemo(
+    () => solutions.flatMap((category) => category.cards.map((card) => ({ ...card, categoryId: category.id, categoryLabel: category.label }))),
+    [solutions]
+  );
 
+  // PERSISTENCE: recordar el filtro activo al volver desde un artículo
   useEffect(() => {
     const savedState = sessionStorage.getItem(STORAGE_KEY);
     if (savedState) {
       try {
         const parsed = JSON.parse(savedState);
-        if (parsed.tab) {
-          const timer = setTimeout(() => setActiveTab(parsed.tab), 0);
+        if (parsed.category) {
+          const timer = setTimeout(() => setActiveCategory(parsed.category), 0);
           return () => clearTimeout(timer);
         }
-      } catch (e) {
-        console.error("Error parsing state", e);
+      } catch {
+        // ignore malformed state
       }
     }
-  }, [STORAGE_KEY, solutions]);
+  }, []);
 
-  const handleTabChange = (newTabId: string) => {
-    setActiveTab(newTabId);
-    setSearchQuery(""); // Clear search when changing tabs
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ tab: newTabId }));
+  const handleCategoryToggle = (categoryId: string) => {
+    const next = activeCategory === categoryId ? null : categoryId;
+    setActiveCategory(next);
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ category: next }));
   };
 
   const saveCurrentState = () => {
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ tab: activeTab }));
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ category: activeCategory }));
   };
 
-  // FILTER LOGIC
   const filteredCards = useMemo(() => {
-    if (searchQuery.trim().length > 0) {
-      const query = searchQuery.toLowerCase();
-      return solutions.flatMap(s => s.cards).filter(card => 
-        card.title.toLowerCase().includes(query) || 
+    const query = searchQuery.trim().toLowerCase();
+    return allCards.filter((card) => {
+      const matchesCategory = !activeCategory || card.categoryId === activeCategory;
+      const matchesQuery =
+        query.length === 0 ||
+        card.title.toLowerCase().includes(query) ||
         card.description.toLowerCase().includes(query) ||
-        card.pain.toLowerCase().includes(query)
-      );
-    }
-    return solutions.find(s => s.id === activeTab)?.cards || [];
-  }, [activeTab, searchQuery, solutions]);
+        card.pain.toLowerCase().includes(query);
+      return matchesCategory && matchesQuery;
+    });
+  }, [allCards, activeCategory, searchQuery]);
 
   return (
-    <div className="flex flex-col lg:flex-row gap-8 xl:gap-12">
-      
-      {/* SIDEBAR */}
-      <aside className="w-full lg:w-64 xl:w-72 shrink-0 flex flex-col gap-6">
-        
-        {/* Buscador */}
-        <div className="relative group">
+    <div className="flex flex-col gap-6">
+
+      {/* TOOLBAR: búsqueda + filtros de categoría (opcionales, no obligatorios) */}
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+        <div className="relative sm:max-w-xs w-full group">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
-          <input 
-            type="text" 
-            placeholder="Buscar módulos (ej. SEO, Seguridad)..." 
+          <input
+            type="text"
+            placeholder="Buscar por tu problema (ej. facturas, inventario)..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-background border border-border rounded-lg pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition placeholder:text-muted-foreground" 
+            className="w-full bg-background border border-border rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition placeholder:text-muted-foreground"
           />
-          {searchQuery && (
-             <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground bg-secondary px-1.5 py-0.5 rounded">
-                {filteredCards.length} res
-             </div>
-          )}
         </div>
 
-        {/* Navegación de Categorías */}
-        <div className="hidden lg:block space-y-1">
-          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-3">
-            Categorías
-          </h3>
-          <nav className="flex flex-col gap-1">
-            {solutions.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => handleTabChange(cat.id)}
-                className={`
-                  w-full text-left px-3 py-2.5 rounded-md text-sm font-medium transition duration-200 flex justify-between items-center
-                  ${activeTab === cat.id && !searchQuery
-                    ? "bg-primary/10 text-primary border border-primary/20" 
-                    : "text-muted-foreground hover:bg-secondary/80 hover:text-foreground border border-transparent"
-                  }
-                `}
-              >
-                {cat.label}
-                <span className="text-[10px] bg-background border border-border px-1.5 py-0.5 rounded text-muted-foreground">
-                  {cat.cards.length}
-                </span>
-              </button>
-            ))}
-          </nav>
-        </div>
-
-        {/* Mobile/Tablet Tabs */}
-        <div className="block lg:hidden overflow-x-auto pb-2 scrollbar-hide -mx-6 px-6 sm:mx-0 sm:px-0">
-           <nav className="flex gap-2">
-             {solutions.map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => handleTabChange(cat.id)}
-                  className={`
-                    whitespace-nowrap px-4 py-2.5 rounded-md text-sm font-medium transition border
-                    ${activeTab === cat.id && !searchQuery
-                      ? "bg-primary/10 text-primary border-primary/20" 
-                      : "bg-background text-muted-foreground border-border hover:bg-secondary"
-                    }
-                  `}
-                >
-                  {cat.label}
-                </button>
-             ))}
-           </nav>
-        </div>
-      </aside>
-
-      {/* CONTENIDO (GRID) */}
-      <main className="flex-1 min-w-0">
-        {filteredCards.length === 0 ? (
-          <div className="w-full py-20 flex flex-col items-center justify-center text-center border border-dashed border-border rounded-2xl bg-background/50">
-             <Filter className="w-10 h-10 text-muted-foreground mb-4 opacity-50" />
-             <h3 className="text-lg font-medium text-foreground">No se encontraron módulos</h3>
-             <p className="text-sm text-muted-foreground mt-1">Intenta con otros términos de búsqueda.</p>
-             <button onClick={() => setSearchQuery("")} className="mt-4 text-sm text-primary hover:underline">
-                Limpiar búsqueda
-             </button>
-          </div>
-        ) : (
-          <div 
-            className="relative max-h-[550px] overflow-y-auto pb-24 pt-12 px-12 -mx-12 -mt-12 scrollbar-hide"
-            style={{
-              maskImage: filteredCards.length > 2 ? 'linear-gradient(to bottom, black 80%, transparent 100%)' : 'none',
-              WebkitMaskImage: filteredCards.length > 2 ? 'linear-gradient(to bottom, black 80%, transparent 100%)' : 'none',
-              msOverflowStyle: 'none',
-              scrollbarWidth: 'none'
-            }}
+        <div className="flex flex-wrap gap-2 overflow-x-auto scrollbar-hide -mx-6 px-6 sm:mx-0 sm:px-0">
+          <button
+            onClick={() => handleCategoryToggle("")}
+            className={cn(
+              "whitespace-nowrap px-3.5 py-2 rounded-full text-xs font-semibold transition border",
+              !activeCategory
+                ? "bg-primary/10 text-primary border-primary/20"
+                : "bg-background text-muted-foreground border-border hover:bg-secondary"
+            )}
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-5">
-              <AnimatePresence mode="popLayout">
-                {filteredCards.map((card, idx) => (
-                  <motion.div
-                    key={card.slug}
-                    layout
-                    initial={{ opacity: 0, y: 10, scale: 0.98 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.2, delay: idx * 0.03 }}
-                  >
-                    <FloatingCard
-                      title={card.title}
-                      description={card.description}
-                      icon={card.icon}
-                      tag={card.pain}
-                      href={`/blog/${card.slug}`}
-                      onCardClick={saveCurrentState}
-                      className="h-full"
-                    />
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </div>
-          </div>
-        )}
-      </main>
+            Todos <span className="opacity-60">({allCards.length})</span>
+          </button>
+          {solutions.map((category) => (
+            <button
+              key={category.id}
+              onClick={() => handleCategoryToggle(category.id)}
+              className={cn(
+                "whitespace-nowrap px-3.5 py-2 rounded-full text-xs font-semibold transition border",
+                activeCategory === category.id
+                  ? "bg-primary/10 text-primary border-primary/20"
+                  : "bg-background text-muted-foreground border-border hover:bg-secondary"
+              )}
+            >
+              {category.label} <span className="opacity-60">({category.cards.length})</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* GRID COMPACTO: todo visible de una vez, sin scroll anidado */}
+      {filteredCards.length === 0 ? (
+        <div className="w-full py-16 flex flex-col items-center justify-center text-center border border-dashed border-border rounded-2xl bg-background/50">
+          <Filter className="w-8 h-8 text-muted-foreground mb-3 opacity-50" />
+          <h3 className="text-base font-medium text-foreground">No se encontraron módulos</h3>
+          <p className="text-sm text-muted-foreground mt-1">Intenta con otros términos de búsqueda.</p>
+          <button onClick={() => setSearchQuery("")} className="mt-3 text-sm text-primary hover:underline">
+            Limpiar búsqueda
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+          <AnimatePresence mode="popLayout">
+            {filteredCards.map((card, idx) => (
+              <motion.div
+                key={card.slug}
+                layout
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.15, delay: idx * 0.015 }}
+              >
+                <Link
+                  href={`/blog/${card.slug}`}
+                  onClick={saveCurrentState}
+                  className="flex items-start gap-3 h-full p-4 rounded-xl border border-slate-200/90 bg-white shadow-sm transition duration-300"
+                >
+                  <div className="w-9 h-9 shrink-0 rounded-lg bg-slate-100 flex items-center justify-center text-[#004481] border border-slate-200">
+                    {card.icon}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-slate-900 leading-snug">
+                      {card.pain}
+                    </p>
+                    <p className="text-xs text-slate-600 mt-1 truncate">{card.title}</p>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+      )}
     </div>
   )
 }

@@ -33,6 +33,9 @@ export interface ProjectMeta extends BaseMdxMeta {
   role?: string;
   stats?: ProjectStat[];
   relatedPosts?: string[];
+  logo?: string;
+  partnerLogo?: string;
+  type?: 'cliente' | 'producto-propio';
 }
 
 export type MdxMeta = BlogMeta | ProjectMeta;

@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from "@/components/ui/sheet"
 import { Menu } from "lucide-react"
 import dynamic from "next/dynamic"
-import DarkThemeToggle from "../ui/dark-theme-toggle";
 import { cn } from "@/lib/utils";
 import { TechButton } from "@/components/ui/design-system/tech-button";
 import { HeaderNav, navItems } from "./header-nav";
@@ -56,25 +55,23 @@ export function Header() {
           className={cn(
             "pointer-events-auto flex items-center justify-between w-full px-6 md:px-12 transition duration-500 ease-in-out border-b",
             isScrolled 
-              ? "h-16 md:h-16 bg-background/80 backdrop-blur-md border-border shadow-sm" 
-              : "h-24 md:h-28 bg-transparent border-transparent"
+              ? "h-16 md:h-16 bg-white/90 backdrop-blur-md border-slate-200/90 shadow-sm" 
+              : "h-20 md:h-24 bg-transparent border-transparent shadow-none"
           )}
         >
           {/* Contenedor central para mantener el contenido alineado a un max-width aunque el header sea w-full */}
           <div className="w-full max-w-7xl mx-auto flex items-center justify-between">
             
-            {/* Logo Section - Inverted for Dark Mode */}
-            <Link href="/" aria-label="Ir al inicio" className="flex items-center gap-2 group mr-4">
-              <div 
-                className="flex items-center justify-center relative h-10 md:h-12 w-[140px] md:w-[180px] dark:brightness-0 dark:invert filter transition-transform duration-300 group-hover:scale-105"
-              >
-                <Image 
-                  src="/assets/logo-full.webp" 
-                  alt="Sudolabs Digital" 
+            {/* Logo Section - Agrandado para máxima visibilidad */}
+            <Link href="/" aria-label="Ir al inicio" className="flex items-center gap-2 group mr-4 cursor-pointer">
+              <div className="flex items-center justify-center relative h-12 md:h-14 w-[220px] md:w-[280px] transition-transform duration-300 group-hover:scale-105">
+                <Image
+                  src="/assets/logo-horizontal.webp"
+                  alt="Sudolabs Perú"
                   fill
                   priority
                   fetchPriority="high"
-                  sizes="(max-width: 768px) 140px, 180px"
+                  sizes="(max-width: 768px) 220px, 280px"
                   className="object-contain object-left"
                 />
               </div>
@@ -83,11 +80,10 @@ export function Header() {
             {/* DESKTOP NAVIGATION - Premium Shared Layout Animation */}
             <HeaderNav />
 
-            {/* DESKTOP CTA & Theme */}
+            {/* DESKTOP CTA */}
             <div className="hidden md:flex items-center ml-4 gap-4">
-              <DarkThemeToggle/>
               <TechButton 
-                variant="laser" 
+                variant="primary" 
                 size="sm" 
                 onClick={handleOpenContact}
               >
@@ -97,22 +93,21 @@ export function Header() {
 
             {/* MOBILE MENU TRIGGER - Icon Only */}
             <div className="flex md:hidden ml-auto items-center gap-2">
-              <DarkThemeToggle/>
               <Sheet open={isOpen} onOpenChange={setIsOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="w-10 h-10">
+                  <Button variant="ghost" size="icon" className="w-10 h-10 text-slate-800 hover:bg-slate-100 cursor-pointer">
                     <Menu className="h-6 w-6" />
                     <span className="sr-only">Menu</span>
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-background border-l border-border">
+                <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-white border-l border-slate-200">
                   <SheetHeader className="mb-8 text-left">
-                    <div className="flex items-center gap-2 mb-2 relative h-10 w-[140px] dark:brightness-0 dark:invert filter">
-                        <Image 
-                          src="/assets/logo-full.webp" 
-                          alt="Sudolabs Digital" 
+                    <div className="flex items-center gap-2 mb-2 relative h-9 w-[160px]">
+                        <Image
+                          src="/assets/logo-horizontal.webp"
+                          alt="Sudolabs Perú"
                           fill
-                          sizes="140px"
+                          sizes="160px"
                           className="object-contain object-left"
                         />
                     </div>
@@ -128,7 +123,7 @@ export function Header() {
                         <Link
                           href="/"
                           onClick={() => setIsOpen(false)}
-                          className="flex items-center py-4 text-lg font-medium text-muted-foreground hover:text-foreground border-b border-border transition-colors w-full"
+                          className="flex items-center py-4 text-lg font-bold text-slate-800 hover:text-[#004481] border-b border-slate-200 transition-colors w-full"
                         >
                           Inicio
                         </Link>
@@ -138,7 +133,7 @@ export function Header() {
                           <Link
                             href={item.href}
                             onClick={() => setIsOpen(false)}
-                            className="flex items-center py-4 text-lg font-medium text-muted-foreground hover:text-foreground border-b border-border transition-colors w-full"
+                            className="flex items-center py-4 text-lg font-bold text-slate-800 hover:text-[#004481] border-b border-slate-200 transition-colors w-full"
                           >
                             {item.name}
                           </Link>

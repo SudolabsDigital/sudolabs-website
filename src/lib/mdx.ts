@@ -8,6 +8,18 @@ export * from "./mdx-utils";
 
 const contentDirectory = path.join(process.cwd(), "src/content");
 
+// Busca `{basename}.svg` o `{basename}.webp` (en ese orden) dentro de
+// public/assets/projects/{slug}/ y devuelve la ruta pública si existe.
+const findProjectAsset = (slug: string, basename: string): string | undefined => {
+  for (const ext of ["svg", "webp"]) {
+    const publicPath = `/assets/projects/${slug}/${basename}.${ext}`;
+    if (fs.existsSync(path.join(process.cwd(), "public", publicPath))) {
+      return publicPath;
+    }
+  }
+  return undefined;
+};
+
 export const getAllContent = async <T extends BlogMeta>(
   type: "blog" | "projects" | "legal"
 ): Promise<T[]> => {
@@ -30,7 +42,13 @@ export const getAllContent = async <T extends BlogMeta>(
       const publicImagePath = path.join(process.cwd(), "public", imagePath);
       const finalImage = fs.existsSync(publicImagePath) ? imagePath : data.image;
 
-      return { ...data, slug, image: finalImage } as T;
+      // Auto-assign client/product logo if it exists in public/assets/projects/{slug}/
+      const finalLogo = type === "projects" ? findProjectAsset(slug, "logo") ?? data.logo : data.logo;
+
+      // Auto-assign an associated/partner logo (e.g. parent institution) if present
+      const finalPartnerLogo = type === "projects" ? findProjectAsset(slug, "partner-logo") ?? data.partnerLogo : data.partnerLogo;
+
+      return { ...data, slug, image: finalImage, logo: finalLogo, partnerLogo: finalPartnerLogo } as unknown as T;
     })
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
@@ -53,8 +71,14 @@ export const getContentBySlug = async <T extends BlogMeta>(
   const publicImagePath = path.join(process.cwd(), "public", imagePath);
   const finalImage = fs.existsSync(publicImagePath) ? imagePath : data.image;
 
+  // Auto-assign client/product logo if it exists in public/assets/projects/{slug}/
+  const finalLogo = type === "projects" ? findProjectAsset(slug, "logo") ?? data.logo : data.logo;
+
+  // Auto-assign an associated/partner logo (e.g. parent institution) if present
+  const finalPartnerLogo = type === "projects" ? findProjectAsset(slug, "partner-logo") ?? data.partnerLogo : data.partnerLogo;
+
   return {
-    meta: { ...data, slug, image: finalImage } as T,
+    meta: { ...data, slug, image: finalImage, logo: finalLogo, partnerLogo: finalPartnerLogo } as unknown as T,
     content,
   };
 };
