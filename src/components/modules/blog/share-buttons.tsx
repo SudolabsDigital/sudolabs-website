@@ -1,19 +1,58 @@
 "use client";
 
 import { useState } from "react";
-import { Link2, Linkedin, Check, Facebook } from "lucide-react";
+import { Link2, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { type BrandIconName } from "@/components/ui/icons";
+import { IconChip } from "@/components/ui/icons/icon-chip";
 import { siteConfig } from "@/core/config";
 
 interface ShareButtonsProps {
   title: string;
   slug: string;
+  /**
+   * Sección a la que pertenece el contenido, sin barras.
+   *
+   * Antes la ruta `/blog` estaba incrustada en la construcción de la URL, así
+   * que el componente solo servía al blog: cualquier otra sección compartía
+   * enlaces rotos. Se mantiene `"blog"` por defecto para no tocar sus usos.
+   */
+  basePath?: string;
 }
 
-export function ShareButtons({ title, slug }: ShareButtonsProps) {
+/** Redes en las que se ofrece compartir, en orden de aparición. */
+const NETWORKS: { name: BrandIconName; label: string; href: (u: string, t: string) => string }[] = [
+  {
+    name: "linkedin",
+    label: "Compartir en LinkedIn",
+    href: (u) => `https://www.linkedin.com/sharing/share-offsite/?url=${u}`,
+  },
+  {
+    name: "x",
+    label: "Compartir en X",
+    href: (u, t) => {
+      const params = new URLSearchParams({ text: decodeURIComponent(t), url: decodeURIComponent(u) });
+      // `via` solo se envía si la cuenta existe de verdad: ver `siteConfig.xHandle`.
+      if (siteConfig.xHandle) params.set("via", siteConfig.xHandle);
+      return `https://x.com/intent/tweet?${params.toString()}`;
+    },
+  },
+  {
+    name: "facebook",
+    label: "Compartir en Facebook",
+    href: (u) => `https://www.facebook.com/sharer/sharer.php?u=${u}`,
+  },
+  {
+    name: "whatsapp",
+    label: "Compartir por WhatsApp",
+    href: (u, t) => `https://wa.me/?text=${t}%20${u}`,
+  },
+];
+
+export function ShareButtons({ title, slug, basePath = "blog" }: ShareButtonsProps) {
   const [copied, setCopied] = useState(false);
-  const url = `${siteConfig.siteUrl}/blog/${slug}`;
-  
+  const url = `${siteConfig.siteUrl}/${basePath}/${slug}`;
+
   const encodedUrl = encodeURIComponent(url);
   const encodedTitle = encodeURIComponent(title);
 
@@ -26,10 +65,7 @@ export function ShareButtons({ title, slug }: ShareButtonsProps) {
   const handleShare = async () => {
     if (navigator.share) {
       try {
-        await navigator.share({
-          title: title,
-          url: url,
-        });
+        await navigator.share({ title, url });
       } catch (err) {
         console.error("Error sharing:", err);
         handleCopy();
@@ -41,51 +77,40 @@ export function ShareButtons({ title, slug }: ShareButtonsProps) {
 
   return (
     <div className="flex flex-wrap gap-2">
-       {/* LinkedIn */}
-       <Button
-         variant="outline"
-         size="icon"
-         className="rounded-full w-8 h-8 hover:text-[#0077b5] hover:border-[#0077b5] transition bg-background/50 backdrop-blur-sm"
-         onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`, '_blank')}
-         title="Compartir en LinkedIn"
-       >
-          <Linkedin className="w-3.5 h-3.5" />
-       </Button>
+      {NETWORKS.map((network) => (
+        <Button
+          key={network.name}
+          variant="ghost"
+          size="icon"
+          // El botón solo aporta comportamiento; lo visual lo pone el chip.
+          // Pasa de 36 a 44 px, el mínimo táctil.
+          className="group w-11 h-11 rounded-full p-0 hover:bg-transparent"
+          onClick={() => window.open(network.href(encodedUrl, encodedTitle), "_blank", "noopener,noreferrer")}
+          title={network.label}
+          aria-label={network.label}
+        >
+          <IconChip name={network.name} size="lg" shape="circle" />
+        </Button>
+      ))}
 
-       {/* X (Twitter) */}
-       <Button
-         variant="outline"
-         size="icon"
-         className="rounded-full w-8 h-8 hover:text-foreground hover:border-foreground transition bg-background/50 backdrop-blur-sm"
-         onClick={() => window.open(`https://x.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}&via=sudolabs_pe&hashtags=Desarrollo,Tecnología,Software`, '_blank')}
-         title="Compartir en X"
-       >
-          <div className="w-3.5 h-3.5 relative text-foreground">
-            <svg viewBox="0 0 24 24" aria-hidden="true" className="w-3.5 h-3.5 fill-current"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
-          </div>
-       </Button>
-
-       {/* Facebook */}
-       <Button
-         variant="outline"
-         size="icon"
-         className="rounded-full w-8 h-8 hover:text-[#1877F2] hover:border-[#1877F2] transition bg-background/50 backdrop-blur-sm"
-         onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`, '_blank')}
-         title="Compartir en Facebook"
-       >
-          <Facebook className="w-3.5 h-3.5" />
-       </Button>
-
-       {/* Copy Link / Native Share */}
-       <Button
-         variant="outline"
-         size="icon"
-         className="rounded-full w-8 h-8 hover:text-primary hover:border-primary transition bg-background/50 backdrop-blur-sm"
-         onClick={handleShare}
-         title="Copiar Enlace"
-       >
-          {copied ? <Check className="w-3.5 h-3.5 text-green-500" /> : <Link2 className="w-3.5 h-3.5" />}
-       </Button>
+      {/* Compartir nativo, con copia del enlace como alternativa */}
+      <Button
+        variant="outline"
+        size="icon"
+        // 44px como los chips de marca de al lado: no entra en el sistema de
+        // iconos —su glifo es de lucide y no tiene color de marca— pero si se
+        // queda en 36 la fila se ve descuadrada.
+        className="rounded-full w-11 h-11 bg-slate-100 border-slate-200/90 text-slate-500 hover:bg-slate-200 hover:text-slate-700 transition-colors"
+        onClick={handleShare}
+        title="Copiar enlace"
+        aria-label="Copiar enlace"
+      >
+        {copied ? (
+          <Check className="w-5 h-5 text-[var(--color-success-green)]" />
+        ) : (
+          <Link2 className="w-5 h-5" />
+        )}
+      </Button>
     </div>
   );
 }
