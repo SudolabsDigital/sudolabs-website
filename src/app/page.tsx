@@ -1,3 +1,5 @@
+import { siteConfig } from "@/core/config"
+import FaqJsonLd from "@/components/seo/faq-json-ld"
 import dynamic from "next/dynamic"
 import { HeroSection } from "@/components/modules/home/hero-section"
 import { TrustBarSection } from "@/components/modules/home/trust-bar-section"
@@ -9,10 +11,11 @@ const FaqSection = dynamic(() => import("@/components/layout/faq-section").then(
 const CtaSection = dynamic(() => import("@/components/modules/home/cta-section").then(mod => mod.CtaSection))
 
 export const metadata = {
-  title: {
-    absolute: "Sudolabs Perú - Consultora de Software y Tecnología en Huancayo"
-  },
-  description: "Socios tecnológicos para empresas ambiciosas. Desarrollamos software a medida, aplicaciones web modernas y arquitectura cloud de alto rendimiento desde Huancayo para el mundo.",
+  // `absolute` porque el template del layout añadiría la marca por segunda vez.
+  // El texto sale de `siteConfig`: antes vivía duplicado aquí y allí, con
+  // puntuación distinta en cada sitio («|» contra «-»).
+  title: { absolute: siteConfig.title },
+  description: siteConfig.description,
 }
 
 export default function Home() {
@@ -44,6 +47,7 @@ export default function Home() {
           <AiChatSection />
 
           {/* SECCIÓN ESTÁTICA */}
+          <FaqJsonLd />
           <FaqSection />
 
           {/* ISLA INTERACTIVA 3: CTA FINAL */}

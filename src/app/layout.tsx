@@ -7,7 +7,8 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { SdlFooter } from "@/components/layout/sdl-footer";
-import { WhatsAppCTA } from "@/components/features/whatsapp-cta";
+import { ContactDock } from "@/components/features/contact-dock";
+import { BackToTop } from "@/components/features/back-to-top";
 import { DebianChatCTA } from "@/components/features/debian-chat-cta";
 import { GlobalSpotlight } from "@/components/ui/global-spotlight";
 import { GoogleTagManager } from '@next/third-parties/google';
@@ -54,7 +55,6 @@ export const metadata: Metadata = {
       url: '/apple-icon.png',
     },
   },
-  keywords: siteConfig.keywords,
   authors: [{ name: siteConfig.author }],
   creator: siteConfig.author,
   appleWebApp: {
@@ -124,7 +124,8 @@ export default function RootLayout({
         
         <Footer />
         <SdlFooter />
-        <WhatsAppCTA />
+        <ContactDock />
+        <BackToTop />
         <DebianChatCTA />
         <Analytics />
         <SpeedInsights />
