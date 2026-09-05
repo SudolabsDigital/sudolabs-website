@@ -1,0 +1,84 @@
+---
+title: "Sistema de control de inventario para boticas"
+description: "Cómo funciona un control de stock para farmacias que sigue vendiendo sin conexión: lotes, vencimientos, caja que cuadra y un catálogo de 30 000 SKUs precargado."
+date: "2026-09-04"
+readTime: "7 min read"
+tags: ["Control de Inventario", "Salud", "Punto de Venta", "Offline-First"]
+category: "Soluciones"
+difficulty: "beginner"
+featured: false
+author: "Equipo de Producto"
+image: "/assets/images/blogs/control-stock-insumos.webp"
+relatedProject: "softana-app"
+---
+
+Una botica no cierra porque se caiga internet. Sigue habiendo gente en el mostrador,
+recetas que despachar y una caja que al final del turno tiene que cuadrar. Pero la
+mayoría de sistemas de punto de venta sí se caen con la conexión, y en ese momento el
+negocio se detiene: no se puede cobrar, no se descuenta stock y nadie sabe qué se
+vendió.
+
+## El problema no es el inventario, es cuándo lo consultas
+
+En un control de stock de farmacia hay tres preguntas que se hacen todo el día:
+
+- **¿Tengo esto?** — y la respuesta tiene que llegar en menos de un segundo, con el
+  cliente delante.
+- **¿Cuándo vence?** — porque el medicamento vencido no es merma, es un problema
+  sanitario.
+- **¿De qué lote salió?** — el día que hay que retirar un lote, esa pregunta decide si
+  se retiran veinte cajas o se cierra la botica.
+
+Un sistema que solo responde cuando hay red responde mal las tres.
+
+## Offline-first no es una caché
+
+La diferencia es de arquitectura, no de configuración. Una caché guarda una copia de lo
+que ya viste y caduca; un sistema **offline-first** trata la base local como la fuente
+de verdad del turno y sincroniza después.
+
+En **SofTana** eso significa que cada botica mantiene su propia base de datos en el
+navegador —IndexedDB— con el catálogo y el stock. La venta se registra ahí, y cuando la
+conexión vuelve, una cola de sincronización envía las transacciones en lote al servidor.
+No hay «modo degradado»: es el mismo flujo con o sin red.
+
+Lo que esto cambia en la práctica:
+
+- La venta **nunca se detiene**, ni cuando el proveedor de internet tiene un mal día.
+- El descuento de stock ocurre en el momento de la venta, no cuando el servidor
+  responde.
+- La caja cuadra al cerrar el turno porque todos los movimientos quedaron registrados
+  localmente, en orden.
+
+## El catálogo es la mitad del trabajo
+
+El otro problema de arrancar un sistema de inventario en una botica es la carga inicial.
+Nadie quiere teclear producto por producto para poder empezar a vender.
+
+Por eso SofTana viene con un **catálogo maestro de más de 30 000 SKUs médicos**
+precargado y estandarizado. El boticario no da de alta el vademécum: ajusta precios y
+existencias sobre un catálogo que ya existe.
+
+Cuando el catálogo llega hecho, la puesta en marcha deja de medirse en semanas.
+
+## Qué mirar antes de contratar cualquier sistema
+
+Si estás evaluando opciones, estas son las preguntas que separan un sistema serio de una
+demo bonita:
+
+1. **¿Qué pasa si desconecto el router ahora mismo?** Pídelo en la demo. La respuesta se
+   ve en diez segundos.
+2. **¿El control de lotes y vencimientos está en el modelo de datos o es un campo de
+   texto?** Lo segundo se rompe el día que hay que buscar por lote.
+3. **¿Quién carga el catálogo?** Si la respuesta es «usted», súmalo al coste.
+4. **¿La caja cuadra sola o hay que cuadrarla a mano?** Un cierre de turno que no cuadra
+   solo es un problema diario, no un incidente.
+
+## Dónde encaja esto
+
+**SofTana** es el sistema propio de Sudolabs para el rubro farmacéutico y nació de este
+problema concreto: en una botica, cada segundo de sistema caído es una venta perdida y
+un cliente que se va a la de al lado.
+
+Si tu operación se parece a esto —mostrador, rotación alta, dependencia de la conexión—
+el caso completo está en el proyecto enlazado abajo.
