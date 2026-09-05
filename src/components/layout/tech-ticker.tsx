@@ -1,14 +1,24 @@
 'use client';
 
-import { Cloud, Database, Globe, Server, ShieldCheck, Workflow, Zap } from "lucide-react";
+import { Cloud, ShieldCheck, Workflow, Zap } from "lucide-react";
+import { BrandIcon, type BrandIconName } from "@/components/ui/icons";
+
+/**
+ * Los pilares que SON una tecnología concreta llevan su logo; los que son un
+ * concepto —arquitectura cloud, CI, rendimiento, seguridad— siguen con un
+ * icono de lucide, que es para lo que sirve. Antes todos usaban metáforas
+ * genéricas: un globo terráqueo para Next.js y un servidor para Laravel.
+ */
+type Pillar =
+  | { name: string; brand: BrandIconName }
+  | { name: string; icon: React.ComponentType<{ className?: string; strokeWidth?: number }> };
 
 export function TechTicker() {
-  // Lista depurada: Solo pilares arquitectónicos
-  const pillars = [
-    { name: "Next.js 16", icon: Globe },
+  const pillars: Pillar[] = [
+    { name: "Next.js 16", brand: "nextjs" },
     { name: "Arquitectura Cloud", icon: Cloud },
-    { name: "Laravel 11", icon: Server },
-    { name: "PostgreSQL", icon: Database },
+    { name: "Laravel 11", brand: "laravel" },
+    { name: "PostgreSQL", brand: "postgresql" },
     { name: "Integración Continua", icon: Workflow },
     { name: "Alto Rendimiento", icon: Zap },
     { name: "Seguridad Integrada", icon: ShieldCheck },
@@ -34,7 +44,11 @@ export function TechTicker() {
                       {pillars.map((tech, i) => (
                           <div key={`${loopIndex}-${i}`} className="flex items-center gap-12">
                               <div className="flex items-center gap-3 text-slate-800">
-                                  <tech.icon className="w-5 h-5 text-[#004481]" strokeWidth={2} />
+                                  {"brand" in tech ? (
+                                    <BrandIcon name={tech.brand} className="w-5 h-5 text-[#004481]" />
+                                  ) : (
+                                    <tech.icon className="w-5 h-5 text-[#004481]" strokeWidth={2} />
+                                  )}
                                   <span className="text-sm font-bold tracking-widest uppercase whitespace-nowrap">
                                       {tech.name}
                                   </span>
@@ -52,7 +66,11 @@ export function TechTicker() {
                       {pillars.map((tech, i) => (
                           <div key={`${loopIndex}-${i}`} className="flex items-center gap-12">
                                <div className="flex items-center gap-3 text-slate-800">
-                                  <tech.icon className="w-5 h-5 text-[#004481]" strokeWidth={2} />
+                                  {"brand" in tech ? (
+                                    <BrandIcon name={tech.brand} className="w-5 h-5 text-[#004481]" />
+                                  ) : (
+                                    <tech.icon className="w-5 h-5 text-[#004481]" strokeWidth={2} />
+                                  )}
                                   <span className="text-sm font-bold tracking-widest uppercase whitespace-nowrap">
                                       {tech.name}
                                   </span>

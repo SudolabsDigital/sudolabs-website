@@ -10,7 +10,15 @@ interface TrustLogo {
   src: string;
 }
 
-export async function TrustBarSection() {
+interface TrustBarSectionProps {
+  /**
+   * Rótulo sobre el carrusel. `null` lo oculta: en `/equipo` ya hay un
+   * encabezado propio justo encima y dos rótulos apilados sobran.
+   */
+  title?: string | null;
+}
+
+export async function TrustBarSection({ title = "Con la confianza de clientes y productos propios" }: TrustBarSectionProps = {}) {
   const projects = await getAllContent<ProjectMeta>("projects");
 
   const primary: TrustLogo[] = [];
@@ -72,11 +80,13 @@ export async function TrustBarSection() {
 
   return (
     <section className="py-6 md:py-8 bg-transparent overflow-hidden">
-      <div className="container mx-auto px-6 mb-4 md:mb-6">
-        <p className="text-center text-xs md:text-sm font-extrabold uppercase tracking-[0.25em] md:tracking-[0.35em] text-slate-700">
-          Con la confianza de clientes y productos propios
-        </p>
-      </div>
+      {title && (
+        <div className="container mx-auto px-6 mb-4 md:mb-6">
+          <p className="text-center text-xs md:text-sm font-extrabold uppercase tracking-[0.25em] md:tracking-[0.35em] text-slate-700">
+            {title}
+          </p>
+        </div>
+      )}
       <div
         className="container mx-auto px-6 overflow-hidden"
         style={{

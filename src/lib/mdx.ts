@@ -3,6 +3,9 @@ import path from "path";
 import matter from "gray-matter";
 import { BlogMeta, slugify } from "./mdx-utils";
 
+/** Tipos de contenido que viven en `src/content`. */
+export type ContentType = "blog" | "projects" | "legal" | "team";
+
 
 export * from "./mdx-utils";
 
@@ -20,8 +23,15 @@ const findProjectAsset = (slug: string, basename: string): string | undefined =>
   return undefined;
 };
 
+// Ver la nota en la llamada: solo `blog` hereda portada por convención de nombre.
+const resolveImage = (type: ContentType, slug: string, declared?: string): string | undefined => {
+  if (type !== "blog") return declared;
+  const imagePath = `/assets/images/blogs/${slug}.webp`;
+  return fs.existsSync(path.join(process.cwd(), "public", imagePath)) ? imagePath : declared;
+};
+
 export const getAllContent = async <T extends BlogMeta>(
-  type: "blog" | "projects" | "legal"
+  type: ContentType
 ): Promise<T[]> => {
   const dirPath = path.join(contentDirectory, type);
   
@@ -37,10 +47,13 @@ export const getAllContent = async <T extends BlogMeta>(
       const fileContent = fs.readFileSync(filePath, "utf8");
       const { data } = matter(fileContent);
       
-      // Auto-assign image if it exists in public/assets/images/blogs/
-      const imagePath = `/assets/images/blogs/${slug}.webp`;
-      const publicImagePath = path.join(process.cwd(), "public", imagePath);
-      const finalImage = fs.existsSync(publicImagePath) ? imagePath : data.image;
+      // Auto-asigna la portada desde la carpeta de blogs. Restringido a `blog`
+      // a propósito: antes se aplicaba a CUALQUIER tipo, así que un archivo
+      // suelto en `images/blogs/` con el mismo slug secuestraba la imagen de un
+      // proyecto o de un perfil sin dar ningún error. Verificado antes de
+      // acotarlo: projects y legal declaran todos su `image`, y no hay ninguna
+      // colisión de nombres, así que el cambio no altera nada existente.
+      const finalImage = resolveImage(type, slug, data.image);
 
       // Auto-assign client/product logo if it exists in public/assets/projects/{slug}/
       const finalLogo = type === "projects" ? findProjectAsset(slug, "logo") ?? data.logo : data.logo;
@@ -56,7 +69,7 @@ export const getAllContent = async <T extends BlogMeta>(
 };
 
 export const getContentBySlug = async <T extends BlogMeta>(
-  type: "blog" | "projects" | "legal",
+  type: ContentType,
   slug: string
 ): Promise<{ meta: T; content: string } | null> => {
   const filePath = path.join(contentDirectory, type, `${slug}.mdx`);
@@ -66,10 +79,7 @@ export const getContentBySlug = async <T extends BlogMeta>(
   const fileContent = fs.readFileSync(filePath, "utf8");
   const { data, content } = matter(fileContent);
 
-  // Auto-assign image if it exists in public/assets/images/blogs/
-  const imagePath = `/assets/images/blogs/${slug}.webp`;
-  const publicImagePath = path.join(process.cwd(), "public", imagePath);
-  const finalImage = fs.existsSync(publicImagePath) ? imagePath : data.image;
+  const finalImage = resolveImage(type, slug, data.image);
 
   // Auto-assign client/product logo if it exists in public/assets/projects/{slug}/
   const finalLogo = type === "projects" ? findProjectAsset(slug, "logo") ?? data.logo : data.logo;

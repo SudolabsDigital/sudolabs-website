@@ -372,6 +372,52 @@
   text-underline-offset: 4px;
   transition: color 0.2s ease;
 }
+
+/* =========================================
+   LEGIBILIDAD DEL CONTENIDO LARGO
+   ========================================= */
+
+/* Los encabezados envuelven su texto en un <a> para el enlace de ancla. Sin
+   esto, la regla de arriba se los pintaba de azul y subrayados: parecían
+   enlaces y no títulos, y la jerarquía de lectura se perdía. */
+.article-content :is(h1, h2, h3, h4, h5, h6) a {
+  color: inherit;
+  text-decoration: none;
+}
+.article-content :is(h1, h2, h3, h4, h5, h6) a:hover {
+  color: var(--color-brand-core);
+}
+
+/* Medida de lectura: entre 60 y 75 caracteres por línea. Sin tope, el texto
+   se estira hasta el ancho de la columna y cansa la vista en pantallas anchas. */
+.article-content > :is(p, ul, ol, blockquote, h2, h3, h4, h5, h6) {
+  max-width: 68ch;
+}
+
+/* Interlineado y color del cuerpo: más aire y algo más de contraste. */
+.article-content p,
+.article-content li {
+  line-height: 1.8;
+  color: var(--color-anthropic-slate);
+}
+
+/* Aire alrededor de los títulos: separa bloques de ideas. */
+.article-content :is(h2, h3) {
+  scroll-margin-top: 6rem;
+}
+.article-content h2 {
+  margin-top: 3.5rem;
+}
+.article-content h3 {
+  margin-top: 2.5rem;
+}
+
+/* Resalta el primer párrafo como entradilla. */
+.article-content > p:first-of-type {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: var(--color-github-ink);
+}
 .article-content a:hover {
   color: var(--color-brand-core);
 }
