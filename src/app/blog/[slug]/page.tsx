@@ -4,6 +4,8 @@ import { Tag, ArrowLeft } from "lucide-react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 
+import { siteConfig } from "@/core/config";
+import BreadcrumbSchema from "@/components/seo/breadcrumb-schema";
 import { getContentBySlug, getAllContent, getHeadings } from "@/lib/mdx";
 import { BlogMeta, ProjectMeta, slugify } from "@/lib/mdx-utils";
 import { ProblemSolverCTA } from "@/components/modules/blog/problem-solver-cta";
@@ -24,22 +26,31 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   const post = await getContentBySlug<BlogMeta>("blog", params.slug);
   if (!post) return {};
   
+  // Declarar `openGraph` REEMPLAZA el del layout entero, no se fusiona. Sin
+  // este respaldo, un artículo sin portada propia se queda sin ninguna imagen
+  // social en vez de heredar la genérica del sitio.
+  const imagenSocial = post.meta.image || siteConfig.ogImage;
+
   return {
-    title: `${post.meta.title} | Blog Sudolabs`,
+    // Sin `| Blog Sudolabs`: el `template` del layout ya pone la marca, y con
+    // el sufijo el título servido llegaba a 101 caracteres.
+    title: post.meta.title,
     description: post.meta.description,
+    alternates: { canonical: `/blog/${params.slug}` },
     openGraph: {
       title: post.meta.title,
       description: post.meta.description,
       type: "article",
+      url: `${siteConfig.siteUrl}/blog/${params.slug}`,
       publishedTime: post.meta.date,
-      authors: [post.meta.author || "Sudolabs Team"],
-      images: post.meta.image ? [{ url: post.meta.image }] : undefined,
+      authors: [post.meta.author || siteConfig.author],
+      images: [{ url: imagenSocial }],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${post.meta.title} | Blog Sudolabs`,
+      title: post.meta.title,
       description: post.meta.description,
-      images: post.meta.image ? [post.meta.image] : undefined,
+      images: [imagenSocial],
     },
   };
 }
@@ -63,6 +74,13 @@ export default async function BlogPost(props: { params: Promise<{ slug: string }
   return (
     <div className="min-h-screen bg-background font-sans pb-24">
       <BlogJsonLd post={post.meta} />
+      <BreadcrumbSchema
+        items={[
+          { name: "Inicio", item: "/" },
+          { name: "Blog", item: "/blog" },
+          { name: post.meta.title },
+        ]}
+      />
       
       {/* Dynamic Page Hero for Blog Post */}
       <PageHero 
@@ -79,18 +97,23 @@ export default async function BlogPost(props: { params: Promise<{ slug: string }
         ]}
       />
 
-      <div className="container mx-auto px-6 max-w-[1400px] pt-12 md:pt-16">
+      {/* relative z-10: el fondo Aurora (`GlobalSpotlight`) es `fixed inset-0 z-0`,
+          o sea un elemento POSICIONADO, y por orden de pintado se dibuja encima de
+          todo bloque sin posicionar — incluido el fondo blanco de este <main>. Las
+          barras laterales se libraban por ser `sticky`. Sin esta línea el contenido
+          central se lee sobre el degradado morado. */}
+      <div className="container mx-auto px-6 max-w-[1400px] pt-12 md:pt-16 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             
             {/* LEFT SIDEBAR (Sticky) */}
             <aside className="hidden lg:block lg:col-span-3 xl:col-span-2">
-                <div className="sticky top-24">
+                <div className="sticky top-24 rounded-3xl border border-slate-200/90 bg-white shadow-sm p-6">
                     <BlogSidebar post={post.meta} relatedProject={relatedProject} />
                 </div>
             </aside>
 
             {/* MAIN CONTENT */}
-            <main className="lg:col-span-9 xl:col-span-7">
+            <main className="lg:col-span-9 xl:col-span-7 rounded-3xl border border-slate-200/90 bg-white shadow-sm p-6 md:p-10">
                 {/* Mobile Back Link */}
                 <Link 
                     href="/blog" 
@@ -133,7 +156,7 @@ export default async function BlogPost(props: { params: Promise<{ slug: string }
 
             {/* RIGHT SIDEBAR (Sticky TOC) */}
             <aside className="hidden lg:block lg:col-span-3">
-                 <div className="sticky top-24">
+                 <div className="sticky top-24 rounded-3xl border border-slate-200/90 bg-white shadow-sm p-6">
                      <TableOfContents headings={headings} />
                  </div>
             </aside>

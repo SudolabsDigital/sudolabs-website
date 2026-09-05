@@ -2,6 +2,7 @@ import { getPostsByTag, getAllTags } from "@/lib/mdx";
 import Link from "next/link";
 import { ArrowLeft, Tag as TagIcon } from "lucide-react";
 import { notFound } from "next/navigation";
+import BreadcrumbSchema from "@/components/seo/breadcrumb-schema";
 
 export async function generateStaticParams() {
   const tags = await getAllTags();
@@ -18,8 +19,14 @@ export async function generateMetadata({ params }: { params: Promise<{ tag: stri
   if (!currentTag) return {};
   
   return {
-    title: `Artículos sobre ${currentTag.name} | Blog Sudolabs`,
-    description: `Explora nuestros artículos técnicos y tutoriales sobre ${currentTag.name}.`,
+    title: `Artículos sobre ${currentTag.name}`,
+    // Con la cifra real: 55 descripciones idénticas salvo el nombre de la
+    // etiqueta compiten entre sí. El recuento las distingue y además informa.
+    description:
+      currentTag.count === 1
+        ? `El artículo de Sudolabs Perú sobre ${currentTag.name}: ingeniería de software aplicada a casos reales.`
+        : `Los ${currentTag.count} artículos de Sudolabs Perú sobre ${currentTag.name}: ingeniería de software aplicada a casos reales.`,
+    alternates: { canonical: `/blog/tags/${tag}` },
   };
 }
 
@@ -37,6 +44,13 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
 
   return (
     <main className="flex-1 pt-32 pb-24 container mx-auto px-6 max-w-5xl">
+        <BreadcrumbSchema
+          items={[
+            { name: "Inicio", item: "/" },
+            { name: "Blog", item: "/blog" },
+            { name: tagName },
+          ]}
+        />
         <Link href="/blog" className="inline-flex items-center text-sm text-muted-foreground hover:text-primary mb-8 transition-colors">
            <ArrowLeft className="w-4 h-4 mr-2" /> Volver a Todos los Artículos
         </Link>

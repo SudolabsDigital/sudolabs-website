@@ -18,6 +18,22 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  /**
+   * Consolida el host: `www` respondía 200 en vez de redirigir, así que el sitio
+   * se servía desde dos orígenes distintos. Las canónicas ya apuntan al ápex;
+   * esta redirección permanente lo hace efectivo también a nivel de petición.
+   */
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.sudolabs.space" }],
+        destination: "https://sudolabs.space/:path*",
+        permanent: true,
+      },
+    ];
+  },
+
   async headers() {
     return [
       {

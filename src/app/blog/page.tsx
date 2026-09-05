@@ -1,11 +1,16 @@
 import { getAllContent, getAllTags, getAllCategories, BlogMeta } from "@/lib/mdx";
 import { BlogList } from "@/components/modules/blog/blog-list";
 import PageHero from "@/components/ui/page-hero";
+import BreadcrumbSchema from "@/components/seo/breadcrumb-schema";
 import { Suspense } from "react";
 
 export const metadata = {
-  title: "Blog de Ingeniería | Sudolabs",
+  // Sin sufijo de marca: el `template` del layout ya añade `| Sudolabs Perú`.
+  title: "Blog de Ingeniería",
   description: "Artículos técnicos sobre desarrollo de software, arquitectura cloud y optimización. Aprendizajes reales desde las trincheras.",
+  // Canónica RELATIVA: `metadataBase` del layout la resuelve contra el dominio.
+  // Sin ella se heredaba la del layout, que apunta a la portada.
+  alternates: { canonical: "/blog" },
 };
 
 export default async function BlogIndex() {
@@ -16,12 +21,13 @@ export default async function BlogIndex() {
 
   return (
     <div className="min-h-screen bg-transparent selection:bg-primary/20 font-sans pb-24">
+      <BreadcrumbSchema items={[{ name: "Inicio", item: "/" }, { name: "Blog" }]} />
        {/* Page Hero Section */}
        <PageHero 
          title="Blog de Ingeniería"
          subtitle="BITÁCORA TÉCNICA"
          description="Nuestras decisiones técnicas, experimentos fallidos y victorias arquitectónicas contadas desde las trincheras."
-         imageSrc="/assets/images/blogs/bienvenidos-a-sudolabs.webp"
+         imageSrc="/assets/images/hero-blog.webp"
          size="compact"
          align="left"
          breadcrumbs={[{ label: "Blog" }]}
