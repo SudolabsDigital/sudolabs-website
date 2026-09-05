@@ -11,6 +11,8 @@ import dynamic from "next/dynamic"
 import { cn } from "@/lib/utils";
 import { TechButton } from "@/components/ui/design-system/tech-button";
 import { HeaderNav, navItems } from "./header-nav";
+import { socialLinks } from "@/core/config";
+import { IconChip } from "@/components/ui/icons/icon-chip";
 
 import { usePathname } from "next/navigation";
 
@@ -101,14 +103,38 @@ export function Header() {
             {/* DESKTOP NAVIGATION - Premium Shared Layout Animation */}
             <HeaderNav />
 
-            {/* DESKTOP CTA */}
+            {/* DESKTOP: redes + CTA */}
             <div className="hidden md:flex items-center ml-4 gap-4">
+              {/* Las redes solo desde `xl`. Medido: a 1024 px quedan 173 px para
+                  esta zona y el botón ya ocupa 150 con su margen; los cuatro
+                  chips más el separador piden ~177 y no entran. A 1280 hay 429. */}
+              <div className="hidden xl:flex items-center gap-2">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={social.label}
+                    className="group rounded-full focus-visible:outline-none"
+                  >
+                    <IconChip name={social.name} label={social.label} size="sm" shape="circle" />
+                  </a>
+                ))}
+              </div>
+
+              <div className="hidden xl:block h-6 w-px bg-slate-200" />
+
+              {/* «Contactar» no dice qué pasa al pulsarlo. El modal pide objetivo,
+                  correo y alcance/presupuesto/plazos: eso es una solicitud de
+                  propuesta, y así se nombra. No promete una cita, que es lo que
+                  haría «Agendar diagnóstico» sin que exista agenda detrás. */}
               <TechButton 
                 variant="primary" 
                 size="sm" 
                 onClick={handleOpenContact}
               >
-                Contactar
+                Solicitar propuesta
               </TechButton>
             </div>
 
@@ -172,7 +198,7 @@ export function Header() {
                           variant="primary"
                           size="lg"
                         >
-                            Contactar Ahora
+                            Solicitar propuesta
                         </TechButton>
                     </div>
                   </nav>
