@@ -64,7 +64,7 @@ export function ServicesContent() {
         title="Tu equipo no debería gastar horas en tareas que un sistema hace en segundos."
         subtitle="Ingeniería de software B2B"
         description="Convertimos procesos manuales, hojas de Excel y sistemas obsoletos en infraestructura digital que opera tu negocio mientras tú te enfocas en crecer. Sin agencias que desaparecen después de entregar."
-        imageSrc="/assets/images/Dashboards Ejecutivos.webp"
+        imageSrc="/assets/images/hero-servicios.webp"
         breadcrumbs={[{ label: "Servicios" }]}
       />      
 

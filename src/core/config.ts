@@ -1,22 +1,15 @@
+import type { BrandIconName } from "@/components/ui/icons";
+
 export const siteConfig = {
   name: "Sudolabs Perú",
   siteUrl: process.env.NEXT_PUBLIC_APP_URL || "https://sudolabs.space",
-  title: "Sudolabs Perú | Consultora de Software y Tecnología en Huancayo",
-  description: "Impulsa tu empresa con software a medida y tecnología de alto rendimiento. Expertos en desarrollo web, aplicaciones móviles y transformación digital desde Huancayo para el mundo.",
+  /**
+   * 64 caracteres: entra completo en un resultado de búsqueda sin truncarse.
+   * Los términos descriptivos van delante y la marca al final.
+   */
+  title: "Desarrollo de Software y Sistemas Web en Huancayo | Sudolabs Perú",
+  description: "Desarrollamos sistemas web y software a medida para empresas: plataformas, integraciones y arquitectura cloud de alto rendimiento, desde Huancayo para el mundo.",
   shortDescription: "Consultora de Ingeniería de Software y Transformación Digital en Huancayo.",
-  keywords: [
-    "Desarrollo de Software Huancayo", 
-    "Consultora Tecnológica Perú", 
-    "Sistemas a medida", 
-    "Aplicaciones Web", 
-    "Transformación Digital", 
-    "Sudolabs Perú",
-    "Ingeniería de Software",
-    "MenuDeable",
-    "Arquitectura Cloud",
-    "Next.js Perú",
-    "Laravel Perú"
-  ],
   author: "Sudolabs Perú",
   ogImage: "/opengraph-image.webp",
   contact: {
@@ -38,5 +31,25 @@ export const siteConfig = {
     instagram: "https://www.instagram.com/sudolabsperu/",
     tiktok: "https://www.tiktok.com/@sudolabs_peru",
     github: "https://github.com/sudolabs-digital"
-  }
+  },
+  /**
+   * Handle de X sin la arroba.
+   *
+   * Sudolabs todavía no tiene cuenta, así que va vacío a propósito: mientras lo
+   * esté, el botón de compartir en X funciona igual pero NO atribuye con `via=`.
+   * Al crear la cuenta, basta con poner el handle aquí.
+   */
+  xHandle: ""
 };
+
+/**
+ * Redes en el orden en que se muestran. Vive aquí y no en cada componente
+ * porque la consumen el header y el footer: dos listas escritas a mano
+ * divergen el día que se añade una red y alguien actualiza solo una.
+ */
+export const socialLinks: { name: BrandIconName; href: string; label: string }[] = [
+  { name: "facebook", href: siteConfig.social.facebook, label: "Facebook" },
+  { name: "instagram", href: siteConfig.social.instagram, label: "Instagram" },
+  { name: "tiktok", href: siteConfig.social.tiktok, label: "TikTok" },
+  { name: "github", href: siteConfig.social.github, label: "GitHub" },
+];

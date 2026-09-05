@@ -16,6 +16,21 @@ export default function JsonLd() {
         "telephone": siteConfig.contact.phone,
         "email": siteConfig.contact.email,
         "priceRange": "$$",
+        // `knowsAbout` enumera los campos de especialidad de la organización.
+        // Cada uno está respaldado por un caso publicado en /proyectos —no es
+        // una lista de aspiraciones— y son los mismos cinco rubros que muestra
+        // /equipo: transporte (EnRuta), salud (SofTana), educación (SIFED),
+        // seguridad y construcción (GMS Integra).
+        "knowsAbout": [
+          "Desarrollo de software a medida",
+          "Sistemas web para empresas",
+          "Arquitectura de software y cloud",
+          "Software para el sector salud y farmacias",
+          "Software para el sector educación",
+          "Software para el sector transporte",
+          "Software para el sector construcción y manufactura",
+          "Seguridad y auditoría de sistemas",
+        ],
         "areaServed": [
           {
             "@type": "City",

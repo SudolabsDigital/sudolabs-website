@@ -1,4 +1,7 @@
 import { getContentBySlug, getAllContent, getPostsBySlugs, ProjectMeta, BlogMeta } from "@/lib/mdx";
+import { siteConfig } from "@/core/config";
+import ProjectJsonLd from "@/components/seo/project-json-ld";
+import BreadcrumbSchema from "@/components/seo/breadcrumb-schema";
 import { MDXContent } from "@/components/modules/blog/mdx-content";
 import { notFound } from "next/navigation";
 import { BookOpen, Briefcase, ArrowRight, ExternalLink } from "lucide-react";
@@ -20,8 +23,24 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   const project = await getContentBySlug<ProjectMeta>("projects", params.slug);
   if (!project) return {};
   return {
-    title: `${project.meta.title} | Portafolio Sudolabs`,
+    title: project.meta.title,
     description: project.meta.description,
+    alternates: { canonical: `/proyectos/${params.slug}` },
+    // Antes no declaraba `openGraph`, así que los 9 casos heredaban la imagen
+    // genérica del sitio y se compartían todos con la misma tarjeta.
+    openGraph: {
+      title: project.meta.title,
+      description: project.meta.description,
+      type: "article",
+      url: `${siteConfig.siteUrl}/proyectos/${params.slug}`,
+      images: [{ url: project.meta.image || siteConfig.ogImage }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: project.meta.title,
+      description: project.meta.description,
+      images: [project.meta.image || siteConfig.ogImage],
+    },
   };
 }
 
@@ -48,6 +67,15 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
   const relatedPosts = Array.from(uniquePostsMap.values());
 
   return (
+    <>
+      <ProjectJsonLd project={project.meta} />
+      <BreadcrumbSchema
+        items={[
+          { name: "Inicio", item: "/" },
+          { name: "Proyectos", item: "/proyectos" },
+          { name: project.meta.title },
+        ]}
+      />
     <div className="flex flex-col bg-background font-sans selection:bg-primary/20">
       <div className="flex-1">
         
@@ -162,7 +190,11 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
 
               {/* Main Content: Pitch */}
               <div className="lg:col-span-8 order-1 lg:order-2">
-                 <div className="max-w-none">
+                 {/* Caja blanca como en blog y equipo. Aquí el contenido YA estaba
+                     por encima de la Aurora (el contenedor de arriba lleva
+                     `relative z-10`), pero sin fondo opaco el texto se leía
+                     igualmente sobre el degradado. */}
+                 <div className="rounded-3xl border border-slate-200/90 bg-white shadow-sm p-6 md:p-10">
                     <MDXContent source={project.content} />
                  </div>
               </div>
@@ -216,5 +248,6 @@ export default async function ProjectPage(props: { params: Promise<{ slug: strin
         </div>
       </div>
     </div>
+    </>
   );
 }

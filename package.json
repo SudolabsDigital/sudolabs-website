@@ -5,8 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "prebuild": "node scripts/check-comments.mjs",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "check:comments": "node scripts/check-comments.mjs"
   },
   "dependencies": {
     "@ai-sdk/google": "^3.0.34",

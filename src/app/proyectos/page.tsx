@@ -11,7 +11,7 @@ import PageHero from "@/components/ui/page-hero";
 import BreadcrumbSchema from "@/components/seo/breadcrumb-schema";
 
 export const metadata = {
-  title: "Portafolio y Casos de Éxito | Sudolabs Perú",
+  title: "Portafolio y Casos de Éxito",
   description: "Descubre cómo transformamos negocios con software. Casos reales de automatización, gestión documental y plataformas digitales.",
   alternates: {
     canonical: "https://sudolabs.space/proyectos",

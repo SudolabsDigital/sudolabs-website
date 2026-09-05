@@ -2,16 +2,19 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Target, Eye, Shield, Sparkles, Zap, Users } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { Target, Eye, Shield, Sparkles, Zap, Users, ArrowRight } from "lucide-react"
 import dynamic from "next/dynamic"
 import PageHero from "@/components/ui/page-hero"
 import { CtaCard } from "@/components/ui/design-system/cta-card"
+import { TeamMeta } from "@/lib/mdx-utils"
 
 const ContactModal = dynamic(() => import("@/components/features/contact-modal").then(mod => mod.ContactModal), {
   ssr: false,
 })
 
-export default function NosotrosPage() {
+export default function NosotrosPage({ team = [] }: { team?: TeamMeta[] }) {
   const [isContactOpen, setIsContactOpen] = useState(false);
 
   return (
@@ -20,7 +23,7 @@ export default function NosotrosPage() {
         title="Ingeniería con Propósito."
         subtitle="Manifiesto Sudolabs"
         description="En Sudolabs, no solo escribimos código. Construimos la infraestructura digital que permite a las empresas ambiciosas escalar sin límites."
-        imageSrc="/assets/images/La Ingeniería Detrás de Sudolabs.webp"
+        imageSrc="/assets/images/hero-nosotros.webp"
         size="compact"
         breadcrumbs={[{ label: "Nosotros" }]}
       />
@@ -119,6 +122,61 @@ export default function NosotrosPage() {
                ))}
             </div>
           </section>
+
+          {/* PUENTE AL EQUIPO */}
+          {team.length > 0 && (
+            <section className="mb-32">
+              <div className="text-center mb-12">
+                <span className="text-xs font-mono font-bold uppercase tracking-[0.3em] text-[#004481] mb-4 block">
+                  Quiénes lo firmamos
+                </span>
+                <h3 className="text-3xl font-extrabold text-slate-900 mb-4">El equipo detrás</h3>
+                <p className="text-slate-600 text-lg">
+                  Nada de esto lo escribe una marca. Lo escriben dos personas con nombre.
+                </p>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+                {team.map((member) => (
+                  <Link
+                    key={member.slug}
+                    href={`/equipo/${member.slug}`}
+                    className="group flex items-center gap-5 p-5 rounded-3xl border border-slate-200/90 bg-white/90 shadow-sm hover:shadow-lg transition-all"
+                  >
+                    <div className="relative h-20 w-20 shrink-0 rounded-2xl overflow-hidden bg-gradient-to-b from-slate-50 to-[#004481]/10 border border-slate-200/80">
+                      {member.image && (
+                        <Image
+                          src={member.image}
+                          alt={member.fullName}
+                          fill
+                          sizes="80px"
+                          className="object-cover object-top"
+                        />
+                      )}
+                    </div>
+                    <div className="min-w-0">
+                      <h4 className="text-base font-bold text-slate-900 leading-snug group-hover:text-[#004481] transition-colors">
+                        {member.fullName}
+                      </h4>
+                      <p className="mt-1 text-[11px] font-bold uppercase tracking-widest text-[#004481] leading-tight">
+                        {member.role}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+
+              <div className="mt-10 text-center">
+                <Link
+                  href="/equipo"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#004481] text-white font-bold uppercase tracking-wider text-xs shadow-sm hover:bg-[#003366] transition-colors"
+                >
+                  Conocer al equipo
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </section>
+          )}
 
           {/* FINAL CTA - STANDARDIZED */}
           <div className="mt-16">

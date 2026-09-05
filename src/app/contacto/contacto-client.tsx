@@ -43,11 +43,17 @@ export default function ContactoClient() {
 
   return (
     <main className="min-h-screen pt-32 pb-20 px-6 bg-transparent text-slate-900 selection:bg-[#004481]/20">
-      <div className="max-w-4xl mx-auto">
+      {/* relative z-10 por el mismo motivo que en el resto del sitio. El panel
+          del formulario se libraba de casualidad: framer-motion le pone un
+          `transform` inline, y eso crea contexto de apilado. La columna
+          izquierda, sin transform, se quedaba debajo de la Aurora. */}
+      <div className="max-w-4xl mx-auto relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
           
           {/* Left Column: Context */}
-          <div className="space-y-8">
+          {/* Caja blanca como la del formulario: estar por encima de la Aurora
+              no basta cuando no hay fondo opaco — el degradado se ve detras. */}
+          <div className="space-y-8 rounded-3xl border border-slate-200/90 bg-white shadow-sm p-8">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}

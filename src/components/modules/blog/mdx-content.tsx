@@ -58,7 +58,10 @@ const components: MDXComponents = {
 
 export function MDXContent({ source }: { source: string }) {
   return (
-    <div className="max-w-none font-sans">
+    // `article-content` aquí y no en el consumidor: la regla de medida de
+    // lectura es `.article-content > :is(p, ul, ...)`, y este div es el padre
+    // directo de los elementos MDX. Ponerla fuera no aplicaría nada.
+    <div className="max-w-none font-sans article-content">
       <MDXRemote 
         source={source} 
         components={components}

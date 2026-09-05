@@ -1,0 +1,79 @@
+---
+title: "Portal web para instituciones educativas"
+description: "Cómo se construye un portal institucional que el personal administrativo actualiza solo, se indexa bien en Google y no consulta la base de datos ni una vez por visitante."
+date: "2026-09-04"
+readTime: "7 min read"
+tags: ["Educación", "Portal Institucional", "Sistema Web", "SEO"]
+category: "Soluciones"
+difficulty: "beginner"
+featured: false
+author: "Equipo de Ingeniería"
+image: "/assets/images/blogs/seo-tecnico-avanzado.webp"
+relatedProject: "up-educacion"
+---
+
+Una unidad de posgrado tiene un problema de comunicación antes que uno de tecnología: la
+oferta académica existe, los procesos existen, pero el estudiante que la busca no la
+encuentra. Y cuando existe un portal, casi siempre pasa lo mismo — **nadie dentro de la
+institución puede actualizarlo**.
+
+El resultado es un sitio que envejece: convocatorias vencidas, un programa que ya no se
+dicta y noticias del año pasado en la portada.
+
+## El requisito que decide la arquitectura
+
+No es el diseño. Es este: **el personal administrativo tiene que poder publicar sin
+saber programar y sin abrir un ticket**.
+
+Ese requisito, tomado en serio, obliga a separar dos cosas que suelen ir pegadas:
+
+- **Dónde se gestionan los datos** — un panel donde se cargan maestrías, doctorados,
+  diplomados y noticias, con validación para que nadie rompa la información
+  institucional.
+- **Cómo se presentan** — un portal público rápido, que no dependa de que el panel esté
+  disponible para que alguien pueda leer la oferta académica.
+
+En **SIFED**, el portal de la Unidad de Posgrado de Educación de la UNCP, esa separación
+es la decisión de arquitectura central: una API como única fuente de verdad y un portal
+público que se genera de forma estática.
+
+## Cero consultas por visitante
+
+La consecuencia técnica es la parte que más se nota en el uso diario.
+
+Con generación estática incremental, el portal se sirve ya construido: **un visitante que
+entra no toca la base de datos ni una vez**. Y cuando alguien publica una noticia, la
+purga de caché regenera solo lo que cambió — la actualización aparece en menos de un
+segundo sin desplegar nada.
+
+Eso da tres cosas a la vez:
+
+- **Velocidad** que no depende de cuánta gente entre al mismo tiempo.
+- **Indexación**, porque Google recibe HTML terminado en lugar de una pantalla que se
+  arma después.
+- **Coste bajo**, porque la infraestructura no crece con las visitas.
+
+## Ser encontrable es parte del encargo
+
+Un portal institucional que no aparece en Google no cumple su función principal: que el
+futuro estudiante encuentre el programa.
+
+Eso se trabaja explícitamente —metadatos por página, datos estructurados, un sitemap
+completo— y se verifica en Search Console, no se da por hecho. Es la diferencia entre
+«tenemos sitio web» y «nos encuentran».
+
+## Qué mirar si tu institución está en este punto
+
+1. **¿Quién publica una noticia un martes por la tarde?** Si la respuesta incluye a un
+   proveedor externo, el portal se va a quedar viejo.
+2. **¿Cuánto tarda en verse un cambio?** Si son horas, alguien dejará de usarlo.
+3. **¿El portal aguanta el día de la convocatoria?** Es el único día que de verdad
+   importa, y es cuando llega todo el tráfico junto.
+4. **¿Está indexado?** Búscate por el nombre de tu programa y mira qué sale.
+
+## Dónde encaja esto
+
+**SIFED** centralizó la oferta académica de la Unidad de Posgrado y sustituyó procesos en
+papel por flujos digitales, con más de mil usuarios y 99,9 % de disponibilidad.
+
+El caso completo está en el proyecto enlazado abajo.

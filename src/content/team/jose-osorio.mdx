@@ -1,0 +1,103 @@
+---
+title: "José Osorio"
+fullName: "José Pablo Osorio Mallqui"
+role: "Fundador & Arquitecto de Software Principal"
+orientation: "Fullstack · Arquitectura & Seguridad"
+description: "Arquitecto de software con experiencia end-to-end en plataformas SaaS multi-tenant, PWA offline-first, sistemas geoespaciales y portales institucionales en producción."
+focus: "Fullstack, con el centro de gravedad en la arquitectura. Lo que me interesa de un sistema no es que funcione el primer día, sino qué le pasa cuando crece: qué consulta se multiplica, qué se cae sin conexión, cuánto cuesta al mes. Y en seguridad me interesa el enfoque ofensivo — entender cómo se rompen los sistemas para construirlos resistentes."
+date: "2026-01-01"
+order: 1
+featured: true
+image: "/assets/team/jose-osorio.webp"
+career: "Ingeniería de Sistemas"
+university: "Universidad Nacional del Centro del Perú (UNCP)"
+location: "Huancayo, Perú"
+languages: ["Español nativo", "Inglés intermedio"]
+links:
+  github: "https://github.com/StoneFind22"
+  linkedin: "https://www.linkedin.com/in/josé-osorio-mallqui-719166397"
+  email: "jose@sudolabs.space"
+stats:
+  - label: "Sistemas en producción"
+    value: "9"
+  - label: "Uptime en SIFED"
+    value: "99,9 %"
+  - label: "Rendimiento de Menudeable"
+    value: "100/100"
+  - label: "Catálogo maestro de SofTana"
+    value: "30 000+ SKUs"
+skills:
+  - label: "Frontend"
+    items: ["Next.js 15/16", "React 18/19", "Vite", "TypeScript", "TailwindCSS v4", "Framer Motion", "Zustand", "TanStack Query", "SWR", "Dexie.js", "Radix UI", "Three.js", "Leaflet", "MapLibre GL", "Turf.js", "Zod", "React Hook Form"]
+  - label: "Backend"
+    items: ["Laravel 12/13", "Node.js / Express", "PHP 8.2/8.3", "Sanctum", "Stancl/Tenancy v3", "Eloquent Spatial", "Intervention Image", "Knex.js", "Django", "FastAPI"]
+  - label: "Bases de datos"
+    items: ["PostgreSQL + PostGIS", "MySQL 8", "SQL Server", "SQLite", "IndexedDB (Dexie.js)", "Google Cloud SQL"]
+  - label: "Cloud & DevOps"
+    items: ["AWS EC2/RDS/S3/Amplify", "Google Cloud SQL", "Cloud Storage", "Firebase Hosting", "Docker", "Nginx", "GitHub Actions", "Vercel", "Cloudflare"]
+  - label: "IA & Automatización"
+    items: ["Google Gemini SDK (@ai-sdk/google)", "Google Drive API", "Puppeteer", "Handlebars", "Streaming de respuestas"]
+  - label: "Lenguajes"
+    items: ["TypeScript", "PHP", "Python 3", "JavaScript (ESM)", "Java", "Kotlin"]
+  - label: "Seguridad"
+    items: ["JWT", "bcryptjs", "Sanctum", "URLs firmadas de S3", "Sanitización MIME", "Kali Linux", "Pentesting", "System Hardening"]
+  - label: "Metodologías"
+    items: ["Scrum", "XP", "Domain-Driven Design", "Offline-First", "ISR/CSR/SSR", "SaaS multi-tenant", "SEO técnico", "Jest", "PHPUnit"]
+projects:
+  - slug: "softana-app"
+    name: "SofTana App"
+    role: "Arquitectura full-stack y PWA offline-first"
+  - slug: "enruta"
+    name: "EnRuta"
+    role: "Arquitectura geoespacial, backend y frontend"
+  - slug: "up-educacion"
+    name: "SIFED — UP Educación UNCP"
+    role: "Arquitectura, ISR y despliegue en AWS"
+  - slug: "menudeable"
+    name: "Menudeable"
+    role: "Arquitectura multi-tenant y CI/CD"
+  - slug: "oficri-pnp"
+    name: "OFICRI PNP Huancayo"
+    role: "Líder técnico y desarrollo full-stack"
+  - slug: "softana-info"
+    name: "SofTana.info"
+    role: "Desarrollo y SEO técnico"
+  - slug: "estilo-barbaro"
+    name: "Estilo Bárbaro"
+    role: "Desarrollo full-stack e integraciones"
+  - slug: "gms-integra"
+    name: "GMS Integra"
+    role: "Consultoría y arquitectura del ERP"
+  - slug: "bloggerito"
+    name: "Bloggerito"
+    role: "Desarrollo full-stack"
+---
+
+## Qué resuelvo
+
+Sistemas que tienen que aguantar. Plataformas SaaS con varios clientes en la misma
+base sin que se vean entre sí, puntos de venta que siguen vendiendo cuando se cae
+internet, portales institucionales que no consultan la base de datos ni una vez
+por visitante.
+
+Mi criterio de diseño es simple: **la tecnología debe ser invisible para el
+usuario**. Eso no se consigue escondiendo complejidad, sino tomando decisiones de
+arquitectura precisas y a tiempo.
+
+## Cómo lo hago
+
+**Offline-first no es una caché.** En SofTana el cliente guarda en IndexedDB con
+una cola de sincronización que envía en lote al recuperar conectividad. Una
+botica no deja de vender porque se caiga internet.
+
+**Multi-tenancy real, no una columna `tenant_id`.** Base de datos aislada por
+cliente y middleware por token. El aislamiento que de verdad protege es el que no
+depende de que nadie olvide un `WHERE`.
+
+**Cero consultas por visitante.** En SIFED los cambios se publican en menos de un
+segundo mediante purga de caché por webhook, sin que un solo visitante toque la
+base de datos.
+
+**Y pensar en la factura.** Trabajar con recursos limitados me obligó a mirar el
+coste cloud desde el primer commit. Un sistema que funciona pero cuesta cuatro
+veces lo que debería no está terminado.
