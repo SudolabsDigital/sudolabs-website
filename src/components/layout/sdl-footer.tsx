@@ -18,6 +18,8 @@ interface SdlFooterProps {
   links?: LinkItem[];
   /** Texto central personalizado. Por defecto: tagline estándar de Sudolabs */
   tagline?: string;
+  /** Etiqueta raíz. Por defecto "footer"; "div" si el sitio ya lo envuelve en su propio <footer> */
+  etiqueta?: "footer" | "div";
 }
 
 /* Valores por defecto */
@@ -34,12 +36,14 @@ export function SdlFooter({
   tema = "dark",
   links = linksDefecto,
   tagline,
+  etiqueta = "footer",
 }: SdlFooterProps) {
   const año    = new Date().getFullYear();
   const oscuro = tema === "dark";
+  const Raiz   = etiqueta;
 
   return (
-    <footer
+    <Raiz
       className={`sdl-footer${oscuro ? "" : " sdl-light"}`}
       data-dark={oscuro ? "true" : "false"}
     >
@@ -98,6 +102,6 @@ export function SdlFooter({
         </div>
 
       </div>
-    </footer>
+    </Raiz>
   );
 }

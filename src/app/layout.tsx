@@ -122,8 +122,11 @@ export default function RootLayout({
           {children}
         </main>
         
-        <Footer />
-        <SdlFooter />
+        {/* Un solo landmark contentinfo para los dos pies. */}
+        <footer>
+          <Footer />
+          <SdlFooter etiqueta="div" />
+        </footer>
         <ContactDock />
         <BackToTop />
         <DebianChatCTA />

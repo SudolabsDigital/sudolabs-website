@@ -15,7 +15,8 @@
   --sdlf-blue:        #3178c6;             /* Azul de marca */
   --sdlf-purple:      #65318d;             /* Morado IA */
   --sdlf-soft:        #c8d6e8;             /* Texto claro principal */
-  --sdlf-muted:       #6b82a4;             /* Texto secundario / apagado */
+  --sdlf-muted:       #7b90ae;             /* Texto secundario / apagado: 4.57:1 sobre --sdlf-bg (WCAG AA) */
+  --sdlf-blue-texto:  #5892d1;             /* Azul de marca aclarado para texto: 4.57:1 sobre --sdlf-bg */
   --sdlf-border:      rgba(49, 120, 198, 0.18); /* Borde sutil con tono azul */
 
   /* Capas de color para la aurora animada */
@@ -212,7 +213,7 @@
 
 /* Separador "·" con acento azul de marca */
 .sdl-footer__dot {
-  color: var(--sdlf-blue);
+  color: var(--sdlf-blue-texto);
   margin: 0 4px;
 }
 
@@ -291,6 +292,9 @@
 .sdl-footer[data-dark="false"] {
   background-color: #f4f7fa;
   color: #212830;
+  /* Sobre fondo claro los tokens de texto se oscurecen: 4.5:1 sobre #f4f7fa */
+  --sdlf-muted:       #5e7290;
+  --sdlf-blue-texto:  #2f73be;
 }
 
 .sdl-footer.sdl-light::before,

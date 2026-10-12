@@ -13,7 +13,8 @@ import { siteConfig, socialLinks } from "@/core/config"
  */
 export function Footer() {
   return (
-    <footer className="border-t border-slate-200/60 bg-white/90 backdrop-blur-md py-12 relative overflow-hidden text-sm">
+    // Sin <footer> propio: el layout envuelve este bloque y el SdlFooter en un único <footer>.
+    <div className="border-t border-slate-200/60 bg-white/90 backdrop-blur-md py-12 relative overflow-hidden text-sm">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start">
           
@@ -103,6 +104,6 @@ export function Footer() {
 
         </div>
       </div>
-    </footer>
+    </div>
   );
 }
