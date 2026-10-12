@@ -32,8 +32,8 @@ export function TeamProfileHeader({ member }: { member: TeamMeta }) {
               aria-label="Migas de navegación"
               className="flex items-center gap-2.5 w-fit py-2 px-4 rounded-full bg-white/95 backdrop-blur-md border border-white/60 shadow-lg text-[11px] font-bold uppercase tracking-widest"
             >
-              <Link href="/" className="text-slate-800 hover:text-[#004481] transition-colors flex items-center">
-                <Home className="w-3.5 h-3.5 text-[#004481]" />
+              <Link href="/" aria-label="Inicio" className="text-slate-800 hover:text-[#004481] transition-colors flex items-center">
+                <Home aria-hidden="true" className="w-3.5 h-3.5 text-[#004481]" />
               </Link>
               <ChevronRight className="w-3 h-3 text-slate-400" />
               <Link href="/equipo" className="text-slate-700 hover:text-[#004481] transition-colors">

@@ -96,7 +96,7 @@ export const getContentBySlug = async <T extends BlogMeta>(
 export const getAllTags = async () => {
   const posts = await getAllContent<BlogMeta>("blog");
   const tags = new Set<string>();
-  
+
   posts.forEach((post) => {
     post.tags?.forEach((tag) => tags.add(tag));
   });
@@ -107,6 +107,9 @@ export const getAllTags = async () => {
     count: posts.filter((p) => p.tags?.includes(tag)).length,
   }));
 };
+
+// Una etiqueta con menos artículos que esto es contenido fino: sale del sitemap y su página lleva noindex.
+export const UMBRAL_ETIQUETA_INDEXABLE = 3;
 
 export const getAllCategories = async () => {
   const posts = await getAllContent<BlogMeta>("blog");

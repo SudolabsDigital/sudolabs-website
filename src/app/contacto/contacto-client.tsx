@@ -42,7 +42,7 @@ export default function ContactoClient() {
   };
 
   return (
-    <main className="min-h-screen pt-32 pb-20 px-6 bg-transparent text-slate-900 selection:bg-[#004481]/20">
+    <div className="min-h-screen pt-32 pb-20 px-6 bg-transparent text-slate-900 selection:bg-[#004481]/20">
       {/* relative z-10 por el mismo motivo que en el resto del sitio. El panel
           del formulario se libraba de casualidad: framer-motion le pone un
           `transform` inline, y eso crea contexto de apilado. La columna
@@ -223,6 +223,6 @@ export default function ContactoClient() {
           </motion.div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

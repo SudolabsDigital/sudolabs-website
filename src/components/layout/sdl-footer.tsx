@@ -18,14 +18,16 @@ interface SdlFooterProps {
   links?: LinkItem[];
   /** Texto central personalizado. Por defecto: tagline estándar de Sudolabs */
   tagline?: string;
+  /** Etiqueta raíz. Por defecto "footer"; "div" si el sitio ya lo envuelve en su propio <footer> */
+  etiqueta?: "footer" | "div";
 }
 
 /* Valores por defecto */
 
 const linksDefecto: LinkItem[] = [
-  { label: "sudolabs.space", href: "https://sudolabs.space",          external: true },
-  { label: "Servicios",      href: "https://sudolabs.space/servicios", external: true },
-  { label: "Contacto",       href: "https://sudolabs.space/contacto",  external: true },
+  { label: "sudolabs.space", href: "https://www.sudolabs.space",          external: true },
+  { label: "Servicios",      href: "https://www.sudolabs.space/servicios", external: true },
+  { label: "Contacto",       href: "https://www.sudolabs.space/contacto",  external: true },
 ];
 
 /* Componente */
@@ -34,12 +36,14 @@ export function SdlFooter({
   tema = "dark",
   links = linksDefecto,
   tagline,
+  etiqueta = "footer",
 }: SdlFooterProps) {
   const año    = new Date().getFullYear();
   const oscuro = tema === "dark";
+  const Raiz   = etiqueta;
 
   return (
-    <footer
+    <Raiz
       className={`sdl-footer${oscuro ? "" : " sdl-light"}`}
       data-dark={oscuro ? "true" : "false"}
     >
@@ -47,7 +51,7 @@ export function SdlFooter({
 
         {/* Marca / Logo */}
         <Link
-          href="https://sudolabs.space"
+          href="https://www.sudolabs.space"
           target="_blank"
           rel="noopener noreferrer"
           className="sdl-footer__brand"
@@ -98,6 +102,6 @@ export function SdlFooter({
         </div>
 
       </div>
-    </footer>
+    </Raiz>
   );
 }

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Nosotros — Ingeniería con Propósito",
   description: "Conoce al equipo detrás de Sudolabs. Nuestra misión es democratizar la tecnología de alta calidad para empresas ambiciosas.",
   alternates: {
-    canonical: "https://sudolabs.space/nosotros",
+    canonical: "/nosotros",
   },
 };
 

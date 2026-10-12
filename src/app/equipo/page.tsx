@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description:
     "Las personas detrás de Sudolabs: arquitectura de software, diseño de producto y experiencia. Conoce quién construye cada sistema que entregamos.",
   alternates: {
-    canonical: "https://sudolabs.space/equipo",
+    canonical: "/equipo",
   },
 };
 

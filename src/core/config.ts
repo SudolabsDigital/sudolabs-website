@@ -2,7 +2,7 @@ import type { BrandIconName } from "@/components/ui/icons";
 
 export const siteConfig = {
   name: "Sudolabs Perú",
-  siteUrl: process.env.NEXT_PUBLIC_APP_URL || "https://sudolabs.space",
+  siteUrl: process.env.NEXT_PUBLIC_APP_URL || "https://www.sudolabs.space",
   /**
    * 64 caracteres: entra completo en un resultado de búsqueda sin truncarse.
    * Los términos descriptivos van delante y la marca al final.

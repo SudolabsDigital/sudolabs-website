@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next'
-import { getAllContent, getAllTags, BlogMeta, ProjectMeta, TeamMeta } from '@/lib/mdx'
+import { getAllContent, getAllTags, BlogMeta, ProjectMeta, TeamMeta, UMBRAL_ETIQUETA_INDEXABLE } from '@/lib/mdx'
 import { siteConfig } from '@/core/config'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -53,7 +53,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }))
 
   // La etiqueta se actualiza cuando se publica un artículo que la lleva.
-  const tagUrls = tags.map((tag) => ({
+  // Las que tienen pocos artículos no se declaran: su página lleva noindex.
+  const tagUrls = tags.filter((tag) => tag.count >= UMBRAL_ETIQUETA_INDEXABLE).map((tag) => ({
     url: `${baseUrl}/blog/tags/${tag.slug}`,
     lastModified: masReciente(
       blogs.filter((p) => p.tags?.includes(tag.name)).map((p) => p.date)

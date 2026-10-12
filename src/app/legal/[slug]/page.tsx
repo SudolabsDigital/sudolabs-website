@@ -86,7 +86,7 @@ export default async function LegalPage(props: { params: Promise<{ slug: string 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             
             {/* MAIN CONTENT */}
-            <main className="lg:col-span-8 xl:col-span-9 rounded-3xl border border-slate-200/90 bg-white shadow-sm p-6 md:p-10">
+            <div className="lg:col-span-8 xl:col-span-9 rounded-3xl border border-slate-200/90 bg-white shadow-sm p-6 md:p-10">
                 <article className="prose prose-sm md:prose-base dark:prose-invert max-w-none article-content">
                     <MDXRemote 
                         source={doc.content} 
@@ -112,7 +112,7 @@ export default async function LegalPage(props: { params: Promise<{ slug: string 
                 <div className="mt-20 border-t border-border pt-8 text-xs text-muted-foreground italic">
                     Última revisión: {doc.meta.date} — Sudolabs Perú, Departamento Legal.
                 </div>
-            </main>
+            </div>
 
             {/* RIGHT SIDEBAR (Sticky TOC) */}
             <aside className="hidden lg:block lg:col-span-4 xl:col-span-3">

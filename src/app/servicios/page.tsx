@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Servicios de Desarrollo de Software",
   description: "Soluciones de ingeniería a medida: Desarrollo Web, Arquitectura Cloud, Automatización y Consultoría Técnica para escalar tu negocio.",
   alternates: {
-    canonical: "https://sudolabs.space/servicios",
+    canonical: "/servicios",
   },
 };
 
