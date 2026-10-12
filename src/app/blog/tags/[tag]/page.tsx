@@ -47,7 +47,7 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
   const tagName = currentTag ? currentTag.name : tag;
 
   return (
-    <main className="flex-1 pt-32 pb-24 container mx-auto px-6 max-w-5xl">
+    <div className="flex-1 pt-32 pb-24 container mx-auto px-6 max-w-5xl">
         <BreadcrumbSchema
           items={[
             { name: "Inicio", item: "/" },
@@ -106,6 +106,6 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
              );
            })}
         </div>
-    </main>
+    </div>
   );
 }

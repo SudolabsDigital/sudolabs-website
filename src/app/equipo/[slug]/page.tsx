@@ -75,19 +75,19 @@ export default async function TeamMemberPage(props: { params: Promise<{ slug: st
 
       {/* relative z-10: el fondo Aurora (`GlobalSpotlight`) es `fixed inset-0 z-0`,
           o sea un elemento POSICIONADO, y por orden de pintado se dibuja encima de
-          todo bloque sin posicionar — incluido el fondo blanco de este <main>. Las
+          todo bloque sin posicionar — incluido el fondo blanco del bloque central. Las
           barras laterales se libraban por ser `sticky`. Sin esta línea el contenido
           central se lee sobre el degradado morado. */}
       <div className="container mx-auto px-6 max-w-[1400px] pt-12 md:pt-16 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Ficha lateral */}
-          <aside className="hidden lg:block lg:col-span-3 xl:col-span-2">
+          <aside aria-label="Ficha del integrante" className="hidden lg:block lg:col-span-3 xl:col-span-2">
             <div className="sticky top-24 rounded-3xl border border-slate-200/90 bg-white shadow-sm p-6">
               <TeamSidebar member={meta} />
             </div>
           </aside>
 
-          <main className="lg:col-span-9 xl:col-span-7 rounded-3xl border border-slate-200/90 bg-white shadow-sm p-6 md:p-10">
+          <div className="lg:col-span-9 xl:col-span-7 rounded-3xl border border-slate-200/90 bg-white shadow-sm p-6 md:p-10">
             <Link
               href="/equipo"
               className="lg:hidden inline-flex items-center text-xs font-bold text-muted-foreground hover:text-primary transition-colors mb-8 uppercase tracking-widest"
@@ -190,9 +190,9 @@ export default async function TeamMemberPage(props: { params: Promise<{ slug: st
                 </ul>
               </section>
             )}
-          </main>
+          </div>
 
-          <aside className="hidden lg:block lg:col-span-3">
+          <aside aria-label="Índice del perfil" className="hidden lg:block lg:col-span-3">
             <div className="sticky top-24 rounded-3xl border border-slate-200/90 bg-white shadow-sm p-6">
               <TableOfContents headings={headings} />
             </div>
