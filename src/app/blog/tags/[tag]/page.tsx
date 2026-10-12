@@ -1,4 +1,4 @@
-import { getPostsByTag, getAllTags } from "@/lib/mdx";
+import { getPostsByTag, getAllTags, UMBRAL_ETIQUETA_INDEXABLE } from "@/lib/mdx";
 import Link from "next/link";
 import { ArrowLeft, Tag as TagIcon } from "lucide-react";
 import { notFound } from "next/navigation";
@@ -27,6 +27,10 @@ export async function generateMetadata({ params }: { params: Promise<{ tag: stri
         ? `El artículo de Sudolabs Perú sobre ${currentTag.name}: ingeniería de software aplicada a casos reales.`
         : `Los ${currentTag.count} artículos de Sudolabs Perú sobre ${currentTag.name}: ingeniería de software aplicada a casos reales.`,
     alternates: { canonical: `/blog/tags/${tag}` },
+    // Etiqueta con pocos artículos: se sirve, pero no compite en el índice.
+    ...(currentTag.count < UMBRAL_ETIQUETA_INDEXABLE
+      ? { robots: { index: false, follow: true } }
+      : {}),
   };
 }
 
