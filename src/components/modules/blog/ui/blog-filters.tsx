@@ -64,8 +64,9 @@ export function BlogFilters({
       <div className="flex flex-col md:flex-row gap-4 justify-between items-center bg-card/30 p-4 rounded-2xl border border-border/40 backdrop-blur-md shadow-sm">
         <div className="relative w-full md:w-96 group">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
-          <Input 
-            placeholder="Buscar por título o contenido..." 
+          <Input
+            aria-label="Buscar artículos"
+            placeholder="Buscar por título o contenido..."
             className="pl-11 bg-background/50 border-border/50 focus:border-primary/50 transition rounded-xl h-10"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -75,7 +76,8 @@ export function BlogFilters({
         <div className="flex flex-wrap gap-2 w-full md:w-auto">
           {/* Difficulty Select */}
           <div className="relative">
-            <select 
+            <select
+              aria-label="Filtrar por nivel"
               className="h-10 pl-9 pr-8 rounded-xl border border-border/50 bg-background/50 appearance-none focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm font-medium cursor-pointer hover:bg-card/50 transition-colors w-full md:w-auto"
               value={selectedDifficulty || ""}
               onChange={(e) => setSelectedDifficulty(e.target.value || null)}
@@ -91,7 +93,8 @@ export function BlogFilters({
 
           {/* Tags Select */}
           <div className="relative">
-            <select 
+            <select
+              aria-label="Filtrar por tecnología"
               className="h-10 pl-9 pr-8 rounded-xl border border-border/50 bg-background/50 appearance-none focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm font-medium cursor-pointer hover:bg-card/50 transition-colors w-full md:w-auto max-w-[200px]"
               value={selectedTag || ""}
               onChange={(e) => setSelectedTag(e.target.value || null)}
