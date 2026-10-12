@@ -23,9 +23,9 @@ interface SdlFooterProps {
 /* Valores por defecto */
 
 const linksDefecto: LinkItem[] = [
-  { label: "sudolabs.space", href: "https://sudolabs.space",          external: true },
-  { label: "Servicios",      href: "https://sudolabs.space/servicios", external: true },
-  { label: "Contacto",       href: "https://sudolabs.space/contacto",  external: true },
+  { label: "sudolabs.space", href: "https://www.sudolabs.space",          external: true },
+  { label: "Servicios",      href: "https://www.sudolabs.space/servicios", external: true },
+  { label: "Contacto",       href: "https://www.sudolabs.space/contacto",  external: true },
 ];
 
 /* Componente */
@@ -47,7 +47,7 @@ export function SdlFooter({
 
         {/* Marca / Logo */}
         <Link
-          href="https://sudolabs.space"
+          href="https://www.sudolabs.space"
           target="_blank"
           rel="noopener noreferrer"
           className="sdl-footer__brand"

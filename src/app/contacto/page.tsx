@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Contacto — Hablemos de tu Proyecto",
   description: "Cuéntanos tu idea y nosotros ponemos la ingeniería. Expertos en desarrollo a medida, automatización y consultoría técnica.",
   alternates: {
-    canonical: "https://sudolabs.space/contacto",
+    canonical: "/contacto",
   },
 };
 

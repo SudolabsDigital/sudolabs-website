@@ -14,7 +14,7 @@ export const metadata = {
   title: "Portafolio y Casos de Éxito",
   description: "Descubre cómo transformamos negocios con software. Casos reales de automatización, gestión documental y plataformas digitales.",
   alternates: {
-    canonical: "https://sudolabs.space/proyectos",
+    canonical: "/proyectos",
   },
 };
 
